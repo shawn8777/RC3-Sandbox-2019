@@ -16,26 +16,26 @@ namespace RC3
         [SerializeField] private GridModelParams _params;
 
         [SerializeField] private int _countX = 10;
-        [SerializeField] private int _countY = 10;
+        [SerializeField] private int _countZ = 10;
 
         [SerializeField] private float _spacingX = 2.0f;
-        [SerializeField] private float _spacingY = 2.0f;
+        [SerializeField] private float _spacingZ = 2.0f;
 
         private GameObject[,] _objects;
 
    
         void Start()
         {
-            _objects = new GameObject[_countY, _countX];
+            _objects = new GameObject[_countZ, _countX];
             
-            for (int i = 0; i < _countY; i++)
+            for (int i = 0; i < _countZ; i++)
             {
                 for (int j = 0; j < _countX; j++)
                 {
                     GameObject copy = Instantiate(_prefab, this.transform);
 
                     float x = j * _spacingX;
-                    float z = i * _spacingY;
+                    float z = i * _spacingZ;
                     copy.transform.localPosition = new Vector3(x, 0.0f, z);
 
                     // store the instantiated copy
@@ -49,7 +49,7 @@ namespace RC3
         {
             float offset = Time.time * _params.Frequency;
 
-            for(int i = 0; i < _countY; i++)
+            for(int i = 0; i < _countZ; i++)
             {
                 for(int j = 0; j < _countX; j++)
                 {
