@@ -13,30 +13,45 @@ namespace RC3
     [CreateAssetMenu(menuName = "RC3/WS1/GridModelParams")]
     public class GridModelParams : ScriptableObject
     {
-        [SerializeField] private float _frequency = 0.1f;
-        [SerializeField] private float _amplitude = 2.0f;
+        [SerializeField] private MixMode _mixMode;
+
+        [SerializeField] private float _speedX = 0.1f;
+        [SerializeField] private float _speedZ = 0.1f;
+
+        [SerializeField] private float _frequencyX = 0.1f;
+        [SerializeField] private float _frequencyZ = 0.1f;
+
         [SerializeField] private float _scaleX = 0.1f;
         [SerializeField] private float _scaleZ = 0.1f;
+
+
+        public MixMode MixMode
+        {
+            get { return _mixMode; }
+        }
         
 
-        public float Frequency
+        public float SpeedX
         {
-            get { return _frequency; }
-            /*
-            set
-            {
-                if (value < 0.0)
-                    throw new ArgumentOutOfRangeException("Value was negative!");
-
-                _frequency = value;
-            }
-            */
+            get { return _speedX; }
         }
 
 
-        public float Amplitude
+        public float SpeedZ
         {
-            get { return _amplitude; }
+            get { return _speedZ; }
+        }
+
+
+        public float FrequencyX
+        {
+            get { return _frequencyX; }
+        }
+
+
+        public float FrequencyZ
+        {
+            get { return _frequencyZ; }
         }
 
 

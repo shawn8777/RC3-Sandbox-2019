@@ -4,14 +4,18 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88cd34e2c1251b04dafecd4233b17228, type: 3}
   m_Name: Params-0
   m_EditorClassIdentifier: 
-  _frequency: 50
-  _amplitude: 5
-  _scaleX: 0.05
-  _scaleZ: 0.05
+  _mixMode: 3
+  _speedX: 10
+  _speedZ: 20
+  _frequencyX: 0.1
+  _frequencyZ: 0.15
+  _scaleX: 10
+  _scaleZ: 5

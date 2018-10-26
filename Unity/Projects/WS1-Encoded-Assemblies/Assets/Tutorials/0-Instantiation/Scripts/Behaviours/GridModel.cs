@@ -23,11 +23,11 @@ namespace RC3
 
         private GameObject[,] _objects;
 
-   
+
         void Start()
         {
             _objects = new GameObject[_countZ, _countX];
-            
+
             for (int i = 0; i < _countZ; i++)
             {
                 for (int j = 0; j < _countX; j++)
@@ -47,26 +47,47 @@ namespace RC3
 
         void Update()
         {
-            float offset = Time.time * _params.Frequency;
+            float offsetX = Time.time * _params.SpeedX;
+            float offsetZ = Time.time * _params.SpeedZ;
 
-            for(int i = 0; i < _countZ; i++)
+            for (int i = 0; i < _countZ; i++)
             {
-                for(int j = 0; j < _countX; j++)
+                for (int j = 0; j < _countX; j++)
                 {
                     GameObject obj = _objects[i, j];
                     Vector3 pos = obj.transform.localPosition;
 
-                    // calculate y coordinate as a function of x coordinate
-                    float x = (pos.x + offset) * _params.ScaleX;
-                    float z = (pos.z + offset) * _params.ScaleZ;
+                    // calculate y coordinate as a function of x and z coordinates
+                    float x = (pos.x + offsetX) * _params.FrequencyX;
+                    float z = (pos.z + offsetZ) * _params.FrequencyZ;
 
-                    float y0 = Mathf.Sin(x) * _params.Amplitude;
-                    float y1 = Mathf.Cos(z) * _params.Amplitude;
+                    float y0 = Mathf.Sin(x) * _params.ScaleX;
+                    float y1 = Mathf.Cos(z) * _params.ScaleZ;
 
-                    // pos.y = Mathf.Min(y0,y1);
-                    pos.y = y0 * y1;
+                    pos.y = Mix(y0, y1);
                     obj.transform.localPosition = pos;
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private float Mix(float a, float b)
+        {
+            switch (_params.MixMode)
+            {
+                case MixMode.Add:
+                    return a + b;
+                case MixMode.Multiply:
+                    return a * b;
+                case MixMode.Min:
+                    return Mathf.Min(a, b);
+                case MixMode.Max:
+                    return Mathf.Max(a, b);
+                default:
+                    throw new NotImplementedException();
             }
         }
     }
