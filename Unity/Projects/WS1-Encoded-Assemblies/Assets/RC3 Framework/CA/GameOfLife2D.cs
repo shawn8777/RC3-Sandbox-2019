@@ -51,11 +51,15 @@ public class GameOfLife2D
         int nx = CountX;
         int ny = CountY;
 
+        // calculate next state
         for (int y = 0; y < ny; y++)
         {
             for (int x = 0; x < nx; x++)
                 Step(x, y);
         }
+
+        // swap state buffers
+        Swap(_currentState, _nextState);
     }
 
     ///
@@ -95,5 +99,13 @@ public class GameOfLife2D
     {
         i %= n;
         return (i < 0) ? i + n : i;
+    }
+
+    ///
+    private static void Swap<T>(ref T t0, ref T t1)
+    {
+        var temp = t0;
+        t0 = t1;
+        t1 = temp;
     }
 }
