@@ -27,18 +27,6 @@ public class GameOfLife2D
     }
 
     ///
-    public int CountX
-    {
-        get { return _currentState.GetLength(1); }
-    }
-
-    ///
-    public int CountY
-    {
-        get { return _currentState.GetLength(0); }
-    }
-
-    ///
     public GameOfLife2D(int countX, int countY)
     {
         _currentState = new int[countY, countX];
@@ -48,13 +36,13 @@ public class GameOfLife2D
     ///
     public void Step()
     {
-        int nx = CountX;
-        int ny = CountY;
+        int countY = _currentState.GetLength(0);
+        int countX = _currentState.GetLength(1);
 
         // calculate next state
-        for (int y = 0; y < ny; y++)
+        for (int y = 0; y < countY; y++)
         {
-            for (int x = 0; x < nx; x++)
+            for (int x = 0; x < countX; x++)
                 Step(x, y);
         }
 
@@ -78,14 +66,14 @@ public class GameOfLife2D
     private int GetNeighborSum(int y0, int x0)
     {
         var current = _currentState;
-        int nx = CountX;
-        int ny = CountY;
+        int countY = current.GetLength(0);
+        int countX = current.GetLength(1);
         int sum = 0;
 
         foreach ((int dy, int dx) in _offsets)
         {
-            int x1 = Wrap(x0 + dx, nx);
-            int y1 = Wrap(y0 + dy, ny);
+            int x1 = Wrap(x0 + dx, countX);
+            int y1 = Wrap(y0 + dy, countY);
 
             if (current[y1, x1] > 0)
                 sum++;
