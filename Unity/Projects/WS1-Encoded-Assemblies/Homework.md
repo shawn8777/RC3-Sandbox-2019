@@ -6,3 +6,6 @@
 ### 23.10.2018
 - Add time-dependant scale factor to instantiated prefabs
 - Add time-dependant rotation factor to instantiated prefabs
+
+## 28.10.2018
+- Develop a new model initializer

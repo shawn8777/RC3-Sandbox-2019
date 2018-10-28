@@ -58,7 +58,7 @@ namespace RC3
             for (int y = 0; y < countY; y++)
             {
                 for (int x = 0; x < countX; x++)
-                    Step(x, y);
+                    Step(y, x);
             }
 
             // swap state buffers
