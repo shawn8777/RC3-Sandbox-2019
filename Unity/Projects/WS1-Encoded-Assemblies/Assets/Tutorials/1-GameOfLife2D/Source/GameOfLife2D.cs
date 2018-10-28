@@ -9,17 +9,19 @@ namespace RC3
         private int[,] _currentState;
         private int[,] _nextState;
 
-        private (int, int)[] _offsets = {
-        (-1, -1),
-        (-1, 0),
-        (-1, 1),
-        (0, -1),
-        // (0, 0), // don't consider self
-        (0, 1),
-        (1, -1),
-        (1, 0),
-        (1, 1),
-    };
+        private (int, int)[] _offsets =
+        {
+            (-1, -1),
+            (-1, 0),
+            (-1, 1),
+            (0, -1),
+            // (0, 0), // don't consider self
+            (0, 1),
+            (1, -1),
+            (1, 0),
+            (1, 1)
+        };
+
 
         ///
         public int[,] CurrentState
