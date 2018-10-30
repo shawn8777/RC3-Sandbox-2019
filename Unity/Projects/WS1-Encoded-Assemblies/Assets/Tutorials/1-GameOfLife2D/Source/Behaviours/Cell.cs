@@ -7,6 +7,7 @@ namespace RC3
     public class Cell : MonoBehaviour
     {
         private MeshRenderer _renderer;
+        private const int _defaultState = 0;
 
 
         /// <summary>
@@ -15,6 +16,7 @@ namespace RC3
         private void Start()
         {
             _renderer = GetComponent<MeshRenderer>();
+            SetState(_defaultState);
         }
 
 

@@ -35,6 +35,7 @@ namespace RC3
             get { return _currentState; }
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -45,6 +46,7 @@ namespace RC3
             _currentState = new int[countY, countX];
             _nextState = new int[countY, countX];
         }
+
 
         /// <summary>
         /// 
@@ -65,6 +67,7 @@ namespace RC3
             Swap(ref _currentState, ref _nextState);
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -80,6 +83,7 @@ namespace RC3
             else
                 _nextState[y, x] = (sum < 2 || sum > 3) ? 0 : 1;
         }
+
 
         /// <summary>
         /// 
@@ -109,6 +113,7 @@ namespace RC3
             return sum;
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -120,6 +125,7 @@ namespace RC3
             i %= n;
             return (i < 0) ? i + n : i;
         }
+
 
         /// <summary>
         /// 

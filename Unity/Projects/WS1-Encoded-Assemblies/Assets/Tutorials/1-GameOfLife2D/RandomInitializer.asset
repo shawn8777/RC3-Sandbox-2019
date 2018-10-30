@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2359287d813f72d47ae91134944515e9, type: 3}
   m_Name: RandomInitializer
   m_EditorClassIdentifier: 
-  _threshold: 0.5
+  _threshold: 0.75

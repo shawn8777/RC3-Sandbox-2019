@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: ImageInitializer
   m_EditorClassIdentifier: 
   _texture: {fileID: 2800000, guid: 18661d4dff8c1af4db80b42cd1b7aaa5, type: 3}
-  _threshold: 0.5
+  _threshold: 0.2

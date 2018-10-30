@@ -9,3 +9,7 @@
 
 ## 28.10.2018
 - Develop a new model initializer
+
+## 30.10.2018
+- Add controls to pause/resume the model
+- Add export functionality
