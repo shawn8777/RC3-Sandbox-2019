@@ -10,17 +10,19 @@ namespace RC3
     /// </summary>
     public class StackManager : MonoBehaviour
     {
+
         [SerializeField] private ModelInitializer _initializer;
         [SerializeField] private CellLayer _layerPrefab;
         [SerializeField] private Cell _cellPrefab;
 
-        [SerializeField] private int _layerWidth = 10;
-        [SerializeField] private int _layerLength = 10;
+        [SerializeField] private int _layerColumns = 10;
+        [SerializeField] private int _layerRows = 10;
         [SerializeField] private int _layerCount = 10;
 
         private CellLayer[] _layers;
         private ModelState[] _history;
-        private GameOfLife2D _model;
+        private CAModel2D _model;
+        private CARule2D _defaultRule = new Conway2D(Neighborhoods.MooreR1);
         private int _stepCount;
         private bool _pause = true;
 
@@ -28,7 +30,7 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        public GameOfLife2D Model
+        public CAModel2D Model
         {
             get { return _model; }
         }
@@ -59,21 +61,21 @@ namespace RC3
                 copy.transform.localPosition = new Vector3(0.0f, -i, 0.0f);
 
                 // create cell layer
-                copy.Initialize(_cellPrefab, _layerWidth, _layerLength);
+                copy.Initialize(_cellPrefab, _layerRows, _layerColumns);
                 _layers[i] = copy;
 
                 // create history
-                _history[i] = new int[_layerLength, _layerWidth];
+                _history[i] = new int[_layerRows, _layerColumns];
             }
 
-            // instantiate model
-            _model = new GameOfLife2D(_layerWidth, _layerLength);
+            // instantiate rule and model
+            _model = new CAModel2D(_defaultRule, _layerRows, _layerColumns);
 
-            // initialize mode
+            // initialize model
             _initializer.Initialize(_model.CurrentState);
 
             // center manager gameobject at the world origin
-            transform.localPosition = new Vector3(_layerWidth, _layerCount, _layerLength) * -0.5f;
+            transform.localPosition = new Vector3(_layerColumns, _layerCount, _layerRows) * -0.5f;
         }
 
 
@@ -82,17 +84,25 @@ namespace RC3
         /// </summary>
         private void Update()
         {
+            // re-initialize on key down
             if (Input.GetKeyDown(KeyCode.Space))
                 _initializer.Initialize(_model.CurrentState);
 
+            //
             CycleHistory();
             CycleLayers();
 
+            // advance model
             _model.Step();
+            //_model.StepParallel();
+            _stepCount++;
+
+            // copy model state to bottom layer
             ModelState current = _model.CurrentState;
             Array.Copy(current, _history[0], current.Count);
 
-            UpdateLayer(_layers[++_stepCount % _layerCount]);
+            // update cells
+            UpdateCells();
         }
 
 
@@ -113,28 +123,11 @@ namespace RC3
 
 
         /// <summary>
-        /// Updates cells from the given layer based on the current state of the model
-        /// </summary>
-        /// <param name="layer"></param>
-        private void UpdateLayer(CellLayer layer)
-        {
-            Cell[,] cells = layer.Cells;
-            int[,] state = _model.CurrentState;
-
-            for (int i = 0; i < _layerLength; i++)
-            {
-                for (int j = 0; j < _layerWidth; j++)
-                    cells[i, j].SetState(state[i, j]);
-            }
-        }
-
-
-        /// <summary>
         /// 
         /// </summary>
         private void CycleLayers()
         {
-            for(int i = 0; i < _layerCount; i++)
+            for (int i = 0; i < _layerCount; i++)
             {
                 Transform xform = _layers[i].transform;
                 Vector3 pos = xform.localPosition;
@@ -144,6 +137,23 @@ namespace RC3
 
                 pos.y = y;
                 xform.localPosition = pos;
+            }
+        }
+
+
+        /// <summary>
+        /// Updates cells from the given layer based on the current state of the model
+        /// </summary>
+        /// <param name="layer"></param>
+        private void UpdateCells()
+        {
+            Cell[,] cells = _layers[_stepCount % _layerCount].Cells;
+            int[,] state = _model.CurrentState;
+
+            for (int i = 0; i < _layerRows; i++)
+            {
+                for (int j = 0; j < _layerColumns; j++)
+                    cells[i, j].SetState(state[i, j]);
             }
         }
     }

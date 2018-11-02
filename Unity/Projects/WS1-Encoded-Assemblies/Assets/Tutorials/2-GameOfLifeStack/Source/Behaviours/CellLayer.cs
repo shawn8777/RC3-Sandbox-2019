@@ -22,19 +22,20 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        public void Initialize(Cell cellPrefab, int width, int length)
+        public void Initialize(Cell cellPrefab, int rows, int columns)
         {
             // create cell array
-            _cells = new Cell[length, width];
+            _cells = new Cell[rows, columns];
 
             // instantiate cell prefabs and store in array
-            for (int j = 0; j < length; j++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int i = 0; i < width; i++)
+                for (int j = 0; j < columns; j++)
                 {
                     Cell cell = Instantiate(cellPrefab, transform);
-                    cell.transform.localPosition = new Vector3(i, 0.0f, j);
-                    _cells[j, i] = cell;
+
+                    cell.transform.localPosition = new Vector3(j, 0.0f, i);
+                    _cells[i, j] = cell;
                 }
             }
         }

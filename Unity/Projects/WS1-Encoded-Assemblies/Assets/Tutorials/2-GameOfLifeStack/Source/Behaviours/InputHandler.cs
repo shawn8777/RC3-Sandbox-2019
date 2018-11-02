@@ -11,10 +11,13 @@ namespace RC3
     {
         private StackManager _manager;
 
-        private IndexPair[][] _neighbourhoods =
+        /// <summary>
+        /// 
+        /// </summary>
+        private CARule2D[] _rules =
         {
-            Neighborhoods.MooreR1,
-            Neighborhoods.VonNeumannR1
+            new Conway2D(Neighborhoods.MooreR1),
+            new Conway2D(Neighborhoods.VonNeumannR1)
         };
 
 
@@ -31,9 +34,9 @@ namespace RC3
         /// 
         /// </summary>
         /// <param name="value"></param>
-        public void SetNeighbourhood(int value)
+        public void SetRule(int value)
         {
-            _manager.Model.Offsets = _neighbourhoods[value];
+            _manager.Model.Rule = _rules[value];
         }
     }
 }
