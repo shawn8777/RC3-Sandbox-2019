@@ -4,35 +4,38 @@ using System.Collections.Generic;
 
 namespace RC3
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class GameOfLife2D
     {
         private int[,] _currentState;
         private int[,] _nextState;
+        private IndexPair[] _offsets = Neighborhoods.MooreR1;
 
 
         /// <summary>
         /// 
         /// </summary>
-        private int[] _offsets =
-        {
-            -1, -1,
-            -1, 0,
-            -1, 1,
-            0, -1,
-            // 0, 0, // don't consider self
-            0, 1,
-            1, -1,
-            1, 0,
-            1, 1
-        };
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int[,] CurrentState
+        public ModelState CurrentState
         {
             get { return _currentState; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IndexPair[] Offsets
+        {
+            get { return _offsets; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException();
+
+                _offsets = value;
+            }
         }
 
 
@@ -54,7 +57,7 @@ namespace RC3
         public void Step()
         {
             int countY = _currentState.GetLength(0);
-            int countX = _currentState.GetLength(1);
+            int countX = _currentState.GetLength(1); 
 
             // calculate next state
             for (int y = 0; y < countY; y++)
@@ -62,7 +65,7 @@ namespace RC3
                 for (int x = 0; x < countX; x++)
                     Step(y, x);
             }
-
+            
             // swap state buffers
             Swap(ref _currentState, ref _nextState);
         }
@@ -79,9 +82,9 @@ namespace RC3
             int sum = GetNeighborSum(y, x);
 
             if (state == 0)
-                _nextState[y, x] = (sum == 3) ? 1 : 0;
+                _nextState[y, x] = (sum == 3) ? 1 : 0; // dead rule
             else
-                _nextState[y, x] = (sum < 2 || sum > 3) ? 0 : 1;
+                _nextState[y, x] = (sum < 2 || sum > 3) ? 0 : 1; // alive rule
         }
 
 
@@ -94,17 +97,15 @@ namespace RC3
         private int GetNeighborSum(int y0, int x0)
         {
             var current = _currentState;
+
             int countY = current.GetLength(0);
             int countX = current.GetLength(1);
             int sum = 0;
 
-            for(int i = 0; i < _offsets.Length; i+=2)
+            foreach(IndexPair offset in _offsets)
             {
-                int dy = _offsets[i];
-                int dx = _offsets[i + 1];
-
-                int x1 = Wrap(x0 + dx, countX);
-                int y1 = Wrap(y0 + dy, countY);
+                int y1 = Wrap(y0 + offset.I, countY);
+                int x1 = Wrap(x0 + offset.J, countX);
 
                 if (current[y1, x1] > 0)
                     sum++;

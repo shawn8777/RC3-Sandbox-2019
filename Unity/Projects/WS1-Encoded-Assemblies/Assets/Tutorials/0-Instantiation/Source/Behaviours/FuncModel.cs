@@ -10,7 +10,7 @@ namespace RC3
     /// <summary>
     /// 
     /// </summary>
-    public class GridModel : MonoBehaviour
+    public class FuncModel : MonoBehaviour
     {
         [SerializeField] private GameObject _prefab;
         [SerializeField] private GridModelParams _params;
