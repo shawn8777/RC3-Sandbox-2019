@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using SpatialSlur;
+
 namespace RC3
 {
     /// <summary>
@@ -58,7 +60,7 @@ namespace RC3
             for(int i = 0; i < _layerCount; i++)
             {
                 CellLayer copy = Instantiate(_layerPrefab, transform);
-                copy.transform.localPosition = new Vector3(0.0f, -i, 0.0f);
+                copy.transform.localPosition = new Vector3(0.0f, i, 0.0f);
 
                 // create cell layer
                 copy.Initialize(_cellPrefab, _layerRows, _layerColumns);
@@ -89,7 +91,6 @@ namespace RC3
                 _initializer.Initialize(_model.CurrentState);
 
             //
-            CycleHistory();
             CycleLayers();
 
             // advance model
@@ -109,35 +110,26 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        private void CycleHistory()
-        {
-            int i = _layerCount - 1;
-            ModelState last = _history[i];
-
-            // move each layer up by one
-            do { _history[i] = _history[i - 1]; } while (--i > 0);
-
-            // move last layer back to the bottom
-            _history[0] = last;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
         private void CycleLayers()
         {
-            for (int i = 0; i < _layerCount; i++)
+            int curr = _layerCount - 1;
+            CellLayer layer0 = _layers[curr];
+            ModelState histor0 = _history[curr];
+            
+            // move each layer up by one
+            do
             {
-                Transform xform = _layers[i].transform;
-                Vector3 pos = xform.localPosition;
+                _layers[curr] = _layers[curr - 1];
+                _history[curr] = _history[curr - 1];
+            } while (--curr > 0);
 
-                int y = Mathf.RoundToInt(pos.y);
-                if (++y >= _layerCount) y = 0;
+            // move last layer back to the bottom
+            _layers[0] = layer0;
+            _history[0] = histor0;
 
-                pos.y = y;
-                xform.localPosition = pos;
-            }
+            // update layer positions
+            for (int j = 0; j < _layerCount; j++)
+                _layers[j].transform.localPosition = new Vector3(0.0f, j, 0.0f);
         }
 
 
@@ -147,7 +139,7 @@ namespace RC3
         /// <param name="layer"></param>
         private void UpdateCells()
         {
-            Cell[,] cells = _layers[_stepCount % _layerCount].Cells;
+            Cell[,] cells = _layers[0].Cells;
             int[,] state = _model.CurrentState;
 
             for (int i = 0; i < _layerRows; i++)

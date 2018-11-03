@@ -74,8 +74,7 @@ namespace RC3
             _nextState = temp;
         }
 
-
-        /*
+        
         /// <summary>
         /// 
         /// </summary>
@@ -92,7 +91,11 @@ namespace RC3
                     _nextState[i, j] = _rule.NextAt(i, j, _currentState);
                 }
             });
+
+            // swap state buffers
+            var temp = _currentState;
+            _currentState = _nextState;
+            _nextState = temp;
         }
-        */
     }
 }
