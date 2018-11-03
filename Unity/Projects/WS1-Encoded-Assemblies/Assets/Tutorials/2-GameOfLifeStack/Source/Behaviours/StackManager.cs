@@ -14,20 +14,24 @@ namespace RC3
     {
 
         [SerializeField] private ModelInitializer _initializer;
-        [SerializeField] private CellLayer _layerPrefab;
-        [SerializeField] private Cell _cellPrefab;
+        [SerializeField] private CellLayer _layerPrefab; 
+        [SerializeField] private Cell _cellPrefab; 
 
-        [SerializeField] private int _layerColumns = 10;
-        [SerializeField] private int _layerRows = 10;
-        [SerializeField] private int _layerCount = 10;
+        [SerializeField] private int _layerColumns = 10; 
+        [SerializeField] private int _layerRows = 10; 
+        [SerializeField] private int _layerCount = 10; 
 
-        private CellLayer[] _layers;
-        private ModelState[] _history;
-        private CAModel2D _model;
-        private CARule2D _defaultRule = new Conway2D(Neighborhoods.MooreR1);
-        private int _stepCount;
-        private bool _pause = true;
+        private CellLayer[] _layers; 
+        private ModelState[] _history; 
+        private CAModel2D _model; 
+        private CARule2D _defaultRule = new Conway2D(Neighborhoods.MooreR1); 
+        private CARule2D _modelRule; 
 
+        private AnalysisManager _analysisManager;
+
+        private int _stepCount; 
+        private bool _pause = true; 
+        private bool _stopLayCount = false;
 
         /// <summary>
         /// 
@@ -36,7 +40,6 @@ namespace RC3
         {
             get { return _model; }
         }
-
 
         /// <summary>
         /// 
@@ -47,17 +50,60 @@ namespace RC3
             set { _pause = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public int StepCount
+        {
+            get { return _stepCount; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int LayerCount
+        {
+            get { return _layerCount; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int LayerColumns
+        {
+            get { return _layerColumns; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int LayerRows
+        {
+            get { return _layerRows; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public CellLayer[] Layers
+        {
+            get { return _layers; }
+        }
+
 
         /// <summary>
         /// 
         /// </summary>
         private void Start()
         {
+            _analysisManager = new AnalysisManager(this);
+            _modelRule = new MyCA(_analysisManager);
+
             _layers = new CellLayer[_layerCount];
             _history = new ModelState[_layerCount];
 
             // instantiate layers
-            for(int i = 0; i < _layerCount; i++)
+            for (int i = 0; i < _layerCount; i++)
             {
                 CellLayer copy = Instantiate(_layerPrefab, transform);
                 copy.transform.localPosition = new Vector3(0.0f, i, 0.0f);
@@ -71,7 +117,8 @@ namespace RC3
             }
 
             // instantiate rule and model
-            _model = new CAModel2D(_defaultRule, _layerRows, _layerColumns);
+            _model = new CAModel2D(_modelRule, _layerRows, _layerColumns);
+
 
             // initialize model
             _initializer.Initialize(_model.CurrentState);
@@ -86,24 +133,28 @@ namespace RC3
         /// </summary>
         private void Update()
         {
-            // re-initialize on key down
-            if (Input.GetKeyDown(KeyCode.Space))
-                _initializer.Initialize(_model.CurrentState);
-
-            // move the oldest layer to the bottom of the stack
-            ShiftLayers();
+            //check all keypresses
+            CheckKeyPress();
+                       
+            //stop updating after reaching layer count
+            if (_stepCount < LayerCount-1)
+            {            
 
             // advance model
             _model.Step();
             //_model.StepParallel();
             _stepCount++;
 
-            // copy model state to bottom layer
+            // copy model state to current layer
             ModelState current = _model.CurrentState;
-            Array.Copy(current, _history[0], current.Count);
+            Array.Copy(current, _history[_stepCount], current.Count);
 
-            // update cells in the bottom layer
+            // update cells in the current layer
             UpdateCells();
+
+            // update analysis manager
+            _analysisManager.UpdateAnalysis();
+            }
         }
 
 
@@ -128,13 +179,38 @@ namespace RC3
         /// <param name="layer"></param>
         private void UpdateCells()
         {
-            Cell[,] cells = _layers[0].Cells;
+            Cell[,] cells = _layers[_stepCount].Cells;
             int[,] state = _model.CurrentState;
 
             for (int i = 0; i < _layerRows; i++)
             {
                 for (int j = 0; j < _layerColumns; j++)
+                {
+                    //update cell age - FIXME
+                    int prevAge = cells[i, j].Age;
+                   if (state[i, j] == 1)
+                    {
+                        cells[i, j].Age = prevAge++;
+                    }
+                    else
+                    {
+                        cells[i, j].Age = 0;
+                    }
+
+                    //set state
                     cells[i, j].SetState(state[i, j]);
+
+                }
+
+            }
+        }
+
+        private void CheckKeyPress()
+        {
+            // re-initialize on key down
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _initializer.Initialize(_model.CurrentState);
             }
         }
     }

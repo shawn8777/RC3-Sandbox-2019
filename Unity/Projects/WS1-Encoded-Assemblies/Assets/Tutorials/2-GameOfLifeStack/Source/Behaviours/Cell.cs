@@ -9,6 +9,8 @@ namespace RC3
         private MeshRenderer _renderer;
         private const int _defaultState = 0;
 
+        private int _state = 0;
+        private int _age = 0;
 
         /// <summary>
         /// 
@@ -28,10 +30,29 @@ namespace RC3
         {
             // if dead, turn off cell
             // if alive, turn on
+            _state = value;
+
             if (value == 0)
                 _renderer.enabled = false;
             else
                 _renderer.enabled = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int State
+        {
+            get { return _state; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Age
+        {
+            get { return _age; }
+            set { _age = value; }
         }
     }
 }

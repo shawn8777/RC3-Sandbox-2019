@@ -33,6 +33,24 @@
             new IndexPair(1, 0)
         };
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly IndexPair[] VonNeumannPair1 =
+        {
+            new IndexPair(0, -1),
+            new IndexPair(0, 1),
+        };
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly IndexPair[] VonNeumannPair2 =
+        {
+            new IndexPair(-1, 0),
+            new IndexPair(1, 0),
+        };
+
 
         /// <summary>
         /// 
