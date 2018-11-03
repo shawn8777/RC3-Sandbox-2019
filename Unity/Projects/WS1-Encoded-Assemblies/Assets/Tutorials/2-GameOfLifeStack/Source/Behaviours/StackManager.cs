@@ -90,8 +90,8 @@ namespace RC3
             if (Input.GetKeyDown(KeyCode.Space))
                 _initializer.Initialize(_model.CurrentState);
 
-            //
-            CycleLayers();
+            // move the oldest layer to the bottom of the stack
+            ShiftLayers();
 
             // advance model
             _model.Step();
@@ -102,30 +102,19 @@ namespace RC3
             ModelState current = _model.CurrentState;
             Array.Copy(current, _history[0], current.Count);
 
-            // update cells
+            // update cells in the bottom layer
             UpdateCells();
         }
 
 
         /// <summary>
-        /// 
+        /// Places the oldest layer at the bottom and shifts the rest up
         /// </summary>
-        private void CycleLayers()
+        private void ShiftLayers()
         {
-            int curr = _layerCount - 1;
-            CellLayer layer0 = _layers[curr];
-            ModelState histor0 = _history[curr];
-            
-            // move each layer up by one
-            do
-            {
-                _layers[curr] = _layers[curr - 1];
-                _history[curr] = _history[curr - 1];
-            } while (--curr > 0);
-
-            // move last layer back to the bottom
-            _layers[0] = layer0;
-            _history[0] = histor0;
+            // shifts array elements by the given offset
+            _layers.Shift(1);
+            _history.Shift(1);
 
             // update layer positions
             for (int j = 0; j < _layerCount; j++)
@@ -134,7 +123,7 @@ namespace RC3
 
 
         /// <summary>
-        /// Updates cells from the given layer based on the current state of the model
+        /// Updates cells in the most recent layer
         /// </summary>
         /// <param name="layer"></param>
         private void UpdateCells()
