@@ -12,12 +12,11 @@ namespace RC3
         private StackManager _manager;
 
         /// <summary>
-        /// 
+        /// Array of rules that can be swapped between
         /// </summary>
-        private CARule2D[] _rules =
+        private ICARule2D[] _rules =
         {
-            new Conway2D(Neighborhoods.MooreR1),
-            new Conway2D(Neighborhoods.VonNeumannR1)
+            new ConwaySimple2D()
         };
 
 

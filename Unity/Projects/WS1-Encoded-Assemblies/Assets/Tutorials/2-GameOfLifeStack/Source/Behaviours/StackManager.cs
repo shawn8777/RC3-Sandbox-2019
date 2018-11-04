@@ -23,9 +23,8 @@ namespace RC3
 
         private CellLayer[] _layers; 
         private ModelState[] _history; 
-        private CAModel2D _model; 
-        private CARule2D _defaultRule = new Conway2D(Neighborhoods.MooreR1); 
-        private CARule2D _modelRule; 
+        private CAModel2D _model;
+        private ICARule2D _modelRule; 
 
         private AnalysisManager _analysisManager;
 
@@ -119,7 +118,6 @@ namespace RC3
             // instantiate rule and model
             _model = new CAModel2D(_modelRule, _layerRows, _layerColumns);
 
-
             // initialize model
             _initializer.Initialize(_model.CurrentState);
 
@@ -134,26 +132,24 @@ namespace RC3
         private void Update()
         {
             //check all keypresses
-            CheckKeyPress();
-                       
+            HandleKeyPress();
+
             //stop updating after reaching layer count
-            if (_stepCount < LayerCount-1)
-            {            
+            if (++_stepCount < LayerCount - 1)
+            {
+                // advance model
+                _model.Step();
+                //_model.StepParallel();
 
-            // advance model
-            _model.Step();
-            //_model.StepParallel();
-            _stepCount++;
+                // copy model state to current layer
+                ModelState current = _model.CurrentState;
+                Array.Copy(current, _history[_stepCount], current.Count);
 
-            // copy model state to current layer
-            ModelState current = _model.CurrentState;
-            Array.Copy(current, _history[_stepCount], current.Count);
+                // update cells in the current layer
+                UpdateCells();
 
-            // update cells in the current layer
-            UpdateCells();
-
-            // update analysis manager
-            _analysisManager.UpdateAnalysis();
+                // update analysis manager
+                _analysisManager.UpdateAnalysis();
             }
         }
 
@@ -188,7 +184,7 @@ namespace RC3
                 {
                     //update cell age - FIXME
                     int prevAge = cells[i, j].Age;
-                   if (state[i, j] == 1)
+                    if (state[i, j] == 1)
                     {
                         cells[i, j].Age = prevAge++;
                     }
@@ -199,13 +195,15 @@ namespace RC3
 
                     //set state
                     cells[i, j].SetState(state[i, j]);
-
                 }
-
             }
         }
 
-        private void CheckKeyPress()
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void HandleKeyPress()
         {
             // re-initialize on key down
             if (Input.GetKeyDown(KeyCode.Space))

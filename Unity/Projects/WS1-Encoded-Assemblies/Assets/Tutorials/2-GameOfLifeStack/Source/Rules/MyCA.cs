@@ -10,7 +10,7 @@ namespace RC3
     /// <summary>
     /// Rule for Conway's game of life
     /// </summary>
-    public class MyCA : CARule2D
+    public class MyCA : ICARule2D
     {
 
         //setup some possible instruction sets
@@ -38,7 +38,7 @@ namespace RC3
         /// <param name="j"></param>
         /// <param name="current"></param>
         /// <returns></returns>
-        public override int NextAt(int i, int j, int[,] current)
+        public int NextAt(int i, int j, int[,] current)
         {
             //get cell age
 
