@@ -16,7 +16,7 @@ namespace RC3
         //setup some possible instruction sets
         private GOLInstructionSet _instSetMO1 = new GOLInstructionSet(2, 3, 3, 3);
         private GOLInstructionSet _instSetMO2 = new GOLInstructionSet(3, 4, 3, 4);
-        private GOLInstructionSet _instSetMO3 = new GOLInstructionSet(2, 5, 3, 3);
+        private GOLInstructionSet _instSetMO3 = new GOLInstructionSet(2, 5, 2, 6);
 
         //analysis manager - provides global model data and data analysis
         private AnalysisManager _analysisManager;
@@ -40,21 +40,69 @@ namespace RC3
         /// <returns></returns>
         public int NextAt(int i, int j, int[,] current)
         {
-            //get cell age
-
-            //get local neighborhood data
-            int sumMO = GetNeighborSum(i, j, current, Neighborhoods.MooreR1);
-            int sumVN1 = GetNeighborSum(i, j, current, Neighborhoods.VonNeumannR1);
-
-            //get layer data
-
-            //get stack data
-
             //get current state
             int state = current[i, j];
 
+            //get local neighborhood data
+            int sumMO = GetNeighborSum(i, j, current, Neighborhoods.MooreR1);
+            int sumVNPair = GetNeighborSum(i, j, current, Neighborhoods.VonNeumannPair1);
+
+            int currentlevel = _analysisManager.StepCount;
+
             //choose an instruction set
             GOLInstructionSet instructionSet = _instSetMO1;
+
+            float currentlayerdensity = _analysisManager.CurrentLayerDensity;
+            instructionSet = _instSetMO1;
+
+            /*
+            if (currentlayerdensity < .17)
+            {
+                instructionSet = _instSetMO3;
+            }
+
+            if (currentlayerdensity >= .17 && currentlayerdensity<.2)
+            {
+                instructionSet = _instSetMO1;
+            }
+
+            if (currentlayerdensity >.2)
+            {
+                instructionSet = _instSetMO2;
+            }
+            */
+
+            /*
+            if(state==0 && sumVNPair == 2)
+            {
+                return 1;
+            }
+
+            if (state == 1 && sumVNPair == 2)
+            {
+                return 0;
+            }
+            */
+
+
+            /*
+            if(currentlevel <= 40)
+            {
+                instructionSet = _instSetMO1;
+            }
+
+            if (currentlevel > 40 && currentlevel<65)
+            {
+                instructionSet = _instSetMO2;
+            }
+
+            if (currentlevel >= 65)
+            {
+                instructionSet = _instSetMO3;
+            }
+            */
+
+
             int output = 0;
             
             //if current state is "alive"

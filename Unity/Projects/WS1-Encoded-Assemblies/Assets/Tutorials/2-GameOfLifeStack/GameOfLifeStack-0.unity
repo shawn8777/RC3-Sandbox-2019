@@ -474,7 +474,7 @@ MonoBehaviour:
     type: 2}
   _layerColumns: 30
   _layerRows: 30
-  _layerCount: 60
+  _layerCount: 100
 --- !u!4 &451328545
 Transform:
   m_ObjectHideFlags: 0

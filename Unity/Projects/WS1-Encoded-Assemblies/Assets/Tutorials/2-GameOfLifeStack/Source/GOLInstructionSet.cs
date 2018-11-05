@@ -10,6 +10,11 @@ public class GOLInstructionSet
     {
     }
 
+    public GOLInstructionSet(int[] instructions)
+    {
+        _instructions = instructions;
+    }
+
     // Use this for initialization
     public GOLInstructionSet(int inst0, int inst1, int inst2, int inst3)
     {

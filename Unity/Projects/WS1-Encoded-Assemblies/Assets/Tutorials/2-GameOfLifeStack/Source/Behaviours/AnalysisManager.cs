@@ -48,6 +48,13 @@ namespace RC3
             get { return _stackManager.StepCount; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public float CurrentLayerDensity
+        {
+            get { return _layerDensities[StepCount-1]; }
+        }
 
         /// <summary>
         /// 
