@@ -52,8 +52,15 @@ namespace RC3
             //choose an instruction set
             GOLInstructionSet instructionSet = _instSetMO1;
 
+            //Get current density of the previous layer
             float currentlayerdensity = _analysisManager.CurrentLayerDensity;
             instructionSet = _instSetMO1;
+
+            //Get current age of the previous cell at this location...
+            int age = _analysisManager.GetCellAge(i, j);
+
+            //Get current density of the overall stack so far...
+            float currentstackdensity = _analysisManager.StackDensity;
 
             /*
             if (currentlayerdensity < .17)

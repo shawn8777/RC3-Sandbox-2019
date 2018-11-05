@@ -175,7 +175,6 @@ namespace RC3
         /// <param name="layer"></param>
         private void UpdateCells()
         {
-            Cell[,] cells = _layers[_stepCount].Cells;
             int[,] state = _model.CurrentState;
 
             for (int i = 0; i < _layerRows; i++)
@@ -183,18 +182,19 @@ namespace RC3
                 for (int j = 0; j < _layerColumns; j++)
                 {
                     //update cell age - FIXME
-                    int prevAge = cells[i, j].Age;
+                    int prevAge = _layers[_stepCount-1].Cells[i, j].Age;
                     if (state[i, j] == 1)
                     {
-                        cells[i, j].Age = prevAge++;
+                        prevAge++;
+                        _layers[_stepCount].Cells[i, j].Age = prevAge;
                     }
                     else
                     {
-                        cells[i, j].Age = 0;
+                        _layers[_stepCount].Cells[i, j].Age = 0;
                     }
 
                     //set state
-                    cells[i, j].SetState(state[i, j]);
+                    _layers[_stepCount].Cells[i, j].SetState(state[i, j]);
                 }
             }
         }

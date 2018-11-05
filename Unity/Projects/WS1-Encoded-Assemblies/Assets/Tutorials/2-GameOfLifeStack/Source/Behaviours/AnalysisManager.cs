@@ -55,6 +55,13 @@ namespace RC3
         {
             get { return _layerDensities[StepCount-1]; }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public float StackDensity
+        {
+            get { return _stackDensity; }
+        }
 
         /// <summary>
         /// 
@@ -83,7 +90,7 @@ namespace RC3
         public int GetCellAge(int i, int j)
         {
             int layerindex = StepCount;
-            CellLayer layer = _stackManager.Layers[StepCount];
+            CellLayer layer = _stackManager.Layers[StepCount-1];
             return layer.Cells[i, j].Age;
         }
     }
