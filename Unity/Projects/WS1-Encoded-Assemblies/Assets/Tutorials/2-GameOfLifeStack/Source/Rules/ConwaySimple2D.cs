@@ -8,7 +8,7 @@ namespace RC3
     /// </summary>
     public class ConwaySimple2D : ICARule2D
     {
-        private IndexPair[] _offsets = Neighborhoods.MooreR1;
+        private Index2[] _offsets = Neighborhoods.MooreR1;
 
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace RC3
             int n = current.GetLength(1);
             int sum = 0;
 
-            foreach (IndexPair offset in _offsets)
+            foreach (Index2 offset in _offsets)
             {
                 int i1 = Wrap(i0 + offset.I, m);
                 int j1 = Wrap(j0 + offset.J, n);

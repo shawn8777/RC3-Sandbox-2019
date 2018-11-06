@@ -3,18 +3,22 @@
     /// <summary>
     /// 
     /// </summary>
-    public struct IndexPair
+
+    public struct Index3
     {
         public readonly int I;
         public readonly int J;
+        public readonly int K;
+
 
         /// <summary>
         /// 
         /// </summary>
-        public IndexPair(int i, int j)
+        public Index3(int i, int j, int k)
         {
             I = i;
             J = j;
+            K = k;
         }
     }
 }

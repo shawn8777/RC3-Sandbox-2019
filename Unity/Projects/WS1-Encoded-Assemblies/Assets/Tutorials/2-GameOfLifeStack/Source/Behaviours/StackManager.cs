@@ -14,22 +14,25 @@ namespace RC3
     {
 
         [SerializeField] private ModelInitializer _initializer;
-        [SerializeField] private CellLayer _layerPrefab; 
-        [SerializeField] private Cell _cellPrefab; 
+        [SerializeField]
+        private StackDisplay _stackDisplay;
 
-        [SerializeField] private int _layerColumns = 10; 
-        [SerializeField] private int _layerRows = 10; 
-        [SerializeField] private int _layerCount = 10; 
+        [SerializeField] private CellLayer _layerPrefab;
+        [SerializeField] private Cell _cellPrefab;
 
-        private CellLayer[] _layers; 
-        private ModelState[] _history; 
+        [SerializeField] private int _layerColumns = 10;
+        [SerializeField] private int _layerRows = 10;
+        [SerializeField] private int _layerCount = 10;
+
+        private CellLayer[] _layers;
+        private ModelState[] _history;
         private CAModel2D _model;
-        private ICARule2D _modelRule; 
+        private ICARule2D _modelRule;
 
-        private AnalysisManager _analysisManager;
+        private StackAnalyser _stackAnalyser;
 
-        private int _stepCount; 
-        private bool _pause = true; 
+        private int _stepCount;
+        private bool _pause = true;
         private bool _stopLayCount = false;
 
         /// <summary>
@@ -89,14 +92,30 @@ namespace RC3
             get { return _layers; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public StackAnalyser StackAnalyser
+        {
+            get { return _stackAnalyser; }
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        private void Start()
+        public ModelState[] History
         {
-            _analysisManager = new AnalysisManager(this);
-            _modelRule = new MyCA(_analysisManager);
+            get { return _history; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Awake()
+        {
+            _stackAnalyser = new StackAnalyser(this);
+            _modelRule = new MyCA(_stackAnalyser);
 
             _layers = new CellLayer[_layerCount];
             _history = new ModelState[_layerCount];
@@ -123,6 +142,14 @@ namespace RC3
 
             // center manager gameobject at the world origin
             transform.localPosition = new Vector3(_layerColumns, _layerCount, _layerRows) * -0.5f;
+
+        }
+
+        private void Start()
+        {
+
+            //setup display manager
+            _stackDisplay.SetupDisplay();
         }
 
 
@@ -149,8 +176,10 @@ namespace RC3
                 UpdateCells();
 
                 // update analysis manager
-                _analysisManager.UpdateAnalysis();
+                _stackAnalyser.UpdateAnalysis();
             }
+
+            _stackDisplay.UpdateDisplay();
         }
 
 
@@ -182,7 +211,7 @@ namespace RC3
                 for (int j = 0; j < _layerColumns; j++)
                 {
                     //update cell age - FIXME
-                    int prevAge = _layers[_stepCount-1].Cells[i, j].Age;
+                    int prevAge = _layers[_stepCount - 1].Cells[i, j].Age;
                     if (state[i, j] == 1)
                     {
                         prevAge++;

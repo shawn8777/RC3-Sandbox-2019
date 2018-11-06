@@ -15,7 +15,7 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        private void Start()
+        private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
             SetState(_defaultState);
@@ -32,10 +32,12 @@ namespace RC3
             // if alive, turn on
             _state = value;
 
+            
             if (value == 0)
                 _renderer.enabled = false;
             else
                 _renderer.enabled = true;
+                
         }
 
         /// <summary>
@@ -53,6 +55,14 @@ namespace RC3
         {
             get { return _age; }
             set { _age = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public MeshRenderer Renderer
+        {
+            get { return _renderer; }
         }
     }
 }

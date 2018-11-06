@@ -19,15 +19,15 @@ namespace RC3
         private GOLInstructionSet _instSetMO3 = new GOLInstructionSet(2, 5, 2, 6);
 
         //analysis manager - provides global model data and data analysis
-        private AnalysisManager _analysisManager;
+        private StackAnalyser _stackAnalyser;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="offsets"></param>
-        public MyCA(AnalysisManager analysismanager)
+        public MyCA(StackAnalyser stackAnalyser)
         {
-            _analysisManager = analysismanager;
+            _stackAnalyser = stackAnalyser;
         }
 
 
@@ -47,20 +47,20 @@ namespace RC3
             int sumMO = GetNeighborSum(i, j, current, Neighborhoods.MooreR1);
             int sumVNPair = GetNeighborSum(i, j, current, Neighborhoods.VonNeumannPair1);
 
-            int currentlevel = _analysisManager.StepCount;
+            int currentlevel = _stackAnalyser.StepCount;
 
             //choose an instruction set
             GOLInstructionSet instructionSet = _instSetMO1;
 
             //Get current density of the previous layer
-            float currentlayerdensity = _analysisManager.CurrentLayerDensity;
+            float currentlayerdensity = _stackAnalyser.CurrentLayerDensity;
             instructionSet = _instSetMO1;
 
             //Get current age of the previous cell at this location...
-            int age = _analysisManager.GetCellAge(i, j);
+            int age = _stackAnalyser.GetCellAge(i, j);
 
             //Get current density of the overall stack so far...
-            float currentstackdensity = _analysisManager.StackDensity;
+            float currentstackdensity = _stackAnalyser.StackDensity;
 
             /*
             if (currentlayerdensity < .17)
@@ -111,7 +111,7 @@ namespace RC3
 
 
             int output = 0;
-            
+
             //if current state is "alive"
             if (state == 1)
             {
@@ -145,7 +145,7 @@ namespace RC3
             }
 
             return output;
-            
+
         }
 
         /// <summary>
@@ -154,13 +154,13 @@ namespace RC3
         /// <param name="i0"></param>
         /// <param name="j0"></param>
         /// <returns></returns>
-        private int GetNeighborSum(int i0, int j0, int[,] current, IndexPair[] neighborhood)
+        private int GetNeighborSum(int i0, int j0, int[,] current, Index2[] neighborhood)
         {
             int m = current.GetLength(0);
             int n = current.GetLength(1);
             int sum = 0;
 
-            foreach (IndexPair offset in neighborhood)
+            foreach (Index2 offset in neighborhood)
             {
                 int i1 = Wrap(i0 + offset.I, m);
                 int j1 = Wrap(j0 + offset.J, n);
