@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using SpatialSlur;
@@ -12,49 +13,31 @@ namespace RC3
     /// </summary>
     public class StackAnalyser
     {
-        private StackManager _stackManager;
-        private float[] _layerDensities;
+        private CellLayer[] _layers;
         private float _stackDensity;
-        private int _highestAge = 0;
+        private int _currentIndex;
+        private int _maxAge = 0;
+
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="stackmanager"></param>
-        public StackAnalyser(StackManager stackmanager)
+        /// <param name="manager"></param>
+        public StackAnalyser(StackManager manager)
         {
-            _stackManager = stackmanager;
-            _layerDensities = new float[_stackManager.LayerCount];
-            for (int i = 0; i < _layerDensities.Length; i++)
-            {
-                _layerDensities[i] = 0;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public StackManager StackManager
-        {
-            get { return _stackManager; }
+            _layers = manager.Layers;
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        public int StepCount
+        public CellLayer[] Layers
         {
-            get { return _stackManager.StepCount; }
+            get { return _layers; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public float CurrentLayerDensity
-        {
-            get { return _layerDensities[StepCount - 1]; }
-        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -63,13 +46,24 @@ namespace RC3
             get { return _stackDensity; }
         }
 
+
+        /// <summary>
+        /// Index of the most recently analysed layer
+        /// </summary>
+        public int CurrentLayerIndex
+        {
+            get { return _currentIndex; }
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
-        public float[] LayerDensities
+        public int MaxAge
         {
-            get { return _layerDensities; }
+            get { return _maxAge; }
         }
+
 
         /// <summary>
         /// 
@@ -81,13 +75,11 @@ namespace RC3
         /// <returns></returns>
         public int GetNeighborSum3(int i0, int j0, int k0, Index3[] neighborhood)
         {
-            //get ModelState from stack manager history at this location
-            int[,] current = _stackManager.History[k0];
+            Cell[,] cells = _layers[k0].Cells;
 
-            int m = current.GetLength(0);
-            int n = current.GetLength(1);
-            int p = _stackManager.History.Length;
-
+            int m = cells.GetLength(0);
+            int n = cells.GetLength(1);
+            int p = _layers.Length;
             int sum = 0;
 
             foreach (Index3 offset in neighborhood)
@@ -95,16 +87,14 @@ namespace RC3
                 int i1 = Wrap(i0 + offset.I, m);
                 int j1 = Wrap(j0 + offset.J, n);
                 int k1 = Wrap(k0 + offset.K, p);
-
-                //layer k1
-                current = _stackManager.History[k1];
-
-                if (current[i1, j1] > 0)
+                
+                if (_layers[k1].Cells[i1, j1].State > 0)
                     sum++;
             }
 
             return sum;
         }
+
 
         /// <summary>
         /// 
@@ -118,52 +108,50 @@ namespace RC3
             return (i < 0) ? i + n : i;
         }
 
+
         /// <summary>
         /// 
         /// </summary>
-        public void UpdateAnalysis()
+        public void Update()
         {
+            CellLayer currentLayer = _layers[_currentIndex];
+            Cell[,] cells = currentLayer.Cells;
+
             //update highest cell age
-            foreach (var cell in _stackManager.Layers[StepCount - 1].Cells)
-            {
-                if (cell.Age > _highestAge)
-                {
-                    _highestAge = cell.Age;
-                }
-            }
+            foreach (var cell in cells)
+                _maxAge = Math.Max(cell.Age, _maxAge);
 
             //update layer current density
-            _layerDensities[StepCount] = _stackManager.Layers[StepCount].CalculateDensity();
-            float densitytotal = 0;
-            for (int i = 0; i <= StepCount - 1; i++)
-            {
-                densitytotal += _layerDensities[i];
-            }
+            currentLayer.Density = CalculateDensity(cells);
 
             //update density of stack overall so far
-            _stackDensity = densitytotal / StepCount;
+            _stackDensity = _layers.Take(_currentIndex + 1).Average(layer => layer.Density);
 
+            _currentIndex++;
         }
+
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
+        public void Reset()
+        {
+            _currentIndex = 0;
+        }
+
+
+        /// <summary>
+        /// Calculate the density of alive cells for the given layer
+        /// </summary>
         /// <returns></returns>
-        public int GetCellAge(int i, int j)
+        public float CalculateDensity(Cell[,] cells)
         {
-            int layerindex = StepCount;
-            CellLayer layer = _stackManager.Layers[StepCount - 1];
-            return layer.Cells[i, j].Age;
-        }
+            int aliveCount = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public int HighestAge
-        {
-            get { return _highestAge; }
+            foreach (var cell in cells)
+                aliveCount += cell.State;
+
+            return (float)aliveCount / cells.Length;
         }
     }
 }

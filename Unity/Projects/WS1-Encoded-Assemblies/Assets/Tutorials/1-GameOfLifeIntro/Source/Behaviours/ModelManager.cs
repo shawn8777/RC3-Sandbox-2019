@@ -63,7 +63,7 @@ namespace RC3
             for (int y = 0; y < _countY; y++)
             {
                 for (int x = 0; x < _countX; x++)
-                    _cells[y, x].SetState(state[y, x]);
+                    _cells[y, x].State = state[y, x];
             }
         }
     }

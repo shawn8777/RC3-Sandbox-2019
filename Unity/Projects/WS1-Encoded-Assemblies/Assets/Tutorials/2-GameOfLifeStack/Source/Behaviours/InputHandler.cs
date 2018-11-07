@@ -16,7 +16,8 @@ namespace RC3
         /// </summary>
         private ICARule2D[] _rules =
         {
-            new ConwaySimple2D()
+            new Conway2D(),
+            new Conway2D()
         };
 
 

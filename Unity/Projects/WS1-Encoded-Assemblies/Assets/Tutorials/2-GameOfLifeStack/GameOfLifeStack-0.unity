@@ -469,13 +469,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initializer: {fileID: 11400000, guid: 2a8b088d8d4971846aacce704393f475, type: 2}
-  _stackDisplay: {fileID: 451328547}
   _layerPrefab: {fileID: 114608955682773520, guid: 84c761d261c35b2488dcd09d5eb310e8,
     type: 2}
   _cellPrefab: {fileID: 114418866462962864, guid: df86c0649474ae6489555efa058a38ec,
     type: 2}
-  _layerColumns: 40
-  _layerRows: 40
+  _columnCount: 10
+  _rowCount: 10
   _layerCount: 60
 --- !u!4 &451328545
 Transform:
@@ -512,13 +511,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b807a8ed5bdded4498ece8b2c621796f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stackManager: {fileID: 451328544}
   _material: {fileID: 2100000, guid: 22fddc334d9b2364b8b7c4eecbe16982, type: 2}
-  _liveColor: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 0}
+  _aliveColor: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 0}
   _ageColor: {r: 0.9433962, g: 0.94018203, b: 0.19134924, a: 0}
-  _ageVizMax: 10
-  _neighborhoodDensityColor: {r: 1, g: 0, b: 0.9298849, a: 0}
+  _ageDisplayMax: 10
+  _stackDensityColor: {r: 0, g: 0, b: 0, a: 0}
   _layerDensityColor: {r: 0.16300285, g: 0.9339623, b: 0.16300285, a: 0}
+  _displayMode: 0
 --- !u!1 &560649907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,7 +1248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1053211671
 RectTransform:
   m_ObjectHideFlags: 0

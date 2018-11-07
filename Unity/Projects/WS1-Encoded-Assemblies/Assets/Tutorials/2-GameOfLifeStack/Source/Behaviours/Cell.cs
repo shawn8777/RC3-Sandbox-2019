@@ -4,13 +4,20 @@ using UnityEngine;
 
 namespace RC3
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Cell : MonoBehaviour
     {
         private MeshRenderer _renderer;
-        private const int _defaultState = 0;
 
+        // Additional custom per-cell attributes
         private int _state = 0;
         private int _age = 0;
+        // ...
+        // ...
+        // ...
+
 
         /// <summary>
         /// 
@@ -18,27 +25,9 @@ namespace RC3
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
-            SetState(_defaultState);
+            State = 0; // set dead by default
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        public void SetState(int value)
-        {
-            // if dead, turn off cell
-            // if alive, turn on
-            _state = value;
-
-            
-            if (value == 0)
-                _renderer.enabled = false;
-            else
-                _renderer.enabled = true;
-                
-        }
+        
 
         /// <summary>
         /// 
@@ -46,7 +35,13 @@ namespace RC3
         public int State
         {
             get { return _state; }
+            set
+            {
+                _state = value;
+                _renderer.enabled = value == 1;
+            }
         }
+
 
         /// <summary>
         /// 
@@ -56,6 +51,7 @@ namespace RC3
             get { return _age; }
             set { _age = value; }
         }
+
 
         /// <summary>
         /// 

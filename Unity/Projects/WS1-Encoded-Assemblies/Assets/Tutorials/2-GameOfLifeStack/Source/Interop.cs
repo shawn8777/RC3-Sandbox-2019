@@ -1,5 +1,8 @@
 ﻿
+using System;
 using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RC3
 {
@@ -8,22 +11,52 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="source"></param>
+        public static string ToString(IEnumerable<CellLayer> layers)
+        {
+            return ToString(
+                layers.SelectMany(layer => ToEnumerable(layer.Cells)),
+                cell => $"{cell.State}, ");
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string ToString(IEnumerable<CellLayer> layers, Func<Cell, string> formatter)
+        {
+            return ToString(layers.SelectMany(layer => ToEnumerable(layer.Cells)), formatter);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cells"></param>
         /// <returns></returns>
-        public static string ToString(int[,] source)
+        public static string ToString<T>(IEnumerable<T> items, Func<T, string> formatter)
+        {
+            StringBuilder text = new StringBuilder();
+
+            foreach (var item in items)
+                text.Append(formatter(item));
+
+            return text.ToString();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static IEnumerable<T> ToEnumerable<T>(T[,] source)
         {
             int m = source.GetLength(0);
             int n = source.GetLength(1);
 
-            StringBuilder text = new StringBuilder();
-
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
-                    text.Append($"{source[i, j]}, ");
+                    yield return source[i, j];
             }
-
-            return text.ToString();
         }
     }
 }

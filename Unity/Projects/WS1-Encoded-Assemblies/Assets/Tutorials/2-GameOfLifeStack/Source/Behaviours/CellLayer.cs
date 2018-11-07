@@ -9,6 +9,13 @@ namespace RC3
     {
         private Cell[,] _cells;
 
+        // Additional custom per-layer attributes
+        private float _density;
+        // ...
+        // ...
+        // ...
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -17,24 +24,43 @@ namespace RC3
             get { return _cells; }
         }
 
+
         /// <summary>
-        /// Calculate the density of alive/dead cells of this layer
+        /// 
         /// </summary>
-        /// <returns></returns>
-        public float CalculateDensity()
+        public float Density
         {
-            int totalcells = _cells.GetLength(0) * _cells.GetLength(1);
-            int livingcount = 0;
-            for (int j = 0; j < _cells.GetLength(0); j++)
-            {
-                for (int i = 0; i < _cells.GetLength(1); i++)
-                {
-                    livingcount += _cells[j, i].State;
-                }
-            }
-            float output = ((float)livingcount)/((float)totalcells);
-            return output;
+            get { return _density; }
+            set { _density = value; }
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Rows
+        {
+            get { return _cells.GetLength(0); }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Columns
+        {
+            get { return _cells.GetLength(1); }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Count
+        {
+            get { return _cells.Length; }
+        }
+
 
         /// <summary>
         /// 

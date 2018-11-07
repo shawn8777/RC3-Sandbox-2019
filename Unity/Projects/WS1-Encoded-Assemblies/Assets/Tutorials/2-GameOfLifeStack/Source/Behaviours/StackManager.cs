@@ -12,28 +12,22 @@ namespace RC3
     /// </summary>
     public class StackManager : MonoBehaviour
     {
-
         [SerializeField] private ModelInitializer _initializer;
-        [SerializeField]
-        private StackDisplay _stackDisplay;
 
         [SerializeField] private CellLayer _layerPrefab;
         [SerializeField] private Cell _cellPrefab;
 
-        [SerializeField] private int _layerColumns = 10;
-        [SerializeField] private int _layerRows = 10;
+        [SerializeField] private int _columnCount = 10;
+        [SerializeField] private int _rowCount = 10;
         [SerializeField] private int _layerCount = 10;
 
         private CellLayer[] _layers;
-        private ModelState[] _history;
         private CAModel2D _model;
-        private ICARule2D _modelRule;
-
-        private StackAnalyser _stackAnalyser;
+        private StackAnalyser _analyser;
 
         private int _stepCount;
         private bool _pause = true;
-        private bool _stopLayCount = false;
+
 
         /// <summary>
         /// 
@@ -42,6 +36,7 @@ namespace RC3
         {
             get { return _model; }
         }
+
 
         /// <summary>
         /// 
@@ -52,6 +47,7 @@ namespace RC3
             set { _pause = value; }
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -60,29 +56,6 @@ namespace RC3
             get { return _stepCount; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public int LayerCount
-        {
-            get { return _layerCount; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int LayerColumns
-        {
-            get { return _layerColumns; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int LayerRows
-        {
-            get { return _layerRows; }
-        }
 
         /// <summary>
         /// 
@@ -92,20 +65,13 @@ namespace RC3
             get { return _layers; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public StackAnalyser StackAnalyser
-        {
-            get { return _stackAnalyser; }
-        }
 
         /// <summary>
         /// 
         /// </summary>
-        public ModelState[] History
+        public StackAnalyser Analyser
         {
-            get { return _history; }
+            get { return _analyser; }
         }
 
 
@@ -114,11 +80,7 @@ namespace RC3
         /// </summary>
         private void Awake()
         {
-            _stackAnalyser = new StackAnalyser(this);
-            _modelRule = new MyCA(_stackAnalyser);
-
             _layers = new CellLayer[_layerCount];
-            _history = new ModelState[_layerCount];
 
             // instantiate layers
             for (int i = 0; i < _layerCount; i++)
@@ -127,29 +89,22 @@ namespace RC3
                 copy.transform.localPosition = new Vector3(0.0f, i, 0.0f);
 
                 // create cell layer
-                copy.Initialize(_cellPrefab, _layerRows, _layerColumns);
+                copy.Initialize(_cellPrefab, _rowCount, _columnCount);
                 _layers[i] = copy;
-
-                // create history
-                _history[i] = new int[_layerRows, _layerColumns];
             }
 
-            // instantiate rule and model
-            _model = new CAModel2D(_modelRule, _layerRows, _layerColumns);
+            // create rule
+            _analyser = new StackAnalyser(this);
+            MyCA rule = new MyCA(_analyser);
+
+            // create model
+            _model = new CAModel2D(rule, _rowCount, _columnCount);
 
             // initialize model
             _initializer.Initialize(_model.CurrentState);
 
             // center manager gameobject at the world origin
-            transform.localPosition = new Vector3(_layerColumns, _layerCount, _layerRows) * -0.5f;
-
-        }
-
-        private void Start()
-        {
-
-            //setup display manager
-            _stackDisplay.SetupDisplay();
+            transform.localPosition = new Vector3(_columnCount, _layerCount, _rowCount) * -0.5f;
         }
 
 
@@ -162,68 +117,51 @@ namespace RC3
             HandleKeyPress();
 
             //stop updating after reaching layer count
-            if (++_stepCount < LayerCount - 1)
+            if (_stepCount < _layerCount)
             {
                 // advance model
                 _model.Step();
                 //_model.StepParallel();
 
-                // copy model state to current layer
-                ModelState current = _model.CurrentState;
-                Array.Copy(current, _history[_stepCount], current.Count);
-
                 // update cells in the current layer
                 UpdateCells();
 
                 // update analysis manager
-                _stackAnalyser.UpdateAnalysis();
+                 _analyser.Update();
+                _stepCount++;
             }
-
-            _stackDisplay.UpdateDisplay();
         }
 
 
         /// <summary>
-        /// Places the oldest layer at the bottom and shifts the rest up
-        /// </summary>
-        private void ShiftLayers()
-        {
-            // shifts array elements by the given offset
-            _layers.Shift(1);
-            _history.Shift(1);
-
-            // update layer positions
-            for (int j = 0; j < _layerCount; j++)
-                _layers[j].transform.localPosition = new Vector3(0.0f, j, 0.0f);
-        }
-
-
-        /// <summary>
-        /// Updates cells in the most recent layer
+        /// Updates all cells in the current layer
         /// </summary>
         /// <param name="layer"></param>
         private void UpdateCells()
         {
-            int[,] state = _model.CurrentState;
+            Cell[,] currCells = _layers[_stepCount].Cells;
+            int[,] currState = _model.CurrentState;
 
-            for (int i = 0; i < _layerRows; i++)
+            Cell[,] prevCells = _stepCount > 0 ? _layers[_stepCount - 1].Cells : null;
+            
+            for (int i = 0; i < _rowCount; i++)
             {
-                for (int j = 0; j < _layerColumns; j++)
+                for (int j = 0; j < _columnCount; j++)
                 {
-                    //update cell age - FIXME
-                    int prevAge = _layers[_stepCount - 1].Cells[i, j].Age;
-                    if (state[i, j] == 1)
-                    {
-                        prevAge++;
-                        _layers[_stepCount].Cells[i, j].Age = prevAge;
-                    }
-                    else
-                    {
-                        _layers[_stepCount].Cells[i, j].Age = 0;
-                    }
+                    Cell cell = currCells[i, j];
+                    int state = currState[i, j];
 
-                    //set state
-                    _layers[_stepCount].Cells[i, j].SetState(state[i, j]);
+                    // assign state
+                    cell.State = state;
+
+                    // update age if history exists
+                    if(prevCells != null)
+                    {
+                        if (state == 0)
+                            cell.Age = 0;
+                        else
+                            cell.Age = prevCells[i, j].Age + 1;
+                    }
                 }
             }
         }
@@ -236,9 +174,28 @@ namespace RC3
         {
             // re-initialize on key down
             if (Input.GetKeyDown(KeyCode.Space))
+                Reset();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Reset()
+        {
+            // reset cells
+            foreach (var layer in _layers)
             {
-                _initializer.Initialize(_model.CurrentState);
+                foreach (var cell in layer.Cells)
+                    cell.State = 0;
             }
+
+            // reset the analyser
+            _analyser.Reset();
+
+            // re-initialize model
+            _initializer.Initialize(_model.CurrentState);
+            _stepCount = 0;
         }
     }
 }

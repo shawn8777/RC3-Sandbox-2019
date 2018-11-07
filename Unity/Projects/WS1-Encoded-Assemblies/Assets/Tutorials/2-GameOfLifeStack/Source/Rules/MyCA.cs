@@ -19,7 +19,8 @@ namespace RC3
         private GOLInstructionSet _instSetMO3 = new GOLInstructionSet(2, 5, 2, 6);
 
         //analysis manager - provides global model data and data analysis
-        private StackAnalyser _stackAnalyser;
+        private StackAnalyser _analyser;
+
 
         /// <summary>
         /// 
@@ -27,7 +28,7 @@ namespace RC3
         /// <param name="offsets"></param>
         public MyCA(StackAnalyser stackAnalyser)
         {
-            _stackAnalyser = stackAnalyser;
+            _analyser = stackAnalyser;
         }
 
 
@@ -47,21 +48,25 @@ namespace RC3
             int sumMO = GetNeighborSum(i, j, current, Neighborhoods.MooreR1);
             int sumVNPair = GetNeighborSum(i, j, current, Neighborhoods.VonNeumannPair1);
 
-            int currentlevel = _stackAnalyser.StepCount;
-
             //choose an instruction set
             GOLInstructionSet instructionSet = _instSetMO1;
 
-            //Get current density of the previous layer
-            float currentlayerdensity = _stackAnalyser.CurrentLayerDensity;
-            instructionSet = _instSetMO1;
+            // collect relevant analysis results
+            CellLayer[] layers = _analyser.Layers;
+            int currIndex = _analyser.CurrentLayerIndex;
 
-            //Get current age of the previous cell at this location...
-            int age = _stackAnalyser.GetCellAge(i, j);
+            float currStackDensity = _analyser.StackDensity;
+            float prevLayerDensity = 1.0f;
+            int prevCellAge = 0;
 
-            //Get current density of the overall stack so far...
-            float currentstackdensity = _stackAnalyser.StackDensity;
-
+            // get attributes of corresponding cell on previous layer (if it exists)
+            if (currIndex > 0)
+            {
+                var prevLayer = layers[currIndex - 1];
+                prevLayerDensity = prevLayer.Density;
+                prevCellAge = prevLayer.Cells[i, j].Age;
+            }
+            
             /*
             if (currentlayerdensity < .17)
             {

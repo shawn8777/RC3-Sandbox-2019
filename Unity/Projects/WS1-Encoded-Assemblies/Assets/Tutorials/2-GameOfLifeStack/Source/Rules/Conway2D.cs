@@ -6,7 +6,7 @@ namespace RC3
     /// <summary>
     /// Rule for Conway's game of life
     /// </summary>
-    public class ConwaySimple2D : ICARule2D
+    public class Conway2D : ICARule2D
     {
         private Index2[] _offsets = Neighborhoods.MooreR1;
 
@@ -15,7 +15,7 @@ namespace RC3
         /// 
         /// </summary>
         /// <param name="offsets"></param>
-        public ConwaySimple2D()
+        public Conway2D()
         {
         }
 

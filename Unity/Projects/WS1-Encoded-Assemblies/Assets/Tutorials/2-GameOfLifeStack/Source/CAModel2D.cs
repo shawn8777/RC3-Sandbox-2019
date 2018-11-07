@@ -18,7 +18,7 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        public ModelState CurrentState
+        public int[,] CurrentState
         {
             get { return _currentState; }
         }
