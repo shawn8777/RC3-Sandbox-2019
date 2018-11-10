@@ -5,7 +5,7 @@
         /// <summary>
         /// 
         /// </summary>
-        private enum CellDisplayMode
+        public enum CellDisplayMode
         {
             Alive,
             Age,
