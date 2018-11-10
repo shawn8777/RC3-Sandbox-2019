@@ -23,7 +23,7 @@ namespace RC3
 
         private CellLayer[] _layers;
         private CAModel2D _model;
-        private StackAnalyser _analyser;
+        [SerializeField] StackAnalyser _analyser;
 
         private int _stepCount;
         private bool _pause = true;
@@ -94,7 +94,6 @@ namespace RC3
             }
 
             // create rule
-            _analyser = new StackAnalyser(this);
             MyCA rule = new MyCA(_analyser);
 
             // create model
@@ -127,8 +126,18 @@ namespace RC3
                 UpdateCells();
 
                 // update analysis manager
-                 _analyser.Update();
+                _analyser.UpdateAnalysis();
                 _stepCount++;
+            } 
+            if(_stepCount == _layerCount)
+            {
+                // show and hide cells centers
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    UpdateAnalyserCenterPoints();
+                    _analyser.ToggleCenterPointsDisplay();
+                    _analyser.CreateLineRenders();
+                }
             }
         }
 
@@ -153,7 +162,6 @@ namespace RC3
 
                     // assign state
                     cell.State = state;
-
                     // update age if history exists
                     if(prevCells != null)
                     {
@@ -162,8 +170,36 @@ namespace RC3
                         else
                             cell.Age = prevCells[i, j].Age + 1;
                     }
+
+                    // if state is alive pass the center of the cell to the stack analyser
+                    if (cell.State == 1)
+                    {
+                        _analyser.AddCellCenter(cell.GetComponent<Transform>().position);
+                    }
                 }
             }
+        }
+
+        private void UpdateAnalyserCenterPoints()
+        {
+            // go over all layers
+            for (int i = 0; i < _layers.Length; i++){
+                CellLayer currentLayer = _layers[i];
+
+                // get cells in the layer
+                Cell[,] layerCells = currentLayer.Cells;
+
+                for (int j = 0; j < _rowCount; j++){
+                    for (int k = 0; k < _columnCount; k++){
+                        Cell currentCell = layerCells[j, k];
+                        // if state of cell is alive pass the center of the cell to the stack analyser
+                        if (currentCell.State == 1)
+                        {
+                            _analyser.AddCellCenter(currentCell.GetComponent<Transform>().position);
+                        }
+                    }
+                } 
+            }        
         }
 
 

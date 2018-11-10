@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 451328544}
   - component: {fileID: 451328546}
   - component: {fileID: 451328547}
+  - component: {fileID: 451328548}
   m_Layer: 0
   m_Name: StackManager
   m_TagString: Untagged
@@ -476,6 +477,7 @@ MonoBehaviour:
   _columnCount: 10
   _rowCount: 10
   _layerCount: 60
+  _analyser: {fileID: 451328548}
 --- !u!4 &451328545
 Transform:
   m_ObjectHideFlags: 0
@@ -517,7 +519,20 @@ MonoBehaviour:
   _ageDisplayMax: 10
   _stackDensityColor: {r: 0, g: 0, b: 0, a: 0}
   _layerDensityColor: {r: 0.16300285, g: 0.9339623, b: 0.16300285, a: 0}
-  _displayMode: 0
+  _displayMode: 1
+--- !u!114 &451328548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 451328543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f0ba6f2c1e3d64585ddf209552be61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRendererPefab: {fileID: 1628250001376286, guid: 78383e9a5df504ed9a4f5197543d7f79,
+    type: 2}
 --- !u!1 &560649907
 GameObject:
   m_ObjectHideFlags: 0
