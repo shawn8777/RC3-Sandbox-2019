@@ -18,18 +18,20 @@ namespace RC3
         // TODO process OnModelReset event
         // TODO reference "AnalysisResults" scriptable object rather than "StackAnalyser"
 
-        [SerializeField] private Material _material;
-        [SerializeField] private Color _aliveColor;
-        [SerializeField] private Color _ageColor;
-        [SerializeField] private int _ageDisplayMax;
-        [SerializeField] private Color _stackDensityColor;
-        [SerializeField] private Color _layerDensityColor;
-        [SerializeField] private CellDisplayMode _displayMode = CellDisplayMode.Alive;
+        [SerializeField] private CellDisplayMode _displayMode = CellDisplayMode.Age;
+        [Space(12)]
+        [SerializeField] private Material _ageMaterial;
+        [SerializeField] private int _ageDisplayMin = 0;
+        [SerializeField] private int _ageDisplayMax = 10;
+        [Space(12)]
+        [SerializeField] private Material _densityMaterial;
+        [SerializeField] private float _densityDisplayMin = 0.0f;
+        [SerializeField] private float _densityDisplayMax = 1.0f;
 
         private StackModel _model;
         private StackAnalyser _analyser;
-        private MaterialPropertyBlock _materialprops;
-        private bool _displayChanged = false;
+        private MaterialPropertyBlock _properties;
+        private int _currentLayer; // index of the most recently updated layer
 
 
         /// <summary>
@@ -40,7 +42,9 @@ namespace RC3
             get { return _displayMode; }
             set
             {
-                _displayChanged = _displayMode != value;
+                if (_displayMode != value)
+                    _currentLayer = -1;
+                
                 _displayMode = value;
             }
         }
@@ -51,22 +55,10 @@ namespace RC3
         /// </summary>
         private void Start()
         {
-            // TODO
-            // MaterialPropertyBlock defaults to blue for some reason...
-
             _model = GetComponent<StackModel>();
             _analyser = GetComponent<StackAnalyser>();
-            _materialprops = new MaterialPropertyBlock();
-
-            // assign material to cells
-            foreach (var layer in _model.Stack.Layers)
-            {
-                foreach (var cell in layer.Cells)
-                    cell.Renderer.sharedMaterial = _material;
-            }
-
-            // default mode
-            DisplayAlive();
+            _properties = new MaterialPropertyBlock();
+            ResetDisplay();
         }
 
 
@@ -75,51 +67,31 @@ namespace RC3
         /// </summary>
         private void LateUpdate()
         {
-            HandleKeyPress();
+            // reset display if necessary
+            if (_currentLayer > _model.CurrentLayer)
+                ResetDisplay();
 
-            if (_displayChanged)
-                ChangeDisplay();
+            // update analysis if model has been updated
+            if (_currentLayer < _model.CurrentLayer)
+                UpdateDisplay();
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private void HandleKeyPress()
+        private void UpdateDisplay()
         {
-            // TODO move to "InputManager"
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                DisplayMode = CellDisplayMode.Alive;
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-                DisplayMode = CellDisplayMode.Age;
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-                DisplayMode = CellDisplayMode.LayerDensity;
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-                DisplayMode = CellDisplayMode.StackDensity;
-        }
-
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public void ChangeDisplay()
-        {
-            _displayChanged = false;
-
             switch (_displayMode)
             {
-                case CellDisplayMode.Alive:
-                    DisplayAlive();
-                    break;
                 case CellDisplayMode.Age:
                     DisplayAge();
                     break;
                 case CellDisplayMode.LayerDensity:
                     DisplayLayerDensity();
                     break;
-                case CellDisplayMode.StackDensity:
-                    DisplayStackDensity();
+                case CellDisplayMode.NeighborDensity:
+                    DisplayNeighborDensity();
                     break;
             }
         }
@@ -128,23 +100,9 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        private void DisplayAlive()
+        private void ResetDisplay()
         {
-            CellLayer[] layers = _model.Stack.Layers;
-            int currentLayer = _model.CurrentLayer;
-
-            //change color of material property block
-            _materialprops.SetColor("_Color", _aliveColor);
-
-            //apply material props to each obj renderer
-            for(int i = 0; i <= currentLayer; i++)
-            {
-                foreach (var cell in layers[i].Cells)
-                {
-                    if (cell.State > 0)
-                        cell.Renderer.SetPropertyBlock(_materialprops);
-                }
-            }
+            _currentLayer = -1;
         }
 
 
@@ -153,11 +111,13 @@ namespace RC3
         /// </summary>
         private void DisplayAge()
         {
-            CellLayer[] layers = _model.Stack.Layers;
-            int currentLayer = _model.CurrentLayer;
+            const string propName = "_Value";
 
-            //apply material props to each obj renderer
-            for (int i = 0; i <= currentLayer; i++)
+            CellLayer[] layers = _model.Stack.Layers;
+            int layer0 = _currentLayer + 1;
+            int layer1 = _model.CurrentLayer;
+            
+            for(int i = layer0; i <= layer1; i++)
             {
                 foreach (var cell in layers[i].Cells)
                 {
@@ -165,37 +125,81 @@ namespace RC3
                     if (cell.State == 0)
                         continue;
 
-                    // map age to color
-                    float value = Remap(cell.Age, 0.0f, Mathf.Max(_ageDisplayMax, _analyser.MaxAge), 0.0f, 1.0f);
-                    Color color = Color.Lerp(Color.white, _ageColor, value);
+                    // update cell material
+                    MeshRenderer renderer = cell.Renderer;
+                    renderer.sharedMaterial = _ageMaterial;
 
-                    //change color of material property block
-                    _materialprops.SetColor("_Color", color);
-                    cell.Renderer.SetPropertyBlock(_materialprops);
+                    // set material properties
+                    {
+                        renderer.GetPropertyBlock(_properties);
+
+                        // normalize age
+                        float value = SlurMath.Normalize(cell.Age, _ageDisplayMin, _ageDisplayMax);
+                        _properties.SetFloat(propName, value);
+
+                        renderer.SetPropertyBlock(_properties);
+                    }
                 }
             }
+            
+            _currentLayer = layer1;
+        }
+        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void DisplayLayerDensity()
+        {
+            const string propName = "_Value";
+
+            CellLayer[] layers = _model.Stack.Layers;
+            int layer0 = _currentLayer + 1;
+            int layer1 = _model.CurrentLayer;
+
+            for (int i = layer0; i <= layer1; i++)
+            {
+                CellLayer layer = layers[i];
+                float value = SlurMath.Normalize(layer.Density, _densityDisplayMin, _densityDisplayMax);
+
+                foreach (var cell in layer.Cells)
+                {
+                    // skip dead cells
+                    if (cell.State == 0)
+                        continue;
+
+                    // update cell material
+                    Renderer renderer = cell.Renderer;
+                    renderer.sharedMaterial = _densityMaterial;
+
+                    // set material properties
+                    renderer.GetPropertyBlock(_properties);
+                    _properties.SetFloat(propName, value);
+                    renderer.SetPropertyBlock(_properties);
+                }
+            }
+
+            _currentLayer = layer1;
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private void DisplayStackDensity()
+        private void DisplayNeighborDensity()
         {
-            // TODO index out of range error
+            const string propName = "_Value";
 
             CellLayer[] layers = _model.Stack.Layers;
-            int currentLayer = _model.CurrentLayer;
-      
-            //apply material props to each obj renderer
-            for (int k = 0; k <= currentLayer; k++)
-            {
-                CellLayer layer = layers[k];
-                Cell[,] cells = layer.Cells;
+            int layer0 = _currentLayer + 1;
+            int layer1 = _model.CurrentLayer;
 
-                Index3[] neighb = Neighborhoods.Moore3Cen;
-                int nrows = layer.RowCount;
-                int ncols = layer.ColumnCount;
+            //apply material props to each obj renderer
+            for (int k = layer0; k <= layer1; k++)
+            {
+                Cell[,] cells = layers[k].Cells;
+                int nrows = cells.GetLength(0);
+                int ncols = cells.GetLength(1);
 
                 for (int i = 0; i < nrows; i++)
                 {
@@ -207,80 +211,46 @@ namespace RC3
                         if (cell.State == 0)
                             continue;
 
-                        // map density to color
-                        int sum = GetNeighborSum3(new Index3(k, i, j), neighb);
-                        float value = Remap(sum, 0.0f, neighb.Length, 0.0f, 1.0f);
-                        Color color = Color.Lerp(Color.white, _stackDensityColor, value);
+                        // update cell material
+                        Renderer renderer = cell.Renderer;
+                        renderer.sharedMaterial = _densityMaterial;
 
-                        //change color of material property block
-                        _materialprops.SetColor("_Color", color);
-                        cell.Renderer.SetPropertyBlock(_materialprops);
+                        // set material properties
+                        renderer.GetPropertyBlock(_properties);
+
+                        // normalize density
+                        float density = GetNeighborDensity(cells, new Index2(i, j), Neighborhoods.VonNeumannR2);
+                        float value = SlurMath.Normalize(density, _densityDisplayMin, _densityDisplayMax);
+
+                        _properties.SetFloat(propName, value);
+                        cell.Renderer.SetPropertyBlock(_properties);
                     }
                 }
             }
+
+            _currentLayer = layer1;
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private void DisplayLayerDensity()
+        private float GetNeighborDensity(Cell[,] cells, Index2 index, Index2[] neighborhood)
         {
-            CellLayer[] layers = _model.Stack.Layers;
-            int currentLayer = _model.CurrentLayer;
-            
-            float minDensity = layers.Min(layer => layer.Density);
-            float maxDensity = layers.Max(layer => layer.Density);
-
-            //change color of material property block
-            _materialprops.SetColor("_Color", _layerDensityColor);
-
-            for(int i = 0; i <= currentLayer; i++)
-            {
-                CellLayer layer = layers[i];
-
-                float value = Remap(layer.Density, minDensity, maxDensity, 0.0f, 1.0f);
-                Color color = Color.Lerp(Color.white, _layerDensityColor, value);
-
-                foreach (var cell in layer.Cells)
-                {
-                    // skip dead cells
-                    if (cell.State == 0)
-                        continue;
-
-                    //change color of material property block
-                    _materialprops.SetColor("_Color", color);
-                    cell.Renderer.SetPropertyBlock(_materialprops);
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int GetNeighborSum3(Index3 index, Index3[] neighborhood)
-        {
-            CellStack stack = _model.Stack;
-            CellLayer[] layers = stack.Layers;
-            Cell[,] layer0 = layers[index.I].Cells;
-
-            int nlays = stack.LayerCount;
-            int nrows = stack.RowCount;
-            int ncols = stack.ColumnCount;
+            int nrows = cells.GetLength(0);
+            int ncols = cells.GetLength(1);
             int sum = 0;
 
-            foreach (Index3 offset in neighborhood)
+            foreach (Index2 offset in neighborhood)
             {
-                int i1 = Wrap(index.I + offset.I, nlays);
-                int j1 = Wrap(index.J + offset.J, nrows);
-                int k1 = Wrap(index.K + offset.K, ncols);
+                int i1 = Wrap(index.I + offset.I, nrows);
+                int j1 = Wrap(index.J + offset.J, ncols);
 
-                if (layers[i1].Cells[j1, k1].State > 0)
+                if (cells[i1, j1].State > 0)
                     sum++;
             }
 
-            return sum;
+            return (float)sum / neighborhood.Length;
         }
 
 
@@ -294,22 +264,6 @@ namespace RC3
         {
             i %= n;
             return (i < 0) ? i + n : i;
-        }
-
-
-        /// <summary>
-        /// Remap range function.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="from1"></param>
-        /// <param name="to1"></param>
-        /// <param name="from2"></param>
-        /// <param name="to2"></param>
-        /// <returns></returns>
-        // Remap numbers - used here for getting a gradient of color across a range
-        private float Remap(float value, float from1, float to1, float from2, float to2)
-        {
-            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
     }
 }

@@ -22,7 +22,6 @@ namespace RC3
         private StackAnalyser _analyser;
 
         private int _currentLayer = -1;
-        private bool _pause = true;
 
 
         /// <summary>
@@ -44,21 +43,11 @@ namespace RC3
 
 
         /// <summary>
-        /// 
+        /// Returns the index of the most recently processed layer
         /// </summary>
         public int CurrentLayer
         {
             get { return _currentLayer; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool Pause
-        {
-            get { return _pause; }
-            set { _pause = value; }
         }
 
 
@@ -80,35 +69,19 @@ namespace RC3
         /// </summary>
         private void Update()
         {
-            //check all keypresses
-            HandleKeyPress();
+            // bail if stack is full
+            if (_currentLayer == _stack.LayerCount - 1)
+                return;
 
-            //stop updating after reaching layer count
-            if (_currentLayer < (_stack.LayerCount - 1))
-            {
-                // move to next layer
-                _currentLayer++;
+            // advance later
+            _currentLayer++;
 
-                // advance model
-                _model.Step();
-                //_model.StepParallel();
+            // advance model
+            _model.Step();
+            //_model.StepParallel();
 
-                // update cells in the stack
-                UpdateStack();
-            }
-        }
-        
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void HandleKeyPress()
-        {
-            // TODO move to "InputHandler"
-
-            // re-initialize on key down
-            if (Input.GetKeyDown(KeyCode.Space))
-                ResetModel();
+            // update cells in the stack
+            UpdateStack();
         }
 
 
@@ -117,6 +90,7 @@ namespace RC3
         /// </summary>
         public void ResetModel()
         {
+            // reset cell states
             foreach (var layer in _stack.Layers)
             {
                 foreach (var cell in layer.Cells)
@@ -125,6 +99,8 @@ namespace RC3
 
             // re-initialize model
             _initializer.Initialize(_model.CurrentState);
+
+            // reset layer
             _currentLayer = -1;
         }
 

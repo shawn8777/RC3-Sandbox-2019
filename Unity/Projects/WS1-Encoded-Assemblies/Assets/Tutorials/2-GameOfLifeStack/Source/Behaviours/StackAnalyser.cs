@@ -14,20 +14,18 @@ namespace RC3
     [RequireComponent(typeof(StackModel))]
     public class StackAnalyser : MonoBehaviour
     {
-        // TODO process OnModelReset event
-        // TODO publish analysis results in scriptable object "AnalysisResults"
-
         private StackModel _model;
-        private float _stackDensity;
-        private int _maxAge = 0;
+        private float _densitySum;
+        private int _currentLayer; // index of the most recently analysed layer
 
 
         /// <summary>
         /// 
         /// </summary>
-        void Start()
+        private void Start()
         {
             _model = GetComponent<StackModel>();
+            ResetAnalysis();
         }
 
 
@@ -36,34 +34,22 @@ namespace RC3
         /// </summary>
         private void LateUpdate()
         {
-            //UpdateAnalysis();
+            // reset analysis if necessary
+            if (_currentLayer > _model.CurrentLayer)
+                ResetAnalysis();
+
+            // update analysis if model has been updated
+            if (_currentLayer < _model.CurrentLayer)
+                UpdateAnalysis();
         }
 
 
         /// <summary>
-        /// 
+        /// Returns the current mean density of the stack
         /// </summary>
-        public void Reset()
+        public float MeanStackDensity
         {
-            _maxAge = 0;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public float StackDensity
-        {
-            get { return _stackDensity; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int MaxAge
-        {
-            get { return _maxAge; }
+            get { return _densitySum / (_model.CurrentLayer + 1); }
         }
 
 
@@ -72,25 +58,15 @@ namespace RC3
         /// </summary>
         public void UpdateAnalysis()
         {
-            CellStack stack = _model.Stack;
-            int currentIndex = _model.CurrentLayer;
-
-            var layers = stack.Layers;
-            CellLayer currentLayer = layers[currentIndex];
+            int currentLayer = _model.CurrentLayer;
+            CellLayer layer = _model.Stack.Layers[currentLayer];
 
             //update layer current density
-            currentLayer.Density = CalculateDensity(currentLayer);
-
-            //update highest cell age
-            foreach (var cell in currentLayer.Cells)
-                _maxAge = Math.Max(cell.Age, _maxAge);
-
-            // calculate mean density of stack
-            float sum = 0.0f;
-            for(int i = 0; i <= currentIndex; i++)
-                sum += layers[i].Density;
-
-            _stackDensity = sum / (currentIndex + 1);
+            var density = CalculateDensity(layer);
+            layer.Density = density;
+            _densitySum += density; // add to running sum
+            
+            _currentLayer = currentLayer;
         }
 
 
@@ -98,7 +74,7 @@ namespace RC3
         /// Calculate the density of alive cells for the given layer
         /// </summary>
         /// <returns></returns>
-        public float CalculateDensity(CellLayer layer)
+        private float CalculateDensity(CellLayer layer)
         {
             var cells = layer.Cells;
             int aliveCount = 0;
@@ -107,6 +83,17 @@ namespace RC3
                 aliveCount += cell.State;
 
             return (float)aliveCount / cells.Length;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private void ResetAnalysis()
+        {
+            _densitySum = 0.0f;
+            _currentLayer = -1;
         }
     }
 }

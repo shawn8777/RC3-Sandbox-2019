@@ -1,4 +1,4 @@
-﻿Shader "Custom/NewSurfaceShader 1" {
+﻿Shader "Custom/SurfaceDynamicColor" {
 	Properties {
 		[PerRendererData]_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
