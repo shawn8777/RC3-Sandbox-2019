@@ -22,6 +22,7 @@ namespace RC3
         private GOLInstructionSet _instSetMO2 = new GOLInstructionSet(3, 4, 3, 4);
         private GOLInstructionSet _instSetMO3 = new GOLInstructionSet(2, 5, 2, 6);
 
+        private IDNAF _dna;
 
         /// <summary>
         /// 
@@ -30,6 +31,7 @@ namespace RC3
         {
             _model = GetComponent<StackModel>();
             _analyser = GetComponent<StackAnalyser>();
+            _dna = _model.Stack.DNA;
         }
 
 
@@ -55,7 +57,7 @@ namespace RC3
             // collect relevant analysis results
             CellLayer[] layers = _model.Stack.Layers;
             int currentLayer = _model.CurrentLayer;
-            
+
             float prevLayerDensity;
             int prevCellAge;
 
@@ -71,7 +73,7 @@ namespace RC3
                 prevLayerDensity = 1.0f;
                 prevCellAge = 0;
             }
-            
+
             /*
             if (currentlayerdensity < .17)
             {

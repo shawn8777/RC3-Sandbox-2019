@@ -19,15 +19,33 @@ namespace RC3
 
         private CellLayer[] _layers;
 
+        private IDNAF _dna;
 
         /// <summary>
         /// 
         /// </summary>
         private void Awake()
         {
+            _dna = new DNAF();
             InitializeCells();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public IDNAF DNA
+        {
+            get { return _dna; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dna"></param>
+        public void SetDNA(IDNAF dna)
+        {
+            _dna = dna;
+        }
 
         /// <summary>
         /// 
