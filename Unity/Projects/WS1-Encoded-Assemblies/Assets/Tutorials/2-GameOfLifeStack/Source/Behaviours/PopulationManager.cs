@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 using SpatialSlur;
 
@@ -10,17 +11,20 @@ namespace RC3
 
     public class PopulationManager : MonoBehaviour
     {
-        private int popSize = 10;
-        private int currentPopSize = 0;
-        private int minPopBreed = 10;
-        private int popCount = 0;
-        private List<CellStack[]> popHistory = new List<CellStack[]>();
+        private int _popSize = 10;
+        private int _popCount = 0;
+        private int _generationCount = 0;
+        private List<CellStack[]> _populationHistory = new List<CellStack[]>();
+        private List<IDNAF> _matingPool = new List<IDNAF>();
+        private CellStack[] _currentPopulation;
 
         [SerializeField] private CellStack _stackPrefab;
-        private CellStack currentStack;
-        private CellStack nextStack;
+        private CellStack _currentStack;
+        private CellStack _nextStack;
 
         private StackModel _model;
+        private StackAnalyser _analyser;
+        private bool _fitnessComplete = false;
 
         //private populationHistory
 
@@ -37,7 +41,15 @@ namespace RC3
             }
 
             _model = GetComponent<StackModel>();
-            //currentStack = Instantiate(_stackPrefab, transform);
+
+            if (GetComponent<StackAnalyser>() == null)
+            {
+                Debug.Log("No StackAnalyser Component!");
+            }
+            _analyser = GetComponent<StackAnalyser>();
+            _currentStack = _model.Stack;
+            _currentPopulation = new CellStack[_popSize];
+            InitializeMatingPool();
         }
 
 
@@ -46,42 +58,156 @@ namespace RC3
         /// </summary>
         private void Update()
         {
-            //check if stack is finished build
 
-            //analyse stack
+            //check if stack is finished build / fitness 
+            if (_model.BuildComplete == false)
+            {
+                return;
+            }
 
-            //if stack analysis is finished, move the stack
+            if (_model.BuildComplete == true)
+            {
+                //calculate fitness
+                _analyser.Fitness();
 
-            //Natural Selection
+                //move the stack position
 
-            //Breed new stack
+                //add stack to current generation
+                AddStackToPopulation(_currentStack);
+
+                _popCount++;
+
+                //if count == popsize recalculate the mating pool
+                if (_popCount == _popSize)
+                {
+                    //add generation to the population history
+                    AddPopulationToHistory(_currentPopulation);
+
+                    //run natural selection to generate breeding pool
+                    UpdateMatingPool();
+
+                    //reset current population array
+                    _currentPopulation = new CellStack[_popSize];
+
+                    //reset popcounter
+                    _popCount = 0;
+                }
+
+                //breed new dna from mating pool
+                IDNAF childdna = Breed();
+
+                //reset the stack and insert new dna
+                _currentStack = Instantiate(_stackPrefab);
+                _currentStack.SetDNA(childdna);
+                _model.ResetModel();
+                _model.SetStack(_currentStack);
+
+            }
 
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void AddStackToPopulation()
+        private void AddStackToPopulation(CellStack stack)
         {
+            _currentPopulation[_popCount] = stack;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void AddPopulationToHistory(CellStack[] population)
+        {
+            _populationHistory.Add(population);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeMatingPool()
+        {
+            _matingPool = new List<IDNAF>();
+            for (int i = 0; i < _popSize; i++)
+            {
+                _matingPool.Add(new DNAF());
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void UpdateMatingPool()
+        {
+            _matingPool.Clear();
+
+            //get flattened stack population
+            var population = _populationHistory.SelectMany(i => i);
+            //sort by fitness value (highest first - descending)
+            var sortedList = population.OrderByDescending(o => (o.Fitness)).ToList();
+
+            if (sortedList.Count < _popSize * 2)
+            {
+                //add DNA to mating pool weighted by fitness value
+                int quantity = sortedList.Count;
+                float totalfitness = TotalFitness(sortedList, quantity);
+                for (int i = 0; i < quantity; i++)
+                {
+                    int weightedQuantity = (int)((sortedList[i].Fitness / totalfitness) * 1000);
+                    for (int j = 0; j < weightedQuantity; j++)
+                    {
+                        _matingPool.Add(sortedList[i].DNA);
+                    }
+                }
+            }
+
+            else
+            {
+                //add DNA to mating pool weighted by fitness value
+                int quantity = sortedList.Count / 2;
+                float totalfitness = TotalFitness(sortedList, quantity);
+                for (int i = 0; i < quantity; i++)
+                {
+                    int weightedQuantity = (int)((sortedList[i].Fitness / totalfitness) * 1000);
+                    for (int j = 0; j < weightedQuantity; j++)
+                    {
+                        _matingPool.Add(sortedList[i].DNA);
+                    }
+                }
+            }
 
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private void NaturalSelection()
+        /// <param name="sortedfitnesslist"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        private float TotalFitness(List<CellStack> sortedfitnesslist, int quantity)
         {
+            float totfitness = 0;
+            for (int i = 0; i < quantity; i++)
+            {
+                totfitness += sortedfitnesslist[i].Fitness;
+            }
 
+            return totfitness;
         }
 
-        private void Breed(Stack stack1, Stack stack2)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dna1"></param>
+        /// <param name="dna2"></param>
+        /// <returns></returns>
+        private IDNAF Breed()
         {
-
-        }
-
-        private void BreedNewPopulation()
-        {
-
+            IDNAF child = new DNAF();
+            IDNAF parent1 = _matingPool[UnityEngine.Random.Range(0, _matingPool.Count)];
+            IDNAF parent2 = _matingPool[UnityEngine.Random.Range(0, _matingPool.Count)];
+            child.Crossover(parent1, parent2);
+            return child;
         }
 
 

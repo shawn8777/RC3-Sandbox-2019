@@ -20,6 +20,7 @@ namespace RC3
         private CellLayer[] _layers;
 
         private IDNAF _dna;
+        private float _fitness = 1;
 
         /// <summary>
         /// 
@@ -46,6 +47,24 @@ namespace RC3
         {
             _dna = dna;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public float Fitness
+        {
+            get { return _fitness; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetFitness(float value)
+        {
+            _fitness = value;
+        }
+
 
         /// <summary>
         /// 

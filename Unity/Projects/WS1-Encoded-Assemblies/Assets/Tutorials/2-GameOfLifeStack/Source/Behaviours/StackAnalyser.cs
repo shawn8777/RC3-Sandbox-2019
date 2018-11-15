@@ -18,7 +18,6 @@ namespace RC3
         private float _densitySum;
         private int _currentLayer; // index of the most recently analysed layer
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -94,6 +93,15 @@ namespace RC3
         {
             _densitySum = 0.0f;
             _currentLayer = -1;
+        }
+
+        public void Fitness()
+        {
+            float fitness = 1;
+            //calculate stack fitness
+
+            //set stack fitness value
+            _model.Stack.SetFitness(fitness);
         }
     }
 }
