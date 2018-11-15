@@ -26,8 +26,6 @@ namespace RC3
         private StackAnalyser _analyser;
         private bool _fitnessComplete = false;
 
-        //private populationHistory
-
         //Current Population
 
         /// <summary>
@@ -71,6 +69,10 @@ namespace RC3
                 _analyser.Fitness();
 
                 //move the stack position
+                var generations = _populationHistory.Count + 1;
+                Vector3 vector = new Vector3(1.5f * (_currentStack.RowCount) * (_popCount - 1), 0, 1.5f * (_currentStack.ColumnCount) * (generations + 1));
+                _currentStack.transform.localPosition = vector;
+                _currentStack.transform.parent = gameObject.transform;
 
                 //add stack to current generation
                 AddStackToPopulation(_currentStack);
@@ -96,11 +98,15 @@ namespace RC3
                 //breed new dna from mating pool
                 IDNAF childdna = Breed();
 
+                //turn off stack
+                _currentStack.gameObject.SetActive(false);
+
                 //reset the stack and insert new dna
                 _currentStack = Instantiate(_stackPrefab);
                 _currentStack.SetDNA(childdna);
-                _model.ResetModel();
                 _model.SetStack(_currentStack);
+                _model.ResetModel();
+
 
             }
 
