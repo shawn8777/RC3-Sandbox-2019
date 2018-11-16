@@ -21,6 +21,7 @@ namespace RC3
 
         private IDNAF _dna;
         private float _fitness = 1;
+        private int _seed;
 
         /// <summary>
         /// 
