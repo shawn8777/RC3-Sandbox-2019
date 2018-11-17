@@ -27,10 +27,10 @@ namespace RC3
         /// <param name="j"></param>
         /// <param name="current"></param>
         /// <returns></returns>
-        public int NextAt(int i, int j, int[,] current)
+        public int NextAt(Index2 index, int[,] current)
         {
-            int sum = GetNeighborSum(i, j, current);
-            int state = current[i, j];
+            int sum = GetNeighborSum(index, current);
+            int state = current[index.I, index.J];
 
             if (state == 0)
                 return (sum == 3) ? 1 : 0;
@@ -45,16 +45,16 @@ namespace RC3
         /// <param name="i0"></param>
         /// <param name="j0"></param>
         /// <returns></returns>
-        private int GetNeighborSum(int i0, int j0, int[,] current)
+        private int GetNeighborSum(Index2 index, int[,] current)
         {
-            int m = current.GetLength(0);
-            int n = current.GetLength(1);
+            int nrows = current.GetLength(0);
+            int ncols = current.GetLength(1);
             int sum = 0;
 
             foreach (Index2 offset in _offsets)
             {
-                int i1 = Wrap(i0 + offset.I, m);
-                int j1 = Wrap(j0 + offset.J, n);
+                int i1 = Wrap(index.I + offset.I, nrows);
+                int j1 = Wrap(index.J + offset.J, ncols);
 
                 if (current[i1, j1] > 0)
                     sum++;
