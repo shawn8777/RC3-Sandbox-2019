@@ -2,8 +2,6 @@
 
 namespace RC3
 {
-
-
     [CreateAssetMenu(menuName = "RC3/WS1/ImageInitializer")]
     public class ImageInitializer : ModelInitializer
     {
@@ -16,17 +14,17 @@ namespace RC3
         /// <param name="state"></param>
         public override void Initialize(int[,] state)
         {
-            int nrows = state.GetLength(0);
-            int ncols = state.GetLength(1);
+            int m = state.GetLength(0);
+            int n = state.GetLength(1);
 
-            float ti = 1.0f / (nrows - 1);
-            float tj = 1.0f / (ncols - 1);
+            float tm = 1.0f / (m - 1);
+            float tn = 1.0f / (n - 1);
 
-            for (int i = 0; i < nrows; i++)
+            for (int i = 0; i < m; i++)
             {
-                for(int j = 0; j < ncols; j++)
+                for(int j = 0; j < n; j++)
                 {
-                    Color color = _texture.GetPixelBilinear(j * tj, i * ti);
+                    Color color = _texture.GetPixelBilinear(j * tn, i * tm);
 
                     if (color.grayscale > _threshold)
                         state[i, j] = 1;

@@ -38,7 +38,7 @@ namespace RC3
             set
             {
                 _state = value;
-                _renderer.enabled = (value == 1);
+                _renderer.enabled = value == 1;
             }
         }
 
@@ -52,7 +52,7 @@ namespace RC3
             set { _age = value; }
         }
 
-        
+
         /// <summary>
         /// 
         /// </summary>

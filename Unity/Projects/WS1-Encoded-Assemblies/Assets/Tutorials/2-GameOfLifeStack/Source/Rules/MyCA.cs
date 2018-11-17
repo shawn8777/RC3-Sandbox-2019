@@ -10,26 +10,25 @@ namespace RC3
     /// <summary>
     /// Rule for Conway's game of life
     /// </summary>
-    [RequireComponent(typeof(StackModel))]
-    [RequireComponent(typeof(StackAnalyser))]
-    public class MyCARule : MonoBehaviour, ICARule2D
+    public class MyCA : ICARule2D
     {
-        private StackModel _model;
-        private StackAnalyser _analyser;
 
         //setup some possible instruction sets
         private GOLInstructionSet _instSetMO1 = new GOLInstructionSet(2, 3, 3, 3);
         private GOLInstructionSet _instSetMO2 = new GOLInstructionSet(3, 4, 3, 4);
         private GOLInstructionSet _instSetMO3 = new GOLInstructionSet(2, 5, 2, 6);
 
+        //analysis manager - provides global model data and data analysis
+        private StackAnalyser _analyser;
+
 
         /// <summary>
         /// 
         /// </summary>
-        private void Start()
+        /// <param name="offsets"></param>
+        public MyCA(StackAnalyser stackAnalyser)
         {
-            _model = GetComponent<StackModel>();
-            _analyser = GetComponent<StackAnalyser>();
+            _analyser = stackAnalyser;
         }
 
 
@@ -40,36 +39,32 @@ namespace RC3
         /// <param name="j"></param>
         /// <param name="current"></param>
         /// <returns></returns>
-        public int NextAt(Index2 index, int[,] current)
+        public int NextAt(int i, int j, int[,] current)
         {
             //get current state
-            int state = current[index.I, index.J];
+            int state = current[i, j];
 
             //get local neighborhood data
-            int sumMO = GetNeighborSum(index, current, Neighborhoods.MooreR1);
-            int sumVNPair = GetNeighborSum(index, current, Neighborhoods.VonNeumannPair1);
+            int sumMO = GetNeighborSum(i, j, current, Neighborhoods.MooreR1);
+            int sumVNPair = GetNeighborSum(i, j, current, Neighborhoods.VonNeumannPair1);
 
             //choose an instruction set
             GOLInstructionSet instructionSet = _instSetMO1;
 
             // collect relevant analysis results
-            CellLayer[] layers = _model.Stack.Layers;
-            int currentLayer = _model.CurrentLayer;
-            
-            float prevLayerDensity;
-            int prevCellAge;
+            CellLayer[] layers = _analyser.Layers;
+            int currIndex = _analyser.CurrentLayerIndex;
 
-            // get attributes of corresponding cell on the previous layer (if it exists)
-            if (currentLayer > 0)
+            float currStackDensity = _analyser.StackDensity;
+            float prevLayerDensity = 1.0f;
+            int prevCellAge = 0;
+
+            // get attributes of corresponding cell on previous layer (if it exists)
+            if (currIndex > 0)
             {
-                var prevLayer = layers[currentLayer - 1];
+                var prevLayer = layers[currIndex - 1];
                 prevLayerDensity = prevLayer.Density;
-                prevCellAge = prevLayer.Cells[index.I, index.J].Age;
-            }
-            else
-            {
-                prevLayerDensity = 1.0f;
-                prevCellAge = 0;
+                prevCellAge = prevLayer.Cells[i, j].Age;
             }
             
             /*
@@ -164,16 +159,16 @@ namespace RC3
         /// <param name="i0"></param>
         /// <param name="j0"></param>
         /// <returns></returns>
-        private int GetNeighborSum(Index2 index, int[,] current, Index2[] neighborhood)
+        private int GetNeighborSum(int i0, int j0, int[,] current, Index2[] neighborhood)
         {
-            int nrows = current.GetLength(0);
-            int ncols = current.GetLength(1);
+            int m = current.GetLength(0);
+            int n = current.GetLength(1);
             int sum = 0;
 
             foreach (Index2 offset in neighborhood)
             {
-                int i1 = Wrap(index.I + offset.I, nrows);
-                int j1 = Wrap(index.J + offset.J, ncols);
+                int i1 = Wrap(i0 + offset.I, m);
+                int j1 = Wrap(j0 + offset.J, n);
 
                 if (current[i1, j1] > 0)
                     sum++;

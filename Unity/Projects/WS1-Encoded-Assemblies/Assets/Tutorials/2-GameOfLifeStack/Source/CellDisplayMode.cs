@@ -1,12 +1,16 @@
 ﻿namespace RC3
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public enum CellDisplayMode
+    public partial class StackDisplay
     {
-        Age,
-        LayerDensity,
-        NeighborDensity
+        /// <summary>
+        /// 
+        /// </summary>
+        private enum CellDisplayMode
+        {
+            Alive,
+            Age,
+            LayerDensity,
+            StackDensity
+        }
     }
 }

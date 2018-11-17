@@ -56,13 +56,13 @@ namespace RC3
         /// </summary>
         public void Step()
         {
-            int nrows = _currentState.GetLength(0);
-            int ncols = _currentState.GetLength(1); 
+            int m = _currentState.GetLength(0);
+            int n = _currentState.GetLength(1); 
 
             // calculate next state
-            for (int i = 0; i < nrows; i++)
+            for (int i = 0; i < m; i++)
             {
-                for (int j = 0; j < ncols; j++)
+                for (int j = 0; j < n; j++)
                     Step(i, j);
             }
             
@@ -97,14 +97,14 @@ namespace RC3
         private int GetNeighborSum(int i0, int j0)
         {
             var current = _currentState;
-            int nrows = current.GetLength(0);
-            int ncols = current.GetLength(1);
+            int m = current.GetLength(0);
+            int n = current.GetLength(1);
             int sum = 0;
 
             foreach(Index2 offset in _offsets)
             {
-                int i1 = Wrap(i0 + offset.I, nrows);
-                int j1 = Wrap(j0 + offset.J, ncols);
+                int i1 = Wrap(i0 + offset.I, m);
+                int j1 = Wrap(j0 + offset.J, n);
 
                 if (current[i1, j1] > 0)
                     sum++;

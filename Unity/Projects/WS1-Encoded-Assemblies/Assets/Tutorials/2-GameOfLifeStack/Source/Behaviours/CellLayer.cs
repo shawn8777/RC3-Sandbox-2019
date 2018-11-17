@@ -38,7 +38,7 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        public int RowCount
+        public int Rows
         {
             get { return _cells.GetLength(0); }
         }
@@ -47,7 +47,7 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        public int ColumnCount
+        public int Columns
         {
             get { return _cells.GetLength(1); }
         }
@@ -56,7 +56,7 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        public int CellCount
+        public int Count
         {
             get { return _cells.Length; }
         }

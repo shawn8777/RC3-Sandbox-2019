@@ -49,12 +49,12 @@ namespace RC3
         /// </summary>
         private static IEnumerable<T> ToEnumerable<T>(T[,] source)
         {
-            int nrows = source.GetLength(0);
-            int ncols = source.GetLength(1);
+            int m = source.GetLength(0);
+            int n = source.GetLength(1);
 
-            for (int i = 0; i < nrows; i++)
+            for (int i = 0; i < m; i++)
             {
-                for (int j = 0; j < ncols; j++)
+                for (int j = 0; j < n; j++)
                     yield return source[i, j];
             }
         }
