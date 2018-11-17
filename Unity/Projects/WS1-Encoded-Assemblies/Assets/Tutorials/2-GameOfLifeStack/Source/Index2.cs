@@ -1,12 +1,12 @@
 ﻿namespace RC3
 {
     /// <summary>
-    /// 
+    /// Convention is [i, j] -> [Row, Column]
     /// </summary>
     public struct Index2
     {
-        public readonly int I;
-        public readonly int J;
+        public readonly int I; // Row
+        public readonly int J; // Column
 
         /// <summary>
         /// 
@@ -17,6 +17,4 @@
             J = j;
         }
     }
-
-
 }

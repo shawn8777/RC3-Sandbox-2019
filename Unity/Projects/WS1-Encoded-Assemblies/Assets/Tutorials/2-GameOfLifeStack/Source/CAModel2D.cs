@@ -58,14 +58,14 @@ namespace RC3
         /// </summary>
         public void Step()
         {
-            int m = _currentState.GetLength(0);
-            int n = _currentState.GetLength(1);
+            int nrows = _currentState.GetLength(0);
+            int ncols = _currentState.GetLength(1);
 
             // calculate next state at each location
-            for (int i = 0; i < m; i++)
+            for (int i = 0; i < nrows; i++)
             {
-                for (int j = 0; j < n; j++)
-                    _nextState[i, j] = _rule.NextAt(i, j, _currentState); 
+                for (int j = 0; j < ncols; j++)
+                    _nextState[i, j] = _rule.NextAt(new Index2(i, j), _currentState); 
             }
 
             // swap state buffers
@@ -88,7 +88,7 @@ namespace RC3
                 {
                     int i = index / n;
                     int j = index - i * n;
-                    _nextState[i, j] = _rule.NextAt(i, j, _currentState);
+                    _nextState[i, j] = _rule.NextAt(new Index2(i, j), _currentState);
                 }
             });
 

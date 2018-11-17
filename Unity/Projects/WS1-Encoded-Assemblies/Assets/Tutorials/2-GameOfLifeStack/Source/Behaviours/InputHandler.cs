@@ -9,16 +9,8 @@ namespace RC3
     /// </summary>
     public class InputHandler : MonoBehaviour
     {
-        private StackManager _manager;
-
-        /// <summary>
-        /// Array of rules that can be swapped between
-        /// </summary>
-        private ICARule2D[] _rules =
-        {
-            new Conway2D(),
-            new Conway2D()
-        };
+        private StackModel _model;
+        private StackDisplay _display;
 
 
         /// <summary>
@@ -26,17 +18,36 @@ namespace RC3
         /// </summary>
         private void Start()
         {
-            _manager = GetComponent<StackManager>();
+            _model = GetComponent<StackModel>();
+            _display = GetComponent<StackDisplay>();
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="value"></param>
-        public void SetRule(int value)
+        private void Update()
         {
-            _manager.Model.Rule = _rules[value];
+            HandleKeyPress();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void HandleKeyPress()
+        {
+            // Reset model
+            if (Input.GetKeyDown(KeyCode.Space))
+                _model.ResetModel();
+
+            // Update display mode
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                _display.DisplayMode = CellDisplayMode.Age;
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+                _display.DisplayMode = CellDisplayMode.LayerDensity;
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+                _display.DisplayMode = CellDisplayMode.NeighborDensity;
         }
     }
 }

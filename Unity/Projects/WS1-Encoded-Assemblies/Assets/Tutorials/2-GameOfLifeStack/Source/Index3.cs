@@ -1,14 +1,14 @@
 ﻿namespace RC3
 {
     /// <summary>
-    /// 
+    /// Convention is [i, j, k] -> [Layer, Row, Column]
     /// </summary>
 
     public struct Index3
     {
-        public readonly int I;
-        public readonly int J;
-        public readonly int K;
+        public readonly int I; // Layer
+        public readonly int J; // Row
+        public readonly int K; // Column
 
 
         /// <summary>

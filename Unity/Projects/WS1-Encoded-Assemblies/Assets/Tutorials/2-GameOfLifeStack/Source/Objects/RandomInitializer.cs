@@ -19,12 +19,12 @@ namespace RC3
         /// <param name="state"></param>
         public override void Initialize(int[,] state)
         {
-            int m = state.GetLength(0);
-            int n = state.GetLength(1);
+            int nrows = state.GetLength(0);
+            int ncols = state.GetLength(1);
 
-            for(int i = 0; i < m; i++)
+            for(int i = 0; i < nrows; i++)
             {
-                for(int j = 0; j < n; j++)
+                for(int j = 0; j < ncols; j++)
                 {
                     if (Random.Range(0.0f, 1.0f) > _threshold)
                         state[i, j] = 1;
