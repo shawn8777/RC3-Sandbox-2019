@@ -17,6 +17,7 @@ namespace RC3
 
         [SerializeField] private ModelInitializer _initializer;
         [SerializeField] private CellStack _stack;
+        [SerializeField] private SharedTextures _seeds;
 
         private CAModel2D _model;
         private StackAnalyser _analyser;
@@ -27,6 +28,18 @@ namespace RC3
         private bool _fitnessComplete = false;
 
 
+        public void SetTexture(Texture2D texture)
+        {
+            //_initializer
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public SharedTextures Seeds
+        {
+            get { return _seeds; }
+        }
 
         /// <summary>
         /// 

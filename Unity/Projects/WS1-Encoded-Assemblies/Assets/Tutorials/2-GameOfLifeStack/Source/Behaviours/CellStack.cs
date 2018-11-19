@@ -21,7 +21,7 @@ namespace RC3
 
         private IDNAF _dna;
         private float _fitness = 1;
-        private int _seed;
+        private Texture2D _seed;
 
         /// <summary>
         /// 
@@ -47,6 +47,23 @@ namespace RC3
         public void SetDNA(IDNAF dna)
         {
             _dna = dna;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Texture2D Seed
+        {
+            get { return _seed; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="seed"></param>
+        public void SetSeed(Texture2D seed)
+        {
+            _seed = seed;
         }
 
         /// <summary>

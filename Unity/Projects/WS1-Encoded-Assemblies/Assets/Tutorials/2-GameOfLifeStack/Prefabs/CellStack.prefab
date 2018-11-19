@@ -55,6 +55,6 @@ MonoBehaviour:
     type: 2}
   _cellPrefab: {fileID: 114418866462962864, guid: df86c0649474ae6489555efa058a38ec,
     type: 2}
-  _columnCount: 20
-  _rowCount: 20
-  _layerCount: 50
+  _columnCount: 30
+  _rowCount: 30
+  _layerCount: 60

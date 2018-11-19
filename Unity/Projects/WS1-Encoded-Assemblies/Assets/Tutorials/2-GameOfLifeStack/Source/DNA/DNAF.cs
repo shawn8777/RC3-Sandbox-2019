@@ -16,8 +16,8 @@ namespace RC3
         public DNAF()
         {
             _genes = new float[_dnaLength];
-            _dnaMins = new float[] { -1, -1, -1, -1 };
-            _dnaMaxs = new float[] { 1, 1, 1, 1 };
+            _dnaMins = new float[] { 0, 0, 0, 0 };
+            _dnaMaxs = new float[] { 3, 3, 3, 3 };
             SetDNARandom();
         }
 

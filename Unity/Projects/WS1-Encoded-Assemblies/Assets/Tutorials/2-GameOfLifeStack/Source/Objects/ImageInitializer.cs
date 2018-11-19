@@ -16,6 +16,7 @@ namespace RC3
         /// <param name="state"></param>
         public override void Initialize(int[,] state)
         {
+
             int nrows = state.GetLength(0);
             int ncols = state.GetLength(1);
 
@@ -24,7 +25,7 @@ namespace RC3
 
             for (int i = 0; i < nrows; i++)
             {
-                for(int j = 0; j < ncols; j++)
+                for (int j = 0; j < ncols; j++)
                 {
                     Color color = _texture.GetPixelBilinear(j * tj, i * ti);
 

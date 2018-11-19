@@ -521,6 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initializer: {fileID: 11400000, guid: 2a8b088d8d4971846aacce704393f475, type: 2}
   _stack: {fileID: 328277512}
+  _seeds: {fileID: 11400000, guid: abb8f099dba2c254fbc157fb1ad81cb5, type: 2}
 --- !u!114 &451328548
 MonoBehaviour:
   m_ObjectHideFlags: 0
