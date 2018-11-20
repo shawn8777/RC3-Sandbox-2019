@@ -13,7 +13,7 @@ namespace RC3
     [RequireComponent(typeof(ICARule2D))]
     public class StackModel : MonoBehaviour
     {
-        // TODO fire OnModelReset event
+        // TODO fire OnModelReset event0.
 
         [SerializeField] private ModelInitializer _initializer;
         [SerializeField] private CellStack _stack;

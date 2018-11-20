@@ -21,6 +21,7 @@ namespace RC3
         [SerializeField] private StackModel _model;
         [SerializeField] private StackAnalyser _analyser;
         [SerializeField] private CellStack _stackPrefab;
+        [SerializeField] private SharedTextures _seeds;
         private CellStack _currentStack;
         private CellStack _nextStack;
 
@@ -95,10 +96,23 @@ namespace RC3
                 _model.SetStack(_currentStack);
 
                 //synthesize images 
-                Texture2D texture1 = _model.Seeds[(int)Math.Round(childdna.GetGene(0))];
-                Texture2D texture2 = _model.Seeds[(int)Math.Round(childdna.GetGene(1))];
-                Texture2D texture3 = _model.Seeds[(int)Math.Round(childdna.GetGene(2))];
-                Texture2D texture4 = _model.Seeds[(int)Math.Round(childdna.GetGene(3))];
+                /*
+                Debug.Log(Mathf.RoundToInt(childdna.GetGene(0)));
+                Debug.Log(_model.Seeds[Mathf.RoundToInt(childdna.GetGene(0))]);
+
+                Debug.Log(Mathf.RoundToInt(childdna.GetGene(1)));
+                Debug.Log(_model.Seeds[Mathf.RoundToInt(childdna.GetGene(1))]);
+
+                Debug.Log(Mathf.RoundToInt(childdna.GetGene(2)));
+                Debug.Log(_model.Seeds[Mathf.RoundToInt(childdna.GetGene(2))]);
+
+                Debug.Log(Mathf.RoundToInt(childdna.GetGene(3)));
+                Debug.Log(_model.Seeds[Mathf.RoundToInt(childdna.GetGene(3))]);
+                */
+                Texture2D texture1 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(0))];
+                Texture2D texture2 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(1))];
+                Texture2D texture3 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(2))];
+                Texture2D texture4 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(3))];
 
                 Texture2D combined = ImageSynthesizer.CombineFour(texture1, texture2, texture3, texture4, _currentStack.RowCount, _currentStack.ColumnCount);
                 Texture2D texture5 = _model.Seeds[0];
