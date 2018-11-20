@@ -28,11 +28,6 @@ namespace RC3
         private bool _fitnessComplete = false;
 
 
-        public void SetTexture(Texture2D texture)
-        {
-            //_initializer
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -143,6 +138,27 @@ namespace RC3
 
             // re-initialize model
             _initializer.Initialize(_model.CurrentState);
+
+            // reset layer
+            _currentLayer = -1;
+
+            _buildComplete = false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ResetModel(Texture2D texture)
+        {
+            // reset cell states
+            foreach (var layer in _stack.Layers)
+            {
+                foreach (var cell in layer.Cells)
+                    cell.State = 0;
+            }
+
+            // re-initialize model
+            _initializer.Initialize(_model.CurrentState, texture);
 
             // reset layer
             _currentLayer = -1;

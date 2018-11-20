@@ -47,7 +47,7 @@ namespace RC3
         {
             for (int i = 0; i < _dnaLength; i++)
             {
-                _genes[i] = (float)Random.Range(_dnaMins[i], _dnaMaxs[i]);
+                _genes[i] = (float)UnityEngine.Random.Range(_dnaMins[i], _dnaMaxs[i]);
             }
         }
 

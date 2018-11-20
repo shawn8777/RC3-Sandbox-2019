@@ -18,12 +18,12 @@ namespace RC3
         private List<IDNAF> _matingPool = new List<IDNAF>();
         private CellStack[] _currentPopulation;
 
+        [SerializeField] private StackModel _model;
+        [SerializeField] private StackAnalyser _analyser;
         [SerializeField] private CellStack _stackPrefab;
         private CellStack _currentStack;
         private CellStack _nextStack;
 
-        private StackModel _model;
-        private StackAnalyser _analyser;
         private bool _fitnessComplete = false;
 
         //Current Population
@@ -33,18 +33,6 @@ namespace RC3
         /// </summary>
         private void Awake()
         {
-            if (GetComponent<StackModel>() == null)
-            {
-                Debug.Log("No StackModel Component!");
-            }
-
-            _model = GetComponent<StackModel>();
-
-            if (GetComponent<StackAnalyser>() == null)
-            {
-                Debug.Log("No StackAnalyser Component!");
-            }
-            _analyser = GetComponent<StackAnalyser>();
             _currentStack = _model.Stack;
             _currentPopulation = new CellStack[_popSize];
             InitializeMatingPool();
@@ -104,23 +92,22 @@ namespace RC3
                 //reset the stack and insert new dna
                 _currentStack = Instantiate(_stackPrefab);
                 _currentStack.SetDNA(childdna);
+                _model.SetStack(_currentStack);
 
                 //synthesize images 
-                Texture2D texture1 = _model.Seeds[(int)Math.Floor(childdna.GetGene(0))];
-                Texture2D texture2 = _model.Seeds[(int)Math.Floor(childdna.GetGene(1))];
-                Texture2D texture3 = _model.Seeds[(int)Math.Floor(childdna.GetGene(2))];
-                Texture2D texture4 = _model.Seeds[(int)Math.Floor(childdna.GetGene(3))];
+                Texture2D texture1 = _model.Seeds[(int)Math.Round(childdna.GetGene(0))];
+                Texture2D texture2 = _model.Seeds[(int)Math.Round(childdna.GetGene(1))];
+                Texture2D texture3 = _model.Seeds[(int)Math.Round(childdna.GetGene(2))];
+                Texture2D texture4 = _model.Seeds[(int)Math.Round(childdna.GetGene(3))];
 
-                Texture2D combined =  ImageSynthesizer.CombineFour(texture1, texture2, texture3, texture4, _currentStack.RowCount, _currentStack.ColumnCount);
-                //_model.SetTexture();
-                _model.SetStack(_currentStack);
-                _model.ResetModel();
+                Texture2D combined = ImageSynthesizer.CombineFour(texture1, texture2, texture3, texture4, _currentStack.RowCount, _currentStack.ColumnCount);
+                Texture2D texture5 = _model.Seeds[0];
+                _model.ResetModel(combined);
 
 
             }
 
         }
-
 
 
         /// <summary>
