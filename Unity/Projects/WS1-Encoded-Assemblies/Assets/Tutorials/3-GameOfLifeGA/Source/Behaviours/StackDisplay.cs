@@ -21,6 +21,8 @@ namespace RC3
             // TODO reference "AnalysisResults" scriptable object rather than "StackAnalyser"
 
             [SerializeField] private CellDisplayMode _displayMode = CellDisplayMode.Age;
+            [SerializeField] private Material _baseMaterial;
+
             [Space(12)]
             [SerializeField] private Material _ageMaterial;
             [SerializeField] private int _ageDisplayMin = 0;
@@ -86,6 +88,10 @@ namespace RC3
             {
                 switch (_displayMode)
                 {
+                    case CellDisplayMode.Alive:
+                        DisplayAlive();
+                        break;
+
                     case CellDisplayMode.Age:
                         DisplayAge();
                         break;
@@ -107,6 +113,28 @@ namespace RC3
                 _currentLayer = -1;
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            private void DisplayAlive()
+            {
+                CellLayer[] layers = _model.Stack.Layers;
+                int layer1 = _model.CurrentLayer;
+
+                for (int i = 0; i <= layer1; i++)
+                {
+                    foreach (var cell in layers[i].Cells)
+                    {
+                        // skip dead cells
+                        if (cell.State == 0)
+                            continue;
+
+                        // update cell material
+                        MeshRenderer renderer = cell.Renderer;
+                        renderer.sharedMaterial = _baseMaterial;
+                    }
+                }
+            }
 
             /// <summary>
             /// 

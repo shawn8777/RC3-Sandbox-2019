@@ -114,7 +114,7 @@ namespace RC3
 
                 //set stack fitness value
                 _model.Stack.SetFitness(fitness);
-                //Debug.Log("Fitness " + fitness);
+                Debug.Log("Fitness " + fitness);
             }
 
             /// <summary>

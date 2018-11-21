@@ -6,6 +6,9 @@ namespace RC3
 {
     namespace WS2
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public class DNAF : IDNAF
         {
             private int _dnaLength = 4;
@@ -14,7 +17,9 @@ namespace RC3
             private float[] _dnaMaxs;
             private float _mutationRate = 0.05f;
 
-
+            /// <summary>
+            /// 
+            /// </summary>
             public DNAF()
             {
                 _genes = new float[_dnaLength];
@@ -50,7 +55,6 @@ namespace RC3
                 for (int i = 0; i < _dnaLength; i++)
                 {
                     _genes[i] = (float)UnityEngine.Random.Range(_dnaMins[i], _dnaMaxs[i]);
-                    //_genes[i] = (float)i;
                 }
             }
 

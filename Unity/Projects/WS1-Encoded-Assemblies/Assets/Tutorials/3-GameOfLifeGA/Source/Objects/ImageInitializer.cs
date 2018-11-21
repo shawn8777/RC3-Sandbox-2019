@@ -46,7 +46,6 @@ namespace RC3
             /// <param name="texture"></param>
             public override void Initialize(int[,] state, Texture2D texture)
             {
-                Debug.Log(texture.name);
                 int nrows = state.GetLength(0);
                 int ncols = state.GetLength(1);
 

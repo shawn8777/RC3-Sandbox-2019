@@ -7,9 +7,12 @@
         /// </summary>
         public enum CellDisplayMode
         {
+            Alive,
             Age,
             LayerDensity,
-            NeighborDensity
+            NeighborDensity,
+            Fitness
         }
+
     }
 }

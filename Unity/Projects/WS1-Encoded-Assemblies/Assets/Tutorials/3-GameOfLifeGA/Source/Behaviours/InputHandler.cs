@@ -14,7 +14,6 @@ namespace RC3
             private StackModel _model;
             private StackDisplay _display;
 
-
             /// <summary>
             /// 
             /// </summary>
@@ -50,6 +49,8 @@ namespace RC3
                     _display.DisplayMode = CellDisplayMode.LayerDensity;
                 else if (Input.GetKeyDown(KeyCode.Alpha3))
                     _display.DisplayMode = CellDisplayMode.NeighborDensity;
+                else if (Input.GetKeyDown(KeyCode.Alpha0))
+                    _display.DisplayMode = CellDisplayMode.Alive;
             }
         }
     }

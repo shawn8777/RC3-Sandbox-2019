@@ -12,23 +12,18 @@ namespace RC3
     {
         public class PopulationManager : MonoBehaviour
         {
-            private int _popSize = 10;
-            private int _popCount = 0;
-            private int _generationCount = 0;
-            private List<CellStack[]> _populationHistory = new List<CellStack[]>();
+            private int _genSize = 10;
+            private int _curCount = 0;
             private List<IDNAF> _matingPool = new List<IDNAF>();
-            private CellStack[] _currentPopulation;
+            private CellStack[] _currentGeneration;
+            private CellStack _currentStack;
+            private bool _fitnessComplete = false;
 
             [SerializeField] private StackModel _model;
             [SerializeField] private StackAnalyser _analyser;
             [SerializeField] private CellStack _stackPrefab;
             [SerializeField] private SharedTextures _seeds;
-            private CellStack _currentStack;
-            private CellStack _nextStack;
-
-            private bool _fitnessComplete = false;
-
-            //Current Population
+            [SerializeField] private StackPopulation _population;
 
             /// <summary>
             /// 
@@ -36,7 +31,8 @@ namespace RC3
             private void Awake()
             {
                 _currentStack = _model.Stack;
-                _currentPopulation = new CellStack[_popSize];
+                _currentGeneration = new CellStack[_genSize];
+                _population.Reset();
                 InitializeMatingPool();
             }
 
@@ -47,76 +43,73 @@ namespace RC3
             private void Update()
             {
 
-                //check if stack is finished build / fitness 
+                //check if stack is finished building
+
+                //if build not complete, leave function
                 if (_model.BuildComplete == false)
                 {
                     return;
                 }
 
+                //if stack building is complete, get fitness / update
                 if (_model.BuildComplete == true)
                 {
                     //calculate fitness
                     _analyser.Fitness();
 
                     //move the stack position
-                    var generations = _populationHistory.Count + 1;
-                    Vector3 vector = new Vector3(1.5f * (_currentStack.RowCount) * (_popCount - 1), 0, 1.5f * (_currentStack.ColumnCount) * (generations + 1));
+                    var generations = _population.Population.Count + 1;
+                    Vector3 vector = new Vector3(1.5f * (_currentStack.RowCount) * (_curCount - 1), 0, 1.5f * (_currentStack.ColumnCount));
                     _currentStack.transform.localPosition = vector;
                     _currentStack.transform.parent = gameObject.transform;
 
                     //add stack to current generation
-                    AddStackToPopulation(_currentStack);
+                    AddStackToGeneration(_currentStack);
 
-                    _popCount++;
+                    _curCount++;
 
                     //if count == popsize recalculate the mating pool
-                    if (_popCount == _popSize)
+                    if (_curCount == _genSize)
                     {
                         //add generation to the population history
-                        AddPopulationToHistory(_currentPopulation);
+                        AddGenToPopulation(_currentGeneration);
 
                         //run natural selection to generate breeding pool
                         UpdateMatingPool();
 
                         //reset current population array
-                        _currentPopulation = new CellStack[_popSize];
+                        _currentGeneration = new CellStack[_genSize];
 
                         //reset popcounter
-                        _popCount = 0;
+                        _curCount = 0;
+
+                        //move population
+                        Vector3 vec = new Vector3(0, 0, 1.5f * (_currentStack.ColumnCount) * (generations + 1));
+                        foreach (var stack in _population.Population)
+                        {
+                            stack.transform.localPosition += vec;
+                        }
                     }
 
                     //breed new dna from mating pool
                     IDNAF childdna = Breed();
 
-                    //turn off stack
-                    _currentStack.gameObject.SetActive(false);
+                    //turn off/deactivate the stack
+                    //_currentStack.gameObject.SetActive(false);
 
                     //reset the stack and insert new dna
                     _currentStack = Instantiate(_stackPrefab);
                     _currentStack.SetDNA(childdna);
                     _model.SetStack(_currentStack);
 
-                    //synthesize images 
-                    /*
-                    Debug.Log(Mathf.RoundToInt(childdna.GetGene(0)));
-                    Debug.Log(_model.Seeds[Mathf.RoundToInt(childdna.GetGene(0))]);
-
-                    Debug.Log(Mathf.RoundToInt(childdna.GetGene(1)));
-                    Debug.Log(_model.Seeds[Mathf.RoundToInt(childdna.GetGene(1))]);
-
-                    Debug.Log(Mathf.RoundToInt(childdna.GetGene(2)));
-                    Debug.Log(_model.Seeds[Mathf.RoundToInt(childdna.GetGene(2))]);
-
-                    Debug.Log(Mathf.RoundToInt(childdna.GetGene(3)));
-                    Debug.Log(_model.Seeds[Mathf.RoundToInt(childdna.GetGene(3))]);
-                    */
+                    //synthesize 4 images from child gene 
                     Texture2D texture1 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(0))];
                     Texture2D texture2 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(1))];
                     Texture2D texture3 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(2))];
                     Texture2D texture4 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(3))];
-
                     Texture2D combined = ImageSynthesizer.CombineFour(texture1, texture2, texture3, texture4, _currentStack.RowCount, _currentStack.ColumnCount);
-                    Texture2D texture5 = _model.Seeds[0];
+
+                    //resets/initializes the model using the synthesized image
                     _model.ResetModel(combined);
 
 
@@ -126,46 +119,64 @@ namespace RC3
 
 
             /// <summary>
-            /// 
+            /// Adds a stack to the current generation of stacks
             /// </summary>
-            private void AddStackToPopulation(CellStack stack)
+            private void AddStackToGeneration(CellStack stack)
             {
-                _currentPopulation[_popCount] = stack;
+                //add stack to current generation of stacks
+                _currentGeneration[_curCount] = stack;
             }
 
             /// <summary>
-            /// 
+            /// Adds the generation of stacks to the population and updates max and min population fitness
             /// </summary>
-            private void AddPopulationToHistory(CellStack[] population)
+            private void AddGenToPopulation(CellStack[] generation)
             {
-                _populationHistory.Add(population);
+                //update min & max fitness of the population
+                foreach (var stack in generation)
+                {
+                    if (stack.Fitness > _population.MaxFitness)
+                    {
+                        _population.MaxFitness = stack.Fitness;
+                    }
+
+                    if (stack.Fitness < _population.MinFitness)
+                    {
+                        _population.MinFitness = stack.Fitness;
+                    }
+                }
+                //add generation of stacks to the population
+                _population.AddGeneration(generation);
+
             }
 
             /// <summary>
-            /// 
+            /// Initializes the mating pool
             /// </summary>
             private void InitializeMatingPool()
             {
+                //initialize mating pool with random instances of dna
                 _matingPool = new List<IDNAF>();
-                for (int i = 0; i < _popSize; i++)
+                for (int i = 0; i < _genSize; i++)
                 {
                     _matingPool.Add(new DNAF());
                 }
             }
 
             /// <summary>
-            /// 
+            /// Updates the mating pool
             /// </summary>
             private void UpdateMatingPool()
             {
+                //reset mating pool
                 _matingPool.Clear();
 
                 //get flattened stack population
-                var population = _populationHistory.SelectMany(i => i);
+                var population = _population.Population;
                 //sort by fitness value (highest first - descending)
                 var sortedList = population.OrderByDescending(o => (o.Fitness)).ToList();
 
-                if (sortedList.Count < _popSize * 2)
+                if (sortedList.Count < _genSize * 2)
                 {
                     //add DNA to mating pool weighted by fitness value
                     int quantity = sortedList.Count;
@@ -198,7 +209,7 @@ namespace RC3
             }
 
             /// <summary>
-            /// 
+            /// Calculate total fitness from list of stacks and quantity of that list to include
             /// </summary>
             /// <param name="sortedfitnesslist"></param>
             /// <param name="quantity"></param>
@@ -229,6 +240,21 @@ namespace RC3
                 return child;
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            public StackPopulation Population
+            {
+                get { return _population; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public int GenSize
+            {
+                get { return _genSize; }
+            }
 
         }
     }

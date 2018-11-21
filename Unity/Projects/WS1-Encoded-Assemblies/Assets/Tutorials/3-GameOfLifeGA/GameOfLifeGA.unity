@@ -305,12 +305,12 @@ Prefab:
     - target: {fileID: 114542855323889792, guid: e72d3628d3db1144c91ef8fd06d585a2,
         type: 2}
       propertyPath: _columnCount
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 114542855323889792, guid: e72d3628d3db1144c91ef8fd06d585a2,
         type: 2}
       propertyPath: _rowCount
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e72d3628d3db1144c91ef8fd06d585a2, type: 2}
@@ -1639,6 +1639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayMode: 0
+  _baseMaterial: {fileID: 2100000, guid: 5ad7da17fb7bb0b499b1f12d0013d2b7, type: 2}
   _ageMaterial: {fileID: 2100000, guid: a2722e114bb126d4fa51cb4822598bf9, type: 2}
   _ageDisplayMin: 0
   _ageDisplayMax: 10
@@ -2057,7 +2058,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1985321470}
+  - component: {fileID: 1985321472}
   - component: {fileID: 1985321469}
+  - component: {fileID: 1985321471}
   m_Layer: 0
   m_Name: PopulationManager
   m_TagString: Untagged
@@ -2080,6 +2083,7 @@ MonoBehaviour:
   _analyser: {fileID: 1413534759}
   _stackPrefab: {fileID: 1410551648}
   _seeds: {fileID: 11400000, guid: 708ae5fa7de795b4683c3d0f1fab3adc, type: 2}
+  _population: {fileID: 11400000, guid: aa3d61acbbb1bce429297d3e4062003d, type: 2}
 --- !u!4 &1985321470
 Transform:
   m_ObjectHideFlags: 0
@@ -2093,6 +2097,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1985321471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1985321468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ac85c5cefb3af47b1748baadcd6aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _displayMode: 0
+  _popDisplayMode: 0
+  _baseMaterial: {fileID: 2100000, guid: 5ad7da17fb7bb0b499b1f12d0013d2b7, type: 2}
+  _fitnessMaterial: {fileID: 2100000, guid: 3016b173ff4e68347883b975e5348c2f, type: 2}
+  _fitnessCutoff: 0.9
+--- !u!114 &1985321472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1985321468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3903198103af244bb738f0da610d87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2039400975
 GameObject:
   m_ObjectHideFlags: 0
