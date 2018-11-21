@@ -15,16 +15,28 @@ namespace RC3
         [RequireComponent(typeof(ICARule2D))]
         public class StackModel : MonoBehaviour
         {
-            // TODO fire OnModelReset event
+            // TODO fire OnModelReset event0.
 
             [SerializeField] private ModelInitializer _initializer;
             [SerializeField] private CellStack _stack;
+            [SerializeField] private SharedTextures _seeds;
 
             private CAModel2D _model;
             private StackAnalyser _analyser;
 
             private int _currentLayer = -1;
 
+            private bool _buildComplete = false;
+            private bool _fitnessComplete = false;
+
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public SharedTextures Seeds
+            {
+                get { return _seeds; }
+            }
 
             /// <summary>
             /// 
@@ -32,6 +44,15 @@ namespace RC3
             public CellStack Stack
             {
                 get { return _stack; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="stack"></param>
+            public void SetStack(CellStack stack)
+            {
+                _stack = stack;
             }
 
 
@@ -56,10 +77,20 @@ namespace RC3
             /// <summary>
             /// 
             /// </summary>
+            public bool BuildComplete
+            {
+                get { return _buildComplete; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
             private void Awake()
             {
                 // create model
                 _model = new CAModel2D(GetComponent<ICARule2D>(), _stack.RowCount, _stack.ColumnCount);
+
+                _stack = Instantiate(_stack);
 
                 // initialize model
                 _initializer.Initialize(_model.CurrentState);
@@ -72,8 +103,18 @@ namespace RC3
             private void Update()
             {
                 // bail if stack is full
-                if (_currentLayer == _stack.LayerCount - 1)
+                if (_currentLayer == _stack.LayerCount - 1 && _buildComplete == false)
+                {
+                    _buildComplete = true;
                     return;
+                }
+
+                if (_buildComplete == true)
+                {
+                    return;
+
+                }
+
 
                 // advance later
                 _currentLayer++;
@@ -104,6 +145,29 @@ namespace RC3
 
                 // reset layer
                 _currentLayer = -1;
+
+                _buildComplete = false;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void ResetModel(Texture2D texture)
+            {
+                // reset cell states
+                foreach (var layer in _stack.Layers)
+                {
+                    foreach (var cell in layer.Cells)
+                        cell.State = 0;
+                }
+
+                // re-initialize model
+                _initializer.Initialize(_model.CurrentState, texture);
+
+                // reset layer
+                _currentLayer = -1;
+
+                _buildComplete = false;
             }
 
 

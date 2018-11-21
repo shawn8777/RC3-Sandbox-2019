@@ -21,13 +21,68 @@ namespace RC3
 
             private CellLayer[] _layers;
 
+            private IDNAF _dna;
+            private float _fitness = 1;
+            private Texture2D _seed;
 
             /// <summary>
             /// 
             /// </summary>
             private void Awake()
             {
+                _dna = new DNAF();
                 InitializeCells();
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public IDNAF DNA
+            {
+                get { return _dna; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="dna"></param>
+            public void SetDNA(IDNAF dna)
+            {
+                _dna = dna;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public Texture2D Seed
+            {
+                get { return _seed; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="seed"></param>
+            public void SetSeed(Texture2D seed)
+            {
+                _seed = seed;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public float Fitness
+            {
+                get { return _fitness; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="value"></param>
+            public void SetFitness(float value)
+            {
+                _fitness = value;
             }
 
 

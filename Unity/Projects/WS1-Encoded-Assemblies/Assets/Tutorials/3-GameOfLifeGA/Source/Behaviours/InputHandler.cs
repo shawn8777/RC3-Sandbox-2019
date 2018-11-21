@@ -9,7 +9,6 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
-        [CreateAssetMenu(menuName = "RC3/WS2/InputHandler")]
         public class InputHandler : MonoBehaviour
         {
             private StackModel _model;

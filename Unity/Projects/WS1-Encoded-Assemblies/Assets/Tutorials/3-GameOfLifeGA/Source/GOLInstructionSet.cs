@@ -6,10 +6,8 @@ namespace RC3
 {
     namespace WS2
     {
-
         public class GOLInstructionSet
         {
-
             private int[] _instructions = new int[4];
 
             public GOLInstructionSet()

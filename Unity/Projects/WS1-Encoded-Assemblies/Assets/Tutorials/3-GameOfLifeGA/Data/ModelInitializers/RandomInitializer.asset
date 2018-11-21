@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2359287d813f72d47ae91134944515e9, type: 3}
+  m_Script: {fileID: 11500000, guid: c727b2c08136f2c4eae8cdb3fb8c0c63, type: 3}
   m_Name: RandomInitializer
   m_EditorClassIdentifier: 
   _threshold: 0.75

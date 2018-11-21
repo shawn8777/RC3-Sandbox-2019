@@ -20,7 +20,6 @@ namespace RC3
             private float _densitySum;
             private int _currentLayer; // index of the most recently analysed layer
 
-
             /// <summary>
             /// 
             /// </summary>
@@ -96,6 +95,73 @@ namespace RC3
             {
                 _densitySum = 0.0f;
                 _currentLayer = -1;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void Fitness()
+            {
+                float fitness = 1;
+                //calculate separate objective fitness values
+                float structuralFit = StructuralFitness();
+                float massFit = MassFitness();
+
+                //setup fitness function to combine and weight these factors
+                fitness = (structuralFit + massFit) / 2;
+
+                fitness = MeanStackDensity;
+
+                //set stack fitness value
+                _model.Stack.SetFitness(fitness);
+                //Debug.Log("Fitness " + fitness);
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            private float PatternFitness()
+            {
+                float patternFitness = 1;
+                //calculate assign pattern fitness value
+
+                return patternFitness;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            private float DensityFitness()
+            {
+                float densityFitness = 1;
+                //calculate assign density fitness value
+
+                return densityFitness;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            private float MassFitness()
+            {
+                float massFitness = 1;
+                //calculate overall mass - assign fitness value
+
+                return massFitness;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            private float StructuralFitness()
+            {
+                float structuralFitness = 1;
+                //calculate structural forces and return fitness value
+                return structuralFitness;
             }
         }
     }
