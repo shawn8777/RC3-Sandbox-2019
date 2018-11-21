@@ -1626,7 +1626,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initializer: {fileID: 11400000, guid: 462e32c935375a14182a84b63e73a26c, type: 2}
   _stack: {fileID: 1410551648}
-  _seeds: {fileID: 11400000, guid: 708ae5fa7de795b4683c3d0f1fab3adc, type: 2}
 --- !u!114 &1413534761
 MonoBehaviour:
   m_ObjectHideFlags: 0

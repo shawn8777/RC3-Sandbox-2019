@@ -12,7 +12,7 @@ namespace RC3
     {
         public class PopulationManager : MonoBehaviour
         {
-            private int _genSize = 10;
+            private int _genSize = 3;
             private int _curCount = 0;
             private List<IDNAF> _matingPool = new List<IDNAF>();
             private CellStack[] _currentGeneration;
@@ -84,7 +84,7 @@ namespace RC3
                         _curCount = 0;
 
                         //move population
-                        Vector3 vec = new Vector3(0, 0, 1.5f * (_currentStack.ColumnCount) * (generations + 1));
+                        Vector3 vec = new Vector3(0, 0, 1.5f * (_currentStack.ColumnCount));
                         foreach (var stack in _population.Population)
                         {
                             stack.transform.localPosition += vec;
@@ -103,18 +103,15 @@ namespace RC3
                     _model.SetStack(_currentStack);
 
                     //synthesize 4 images from child gene 
-                    Texture2D texture1 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(0))];
-                    Texture2D texture2 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(1))];
-                    Texture2D texture3 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(2))];
-                    Texture2D texture4 = _model.Seeds[Mathf.RoundToInt(childdna.GetGene(3))];
+                    Texture2D texture1 = _seeds[Mathf.RoundToInt(childdna.GetGene(0))];
+                    Texture2D texture2 = _seeds[Mathf.RoundToInt(childdna.GetGene(1))];
+                    Texture2D texture3 = _seeds[Mathf.RoundToInt(childdna.GetGene(2))];
+                    Texture2D texture4 = _seeds[Mathf.RoundToInt(childdna.GetGene(3))];
                     Texture2D combined = ImageSynthesizer.CombineFour(texture1, texture2, texture3, texture4, _currentStack.RowCount, _currentStack.ColumnCount);
 
                     //resets/initializes the model using the synthesized image
                     _model.ResetModel(combined);
-
-
                 }
-
             }
 
 

@@ -19,24 +19,12 @@ namespace RC3
 
             [SerializeField] private ModelInitializer _initializer;
             [SerializeField] private CellStack _stack;
-            [SerializeField] private SharedTextures _seeds;
 
             private CAModel2D _model;
             private StackAnalyser _analyser;
 
             private int _currentLayer = -1;
-
             private bool _buildComplete = false;
-            private bool _fitnessComplete = false;
-
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public SharedTextures Seeds
-            {
-                get { return _seeds; }
-            }
 
             /// <summary>
             /// 
