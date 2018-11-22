@@ -13,7 +13,6 @@ namespace RC3
         public class RandomInitializer : ModelInitializer
         {
             [SerializeField] float _threshold = 0.75f;
-            INITIALIZERTYPE _type = INITIALIZERTYPE.Random;
 
             /// <summary>
             /// 
@@ -46,13 +45,6 @@ namespace RC3
                 Initialize(state);
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            public override INITIALIZERTYPE Type
-            {
-                get { return _type; }
-            }
 
 
         }

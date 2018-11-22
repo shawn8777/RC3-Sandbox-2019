@@ -52,6 +52,14 @@ namespace RC3
                 get { return _model; }
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            public ModelInitializer Initializer
+            {
+                get { return _initializer; }
+            }
+
 
             /// <summary>
             /// Returns the index of the most recently processed layer

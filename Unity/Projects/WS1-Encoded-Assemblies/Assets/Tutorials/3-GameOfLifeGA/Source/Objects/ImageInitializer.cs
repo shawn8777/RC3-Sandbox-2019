@@ -10,7 +10,6 @@ namespace RC3
         {
             [SerializeField] private Texture2D _texture;
             [SerializeField] private float _threshold = 0.5f;
-            private INITIALIZERTYPE _type = INITIALIZERTYPE.Image;
 
             /// <summary>
             /// 
@@ -64,14 +63,6 @@ namespace RC3
                             state[i, j] = 0;
                     }
                 }
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public override INITIALIZERTYPE Type
-            {
-                get { return _type; }
             }
         }
     }

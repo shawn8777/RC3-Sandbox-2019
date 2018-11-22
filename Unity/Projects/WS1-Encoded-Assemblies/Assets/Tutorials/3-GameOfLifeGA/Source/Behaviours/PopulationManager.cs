@@ -109,6 +109,9 @@ namespace RC3
                     Texture2D texture4 = _seeds[Mathf.RoundToInt(childdna.GetGene(3))];
                     Texture2D combined = ImageSynthesizer.CombineFour(texture1, texture2, texture3, texture4, _currentStack.RowCount, _currentStack.ColumnCount);
 
+                    //place the synthesized image into the stack
+                    _currentStack.SetSeed(combined);
+
                     //resets/initializes the model using the synthesized image
                     _model.ResetModel(combined);
                 }
@@ -223,7 +226,7 @@ namespace RC3
             }
 
             /// <summary>
-            /// 
+            /// Create child dna by breeding two parents from the mating pool
             /// </summary>
             /// <param name="dna1"></param>
             /// <param name="dna2"></param>
