@@ -185,6 +185,8 @@ namespace RC3
                         currCells[i, j].State = currState[i, j];
                 }
 
+                int maxage = 0;
+
                 // update cell age
                 if (_currentLayer > 0)
                 {
@@ -193,9 +195,18 @@ namespace RC3
                     for (int i = 0; i < nrows; i++)
                     {
                         for (int j = 0; j < ncols; j++)
+                        {
                             currCells[i, j].Age = currState[i, j] > 0 ? prevCells[i, j].Age + 1 : 0;
+                            if(currCells[i, j].Age > maxage)
+                            {
+                                maxage = currCells[i, j].Age;
+                            }
+                        }
                     }
                 }
+
+                //set layer max age
+                _stack.Layers[_currentLayer].MaxAge = maxage;
             }
         }
     }

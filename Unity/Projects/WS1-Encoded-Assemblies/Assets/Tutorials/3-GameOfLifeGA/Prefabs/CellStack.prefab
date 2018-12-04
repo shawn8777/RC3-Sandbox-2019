@@ -58,3 +58,4 @@ MonoBehaviour:
   _columnCount: 30
   _rowCount: 30
   _layerCount: 40
+  _UITextPrefab: {fileID: 0}

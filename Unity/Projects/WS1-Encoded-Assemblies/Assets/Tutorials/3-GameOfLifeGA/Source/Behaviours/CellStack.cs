@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using SpatialSlur.Collections;
 
@@ -19,11 +21,30 @@ namespace RC3
             [SerializeField] private int _rowCount = 10;
             [SerializeField] private int _layerCount = 10;
 
+            [SerializeField] private GameObject _UITextPrefab;
+
             private CellLayer[] _layers;
 
             private IDNAF _dna;
             private float _fitness = 1;
             private Texture2D _seed;
+
+            private string _name = "";
+            private float _meanStackDensity = 0;
+            private float _maxLayerDensity = 0;
+            private float _minLayerDensity = float.MaxValue;
+            private float _maxAge = 0;
+            private float _avgAge = 0;
+
+            private Text _nameText;
+            private Text _genesText;
+            private Text _fitnessText;
+            private Text _meanStackDensityText;
+            private Text _maxLayerDensityText;
+            private Text _minLayerDensityText;
+            private Text _maxAgeText;
+            private Text _avgAgeText;
+
 
             /// <summary>
             /// 
@@ -32,6 +53,224 @@ namespace RC3
             {
                 _dna = new DNAF();
                 InitializeCells();
+                SetupUIText();
+
+            }
+
+
+            /// <summary>
+            /// 
+            /// </summary>
+            private void SetupUIText()
+            {
+                if (_UITextPrefab != null)
+                {
+                    Transform canvastrans = _UITextPrefab.transform.parent;
+                    _UITextPrefab = Instantiate(_UITextPrefab, canvastrans);
+                    int count = _UITextPrefab.transform.childCount;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        GameObject childobj = _UITextPrefab.transform.GetChild(i).gameObject;
+                        if (childobj.name == "StackNameText")
+                        {
+                            _nameText = childobj.GetComponent<Text>();
+                        }
+
+                        if (childobj.name == "StackGenesText")
+                        {
+                            _genesText = childobj.GetComponent<Text>();
+                        }
+
+                        if (childobj.name == "StackFitnessText")
+                        {
+                            _fitnessText = childobj.GetComponent<Text>();
+                        }
+
+                        if (childobj.name == "StackMeanDensityText")
+                        {
+                            _meanStackDensityText = childobj.GetComponent<Text>();
+                        }
+
+                        if (childobj.name == "StackMaxLayerDensityText")
+                        {
+                            _maxLayerDensityText = childobj.GetComponent<Text>();
+                        }
+
+                        if (childobj.name == "StackMinLayerDensityText")
+                        {
+                            _minLayerDensityText = childobj.GetComponent<Text>();
+                        }
+
+                        if (childobj.name == "StackMaxAgeText")
+                        {
+                            _maxAgeText = childobj.GetComponent<Text>();
+                        }
+
+
+                        if (childobj.name == "StackAvgAgeText")
+                        {
+                            _avgAgeText = childobj.GetComponent<Text>();
+                        }
+                    }
+                }
+
+                else
+                {
+                    Debug.Log("No Text UI Object!!");
+                }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void SetPosition(Vector3 pos)
+            {
+                transform.localPosition = pos;
+                pos = new Vector3(pos.x, 0, pos.z - 5);
+                if (_UITextPrefab != null)
+                {
+                    _UITextPrefab.transform.position = pos;
+                }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void MovePosition(Vector3 move)
+            {
+                transform.localPosition += move;
+
+                //move = new Vector3(move.x, move.z, 0);
+                if (_UITextPrefab != null)
+                {
+                    _UITextPrefab.transform.position += move;
+                }
+
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public GameObject UITextObj
+            {
+                get { return _UITextPrefab; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void SetName(string name)
+            {
+                _name = name;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public float MeanStackDensity
+            {
+                get { return _meanStackDensity; }
+            }
+
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void SetMeanStackDensity(float meanStackDensity)
+            {
+                _meanStackDensity = meanStackDensity;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            public float MaxLayerDensity
+            {
+                get { return _maxLayerDensity; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void SetMaxLayerDensity(float maxLayerDensity)
+            {
+                _maxLayerDensity = maxLayerDensity;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public float MinLayerDensity
+            {
+                get { return _minLayerDensity; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void SetMinLayerDensity(float minLayerDensity)
+            {
+                _minLayerDensity = minLayerDensity;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public float MaxAge
+            {
+                get { return _maxAge; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void SetMaxAge(float maxAge)
+            {
+                _maxAge = maxAge;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public float AvgAge
+            {
+                get { return _avgAge; }
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void SetAvgAge(float avgAge)
+            {
+                _avgAge = avgAge;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public void UpdateDataText()
+            {
+                if (_UITextPrefab != null)
+                {
+                    _UITextPrefab.SetActive(true);
+                    _nameText.text = _name;
+
+                    List<float> roundedgenes = new List<float>();
+                    foreach (var gene in _dna.Genes)
+                    {
+                        roundedgenes.Add((float)Math.Round(gene, 3));
+                    }
+
+                    _genesText.text = "Genes= [ " + String.Join(",", roundedgenes) + " ]";
+                    _fitnessText.text = "Fitness= " + _fitness;
+                    _meanStackDensityText.text = "Mean Stack Density= " + _meanStackDensity;
+                    _maxLayerDensityText.text = "Max Layer Density= " + _maxLayerDensity;
+                    _minLayerDensityText.text = "Min Layer Density= " + _minLayerDensity;
+                    _maxAgeText.text = "Max Age= " + _maxAge;
+                    _avgAgeText.text = "Avg Age= " + _avgAge;
+                }
             }
 
             /// <summary>
@@ -141,7 +380,11 @@ namespace RC3
                 }
 
                 // center at the world origin
-                transform.localPosition = new Vector3(_columnCount, _layerCount, _rowCount) * -0.5f;
+                //transform.localPosition = new Vector3(_columnCount, 0, _rowCount) * -0.5f;
+
+                //place lower corner on origin
+                transform.localPosition = new Vector3(0, 0, 0);
+
             }
         }
     }

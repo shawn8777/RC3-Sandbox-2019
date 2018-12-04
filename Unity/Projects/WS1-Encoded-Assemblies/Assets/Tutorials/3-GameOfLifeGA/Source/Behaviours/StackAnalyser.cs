@@ -18,6 +18,8 @@ namespace RC3
         {
             private StackModel _model;
             private float _densitySum;
+            private float _ageSum;
+
             private int _currentLayer; // index of the most recently analysed layer
 
             /// <summary>
@@ -53,6 +55,13 @@ namespace RC3
                 get { return _densitySum / (_model.CurrentLayer + 1); }
             }
 
+            /// <summary>
+            /// Returns the current mean age of the stack
+            /// </summary>
+            public float MeanStackAge
+            {
+                get { return _ageSum / (_model.CurrentLayer + 1); }
+            }
 
             /// <summary>
             /// 
@@ -66,6 +75,37 @@ namespace RC3
                 var density = CalculateDensity(layer);
                 layer.Density = density;
                 _densitySum += density; // add to running sum
+
+                //update stack mean density
+                _model.Stack.SetMeanStackDensity(MeanStackDensity); //update the stack
+
+
+                //update layer avg age
+                var avgage = CalculateAverageAge(layer);
+                layer.AvgAge = avgage;
+                _ageSum += avgage; // add to running sum
+
+                //update stack avg age
+                _model.Stack.SetAvgAge(MeanStackAge);//update the stack
+
+                //update stack max layer density
+                if (layer.Density > _model.Stack.MaxLayerDensity)
+                {
+                    _model.Stack.SetMaxLayerDensity(layer.Density);
+                }
+
+                //update stack min layer density
+                if (layer.Density < _model.Stack.MinLayerDensity)
+                {
+                    _model.Stack.SetMinLayerDensity(layer.Density);
+                }
+
+                //update stack max age
+                if (layer.MaxAge > _model.Stack.MaxAge)
+                {
+                    _model.Stack.SetMaxAge(layer.MaxAge);
+                }
+
 
                 _currentLayer = currentLayer;
             }
@@ -84,6 +124,26 @@ namespace RC3
                     aliveCount += cell.State;
 
                 return (float)aliveCount / cells.Length;
+            }
+
+            /// <summary>
+            /// Calculate the average age of live cells for the given layer
+            /// </summary>
+            /// <returns></returns>
+            private float CalculateAverageAge(CellLayer layer)
+            {
+                var cells = layer.Cells;
+                int aliveCount = 0;
+                int ageCount = 0;
+
+                foreach (var cell in cells)
+                {
+                    aliveCount += cell.State;
+                    ageCount += cell.Age;
+                }
+                    
+
+                return (float)((float)ageCount) / ((float)aliveCount);
             }
 
 

@@ -199,6 +199,7 @@ namespace RC3
                         if (stack.gameObject.active == true)
                         {
                             stack.gameObject.SetActive(false);
+                            stack.UITextObj.SetActive(false);
                         }
                     }
 
@@ -207,6 +208,8 @@ namespace RC3
                         if (stack.gameObject.active == false)
                         {
                             stack.gameObject.SetActive(true);
+                            stack.UITextObj.SetActive(true);
+
                         }
                     }
                 }
@@ -247,12 +250,16 @@ namespace RC3
                         if (stack.gameObject.active == false)
                         {
                             stack.gameObject.SetActive(true);
+                            stack.UITextObj.SetActive(true);
+
                         }
                     }
 
                     else
                     {
                         stack.gameObject.SetActive(false);
+                        stack.UITextObj.SetActive(false);
+
                     }
 
                     /*
@@ -287,6 +294,8 @@ namespace RC3
                     if (stack.gameObject.active == false)
                     {
                         stack.gameObject.SetActive(true);
+                        stack.UITextObj.SetActive(true);
+
                     }
                 }
             }
@@ -304,6 +313,8 @@ namespace RC3
                     if (stack.gameObject.active == true)
                     {
                         stack.gameObject.SetActive(false);
+                        stack.UITextObj.SetActive(false);
+
                     }
                 }
             }
@@ -344,7 +355,9 @@ namespace RC3
             /// </summary>
             private void DisplayFitness()
             {
-                const string propName = "_Value";
+                Debug.Log("check");
+
+                const string propName = "Color";
                 var population = _population.Population;
 
                 foreach (var stack in population)
@@ -357,6 +370,14 @@ namespace RC3
 
                     // normalize fitness
                     float value = SlurMath.Normalize(stack.Fitness, _population.MinFitness, _population.MaxFitness);
+
+                    if (value > .9f)
+                    {
+                        Debug.Log(_population.MinFitness);
+                        Debug.Log(_population.MaxFitness);
+                        Debug.Log(value);
+                    }
+
                     if (stack.Fitness == _population.MaxFitness)
                     {
                         value = .999f;

@@ -13,6 +13,9 @@ namespace RC3
 
             // Additional custom per-layer attributes
             private float _density;
+            private float _avgAge;
+            private float _maxAge;
+
             // ...
             // ...
             // ...
@@ -36,6 +39,25 @@ namespace RC3
                 set { _density = value; }
             }
 
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public float AvgAge
+            {
+                get { return _avgAge; }
+                set { _avgAge = value; }
+            }
+
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public float MaxAge
+            {
+                get { return _maxAge; }
+                set { _maxAge = value; }
+            }
 
             /// <summary>
             /// 

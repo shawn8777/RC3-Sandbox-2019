@@ -59,12 +59,19 @@ namespace RC3
 
                     //move the stack position
                     var generations = _population.Population.Count + 1;
-                    Vector3 vector = new Vector3(1.5f * (_currentStack.RowCount) * (_curCount - 1), 0, 1.5f * (_currentStack.ColumnCount));
-                    _currentStack.transform.localPosition = vector;
+
+                    //child of population manager
                     _currentStack.transform.parent = gameObject.transform;
+
+                    Vector3 vector = new Vector3(2f * (_currentStack.RowCount) * (_curCount), 0, 2f * (_currentStack.ColumnCount));
+                    _currentStack.SetPosition(vector);
 
                     //add stack to current generation
                     AddStackToGeneration(_currentStack);
+
+                    //update the name and ui data text in the stack
+                    _currentStack.SetName("GEN " + generations + " | STACK " + _curCount);
+                    _currentStack.UpdateDataText();
 
                     _curCount++;
 
@@ -86,10 +93,11 @@ namespace RC3
                         _curCount = 0;
 
                         //move population
-                        Vector3 vec = new Vector3(0, 0, 1.5f * (_currentStack.ColumnCount));
+                        Vector3 vec = new Vector3(0, 0, 2f * (_currentStack.ColumnCount));
                         foreach (var stack in _population.Population)
                         {
-                            stack.transform.localPosition += vec;
+                            //stack.transform.localPosition += vec;
+                            stack.MovePosition(vec);
                         }
                     }
 
