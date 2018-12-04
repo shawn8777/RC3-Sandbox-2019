@@ -81,7 +81,7 @@ namespace RC3
                     if (_display.PopDisplayMode != PopulationDisplayMode.All)
                     {
                         _display.PopDisplayMode = PopulationDisplayMode.All;
-                        _display.DisplayChange = true;
+                        _display.PopDisplayChange = true;
                     }
                 }
             }

@@ -27,9 +27,17 @@ namespace RC3
             [Range(0, 1)]
             [SerializeField] private float _fitnessCutoff = .9f;
 
+            [SerializeField] private int _fitNumDisplay = 5; //////
+
             private PopulationManager _manager;
             private StackPopulation _population;
             private MaterialPropertyBlock _properties;
+
+            private int popSize = 0;
+
+            private bool _currentGenDisplay = false;
+            //private bool _populationDisplayMode = true;
+
 
             /// <summary>
             /// 
@@ -60,12 +68,14 @@ namespace RC3
 
             private bool _displayChange = false;
             private bool _popDisplayChange = false;
+            private bool _popIsUpdated = true;
 
             public bool DisplayChange
             {
                 get { return _displayChange; }
                 set { _displayChange = value; }
             }
+
             public bool PopDisplayChange
             {
                 get { return _popDisplayChange; }
@@ -89,23 +99,31 @@ namespace RC3
             /// </summary>
             private void LateUpdate()
             {
+                if (_population.Population.Count != popSize)
+                {
+                    popSize = _population.Population.Count;
+                    _popIsUpdated = false;
+                }
+
                 // update display
-                if (_displayChange == true || _popDisplayChange == true)
+                if (_displayChange == true || _popDisplayChange == true || _popIsUpdated == false)
                 {
                     UpdateDisplay();
                 }
+
                 _displayChange = false;
                 _popDisplayChange = false;
+                _popIsUpdated = true;
             }
-
 
             /// <summary>
             /// 
             /// </summary>
             private void UpdateDisplay()
             {
+
                 //switch enable
-                if (_popDisplayChange == true)
+                if (_popDisplayChange == true || _popIsUpdated == false)
                 {
                     switch (_popDisplayMode)
                     {
@@ -122,7 +140,7 @@ namespace RC3
                             break;
 
                         case PopulationDisplayMode.All:
-                            ShowFittest();
+                            ShowAll();
                             break;
 
                         default:
@@ -132,7 +150,7 @@ namespace RC3
 
                 //switch color
 
-                if (_displayChange == true || _popDisplayChange == true)
+                if (_displayChange == true || _popDisplayChange == true || _popIsUpdated == false)
                 {
                     if (_popDisplayMode == PopulationDisplayMode.None)
                     {
@@ -194,6 +212,7 @@ namespace RC3
                 }
             }
 
+
             /// <summary>
             /// 
             /// </summary>
@@ -201,11 +220,42 @@ namespace RC3
             {
                 const string propName = "_Value";
                 var population = _population.Population;
+
+                //sort by fitness value (highest first - descending)
+                var sortedList = population.OrderByDescending(o => (o.Fitness)).ToList();
+
+                var selectedlist = new List<CellStack>();
+                if (sortedList.Count <= _fitNumDisplay)
+                {
+                    selectedlist = sortedList;
+
+                }
+
+                if (sortedList.Count > _fitNumDisplay)
+                {
+                    selectedlist = sortedList.GetRange(0, _fitNumDisplay);
+                }
+
+
                 for (int i = 0; i < population.Count; i++)
                 {
                     var stack = population[i];
                     float value = SlurMath.Normalize(stack.Fitness, _population.MinFitness, _population.MaxFitness);
 
+                    if (selectedlist.Contains(stack) == true)
+                    {
+                        if (stack.gameObject.active == false)
+                        {
+                            stack.gameObject.SetActive(true);
+                        }
+                    }
+
+                    else
+                    {
+                        stack.gameObject.SetActive(false);
+                    }
+
+                    /*
                     if (value > _fitnessCutoff)
                     {
                         if (stack.gameObject.active == false)
@@ -221,6 +271,7 @@ namespace RC3
                             stack.gameObject.SetActive(false);
                         }
                     }
+                    */
                 }
             }
 
@@ -229,7 +280,6 @@ namespace RC3
             /// </summary>
             private void ShowAll()
             {
-                const string propName = "_Value";
                 var population = _population.Population;
                 for (int i = 0; i < population.Count; i++)
                 {
@@ -296,8 +346,15 @@ namespace RC3
             {
                 const string propName = "_Value";
                 var population = _population.Population;
+
                 foreach (var stack in population)
                 {
+
+                    if (stack.gameObject.active == false)
+                    {
+                        continue;
+                    }
+
                     // normalize fitness
                     float value = SlurMath.Normalize(stack.Fitness, _population.MinFitness, _population.MaxFitness);
                     if (stack.Fitness == _population.MaxFitness)
@@ -308,11 +365,6 @@ namespace RC3
                     if (stack.Fitness == _population.MinFitness)
                     {
                         value = .001f;
-                    }
-
-                    if (stack.gameObject.active == false)
-                    {
-                        continue;
                     }
 
                     foreach (var layer in stack.Layers)

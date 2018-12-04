@@ -46,6 +46,11 @@ namespace RC3
             /// <returns></returns>
             public int NextAt(Index2 index, int[,] current)
             {
+                if (_dna != _model.Stack.DNA)
+                {
+                    _dna = _model.Stack.DNA;
+                }
+
                 //get current state
                 int state = current[index.I, index.J];
 

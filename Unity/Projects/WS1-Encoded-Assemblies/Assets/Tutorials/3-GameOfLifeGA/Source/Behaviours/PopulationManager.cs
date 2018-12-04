@@ -74,6 +74,8 @@ namespace RC3
                         //add generation to the population history
                         AddGenToPopulation(_currentGeneration);
 
+                        //UpdatePopulation()
+
                         //run natural selection to generate breeding pool
                         UpdateMatingPool();
 
@@ -149,6 +151,8 @@ namespace RC3
                 _population.AddGeneration(generation);
 
             }
+
+
 
             /// <summary>
             /// Initializes the mating pool
