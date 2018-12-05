@@ -40,6 +40,21 @@ namespace RC3
             private void HandleKeyPress()
             {
                 // Update display mode
+
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    if (_manager.Pause == true)
+                    {
+                        _manager.Pause = false;
+                    }
+
+                    else
+                    {
+                        _manager.Pause = true;
+                    }
+                }
+
+
                 if (Input.GetKeyDown(KeyCode.Alpha4))
                 {
                     if (_display.DisplayMode != CellDisplayMode.Fitness)

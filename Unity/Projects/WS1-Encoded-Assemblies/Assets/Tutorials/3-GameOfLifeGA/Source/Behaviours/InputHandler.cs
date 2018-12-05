@@ -12,7 +12,7 @@ namespace RC3
         public class InputHandler : MonoBehaviour
         {
             private StackModel _model;
-            private StackDisplay _display;
+            private StackDisplay _stackDisplay;
 
             /// <summary>
             /// 
@@ -20,7 +20,7 @@ namespace RC3
             private void Start()
             {
                 _model = GetComponent<StackModel>();
-                _display = GetComponent<StackDisplay>();
+                _stackDisplay = GetComponent<StackDisplay>();
             }
 
 
@@ -42,15 +42,28 @@ namespace RC3
                 if (Input.GetKeyDown(KeyCode.Space))
                     _model.ResetModel();
 
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    if (_model.Pause == true)
+                    {
+                        _model.Pause = false;
+                    }
+
+                    else
+                    {
+                        _model.Pause = true;
+                    }
+                }
+
                 // Update display mode
                 if (Input.GetKeyDown(KeyCode.Alpha1))
-                    _display.DisplayMode = CellDisplayMode.Age;
+                    _stackDisplay.DisplayMode = CellDisplayMode.Age;
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
-                    _display.DisplayMode = CellDisplayMode.LayerDensity;
+                    _stackDisplay.DisplayMode = CellDisplayMode.LayerDensity;
                 else if (Input.GetKeyDown(KeyCode.Alpha3))
-                    _display.DisplayMode = CellDisplayMode.NeighborDensity;
+                    _stackDisplay.DisplayMode = CellDisplayMode.NeighborDensity;
                 else if (Input.GetKeyDown(KeyCode.Alpha0))
-                    _display.DisplayMode = CellDisplayMode.Alive;
+                    _stackDisplay.DisplayMode = CellDisplayMode.Alive;
             }
         }
     }

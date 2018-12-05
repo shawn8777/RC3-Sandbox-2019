@@ -26,6 +26,19 @@ namespace RC3
             private int _currentLayer = -1;
             private bool _buildComplete = false;
 
+            private bool _pause = false;
+
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public bool Pause
+            {
+                get { return _pause; }
+                set { _pause = value; }
+            }
+
+
             /// <summary>
             /// 
             /// </summary>
@@ -98,29 +111,34 @@ namespace RC3
             /// </summary>
             private void Update()
             {
-                // bail if stack is full
-                if (_currentLayer == _stack.LayerCount - 1 && _buildComplete == false)
+                if (_pause == false)
                 {
-                    _buildComplete = true;
-                    return;
+
+
+                    // bail if stack is full
+                    if (_currentLayer == _stack.LayerCount - 1 && _buildComplete == false)
+                    {
+                        _buildComplete = true;
+                        return;
+                    }
+
+                    if (_buildComplete == true)
+                    {
+                        return;
+
+                    }
+
+
+                    // advance later
+                    _currentLayer++;
+
+                    // advance model
+                    _model.Step();
+                    //_model.StepParallel();
+
+                    // update cells in the stack
+                    UpdateStack();
                 }
-
-                if (_buildComplete == true)
-                {
-                    return;
-
-                }
-
-
-                // advance later
-                _currentLayer++;
-
-                // advance model
-                _model.Step();
-                //_model.StepParallel();
-
-                // update cells in the stack
-                UpdateStack();
             }
 
 
@@ -143,6 +161,7 @@ namespace RC3
                 _currentLayer = -1;
 
                 _buildComplete = false;
+
             }
 
             /// <summary>
@@ -197,7 +216,7 @@ namespace RC3
                         for (int j = 0; j < ncols; j++)
                         {
                             currCells[i, j].Age = currState[i, j] > 0 ? prevCells[i, j].Age + 1 : 0;
-                            if(currCells[i, j].Age > maxage)
+                            if (currCells[i, j].Age > maxage)
                             {
                                 maxage = currCells[i, j].Age;
                             }
