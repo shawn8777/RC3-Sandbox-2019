@@ -54,8 +54,16 @@ namespace RC3
                     }
                 }
 
+                if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    if (_display.DisplayMode != CellDisplayMode.Alive)
+                    {
+                        _display.DisplayMode = CellDisplayMode.Alive;
+                        _display.DisplayChange = true;
+                    }
+                }
 
-                if (Input.GetKeyDown(KeyCode.Alpha4))
+                if (Input.GetKeyDown(KeyCode.Alpha6))
                 {
                     if (_display.DisplayMode != CellDisplayMode.Fitness)
                     {
@@ -64,25 +72,21 @@ namespace RC3
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Alpha5))
+                if (Input.GetKeyDown(KeyCode.Alpha7))
                 {
-                    if (_display.PopDisplayMode != PopulationDisplayMode.None)
+                    if (_display.CurrentGenerationDisplay == true)
                     {
-                        _display.PopDisplayMode = PopulationDisplayMode.None;
-                        _display.PopDisplayChange = true;
+                        _display.CurrentGenerationDisplay = false;
                     }
+                    else
+                    {
+                        _display.CurrentGenerationDisplay = true;
+                    }
+
+                    _display.GenDisplayChange = true;
                 }
 
-                else if (Input.GetKeyDown(KeyCode.Alpha6))
-                {
-                    if (_display.PopDisplayMode != PopulationDisplayMode.Generation)
-                    {
-                        _display.PopDisplayMode = PopulationDisplayMode.Generation;
-                        _display.PopDisplayChange = true;
-                    }
-                }
-
-                else if (Input.GetKeyDown(KeyCode.Alpha7))
+                else if (Input.GetKeyDown(KeyCode.Alpha8))
                 {
                     if (_display.PopDisplayMode != PopulationDisplayMode.Fittest)
                     {
@@ -91,11 +95,20 @@ namespace RC3
                     }
                 }
 
-                else if (Input.GetKeyDown(KeyCode.Alpha8))
+                else if (Input.GetKeyDown(KeyCode.Alpha9))
                 {
                     if (_display.PopDisplayMode != PopulationDisplayMode.All)
                     {
                         _display.PopDisplayMode = PopulationDisplayMode.All;
+                        _display.PopDisplayChange = true;
+                    }
+                }
+
+                else if (Input.GetKeyDown(KeyCode.Alpha0))
+                {
+                    if (_display.PopDisplayMode != PopulationDisplayMode.None)
+                    {
+                        _display.PopDisplayMode = PopulationDisplayMode.None;
                         _display.PopDisplayChange = true;
                     }
                 }

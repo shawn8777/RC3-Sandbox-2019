@@ -45,12 +45,20 @@ namespace RC3
             private Text _maxAgeText;
             private Text _avgAgeText;
 
+            private MaterialPropertyBlock _properties;
+
+            public MaterialPropertyBlock MaterialProperties
+            {
+                get { return _properties; }
+                set { _properties = value; }
+            }
 
             /// <summary>
             /// 
             /// </summary>
             private void Awake()
             {
+                _properties = new MaterialPropertyBlock();
                 _dna = new DNAF();
                 InitializeCells();
                 SetupUIText();

@@ -57,13 +57,13 @@ namespace RC3
 
                 // Update display mode
                 if (Input.GetKeyDown(KeyCode.Alpha1))
-                    _stackDisplay.DisplayMode = CellDisplayMode.Age;
-                else if (Input.GetKeyDown(KeyCode.Alpha2))
-                    _stackDisplay.DisplayMode = CellDisplayMode.LayerDensity;
-                else if (Input.GetKeyDown(KeyCode.Alpha3))
-                    _stackDisplay.DisplayMode = CellDisplayMode.NeighborDensity;
-                else if (Input.GetKeyDown(KeyCode.Alpha0))
                     _stackDisplay.DisplayMode = CellDisplayMode.Alive;
+                else if (Input.GetKeyDown(KeyCode.Alpha2))
+                    _stackDisplay.DisplayMode = CellDisplayMode.Age;
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                    _stackDisplay.DisplayMode = CellDisplayMode.LayerDensity;
+                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                    _stackDisplay.DisplayMode = CellDisplayMode.NeighborDensity;
             }
         }
     }

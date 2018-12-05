@@ -26,6 +26,7 @@ namespace RC3
             [SerializeField] private StackPopulation _population;
 
             bool _pause = false;
+            bool _hideCurGen = false;
 
             /// <summary>
             /// 
@@ -280,6 +281,13 @@ namespace RC3
                 get { return _genSize; }
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            public CellStack[] CurrentGeneration
+            {
+                get { return _currentGeneration; }
+            }
         }
     }
 }

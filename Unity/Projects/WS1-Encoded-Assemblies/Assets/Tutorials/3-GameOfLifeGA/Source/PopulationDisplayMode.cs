@@ -8,7 +8,6 @@
         public enum PopulationDisplayMode
         {
             None,
-            Generation,
             Fittest,
             All,
         }

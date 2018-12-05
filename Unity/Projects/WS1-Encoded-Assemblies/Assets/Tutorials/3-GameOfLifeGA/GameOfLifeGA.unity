@@ -13880,6 +13880,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sensitivity: 1
   _stiffness: 5
+  _minDistance: 0.1
+  _maxDistance: 1000
 --- !u!114 &892593808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31247,9 +31249,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _displayMode: 0
   _popDisplayMode: 0
+  _currentGenDisplay: 1
   _baseMaterial: {fileID: 2100000, guid: 5ad7da17fb7bb0b499b1f12d0013d2b7, type: 2}
   _fitnessMaterial: {fileID: 2100000, guid: 3016b173ff4e68347883b975e5348c2f, type: 2}
-  _fitnessCutoff: 0.9
   _fitNumDisplay: 3
 --- !u!114 &1985321472
 MonoBehaviour:
