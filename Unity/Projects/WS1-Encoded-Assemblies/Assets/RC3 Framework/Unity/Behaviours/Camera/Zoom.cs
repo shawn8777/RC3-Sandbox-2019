@@ -20,10 +20,14 @@ namespace RC3.Unity
         private float _stiffness = 5.0f;
         
 
-        private float _distance = 50.0f;
+        [SerializeField]
         private float _minDistance = 1.0f;
+
+        [SerializeField]
         private float _maxDistance = 100.0f;
-        
+
+        private float _distance = 50.0f;
+
 
         /// <summary>
         /// 

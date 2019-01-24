@@ -11,13 +11,16 @@ namespace RC3
         /// <summary>
         /// 
         /// </summary>
+        
         public static string ToString(IEnumerable<CellLayer> layers)
         {
+                
             return ToString(
                 layers.SelectMany(layer => ToEnumerable(layer.Cells)),
                 cell => $"{cell.State}, ");
+            
         }
-
+        
 
         /// <summary>
         /// 
