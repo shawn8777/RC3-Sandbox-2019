@@ -1,6 +1,6 @@
 # RC3-Framework
 
-Tutorials on fundamental algorithms and data structures for modelling complex systems
+Fundamental algorithms and data structures for modelling complex systems
 
 ![](rc3.png)
 
