@@ -37,5 +37,25 @@ namespace RC3.Unity.GraphIntro
         {
             get { return _positions; }
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Clear()
+        {
+            _vertices.Clear();
+            _positions.Clear();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ClearEdges()
+        {
+            for(int i = 0; i < _vertices.Count; i++)
+                _vertices[i].Clear();
+        }
     }
 }
