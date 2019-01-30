@@ -14,18 +14,9 @@ namespace RC3.Unity.GraphIntro
         [Range(0.0f, 1.0f)]
         [SerializeField] private float _maxRadius = 0.125f;
 
-        [Range(0, 100)]
-        [SerializeField] private int _vertexCount = 0;
+        [Range(0, 1000)]
+        [SerializeField] private int _vertexCount = 100;
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Awake()
-        {
-            _graph.Clear();
-            GraphFactory.CreateScatterGraph(_graph, _maxRadius, _vertexCount);
-        }
 
         /// <summary>
         /// 

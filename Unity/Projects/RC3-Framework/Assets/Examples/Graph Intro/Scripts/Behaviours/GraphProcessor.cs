@@ -23,7 +23,7 @@ namespace RC3.Unity.GraphIntro
             {
                 var verts = _graph.Vertices;
 
-                // Ensure sufficient number of deltas
+                // Ensure delta buffer is large enough
                 if (_deltas.Length < verts.Count)
                     _deltas = new Vector3[verts.Capacity];
 

@@ -905,7 +905,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.6, g: 0.6, b: 0.6, a: 0}
+  m_BackGroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -1604,8 +1604,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _graph: {fileID: 11400000, guid: c0be3984a1a8f1a498008e4786d753ee, type: 2}
-  _maxRadius: 0.125
-  _vertexCount: 0
+  _maxRadius: 0.25
+  _vertexCount: 150
 --- !u!114 &1407300075
 MonoBehaviour:
   m_ObjectHideFlags: 0
