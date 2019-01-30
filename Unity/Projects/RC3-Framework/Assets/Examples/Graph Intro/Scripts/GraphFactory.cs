@@ -76,9 +76,10 @@ namespace RC3.Unity.GraphIntro
             for (int i = 0; i < vertexCount; i++)
             {
                 float x = (float)random.NextDouble();
+                float y = (float)random.NextDouble();
                 float z = (float)random.NextDouble();
 
-                positions.Add(new Vector3(x, 0.0f, z));
+                positions.Add(new Vector3(x, y, z));
                 verts.Add(new List<int>());
             }
 
