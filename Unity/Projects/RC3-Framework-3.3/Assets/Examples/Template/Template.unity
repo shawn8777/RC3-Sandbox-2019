@@ -881,8 +881,6 @@ GameObject:
   - component: {fileID: 892593807}
   - component: {fileID: 892593806}
   - component: {fileID: 892593809}
-  - component: {fileID: 892593810}
-  - component: {fileID: 892593811}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -906,7 +904,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 0}
+  m_BackGroundColor: {r: 0.6, g: 0.6, b: 0.6, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -995,50 +993,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 892593802}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 286cd706df8d1414aa5f7686597155b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transform: {fileID: 1407300073}
-  _material: {fileID: 2100000, guid: 9503062e767be5d4d86ee1e053183043, type: 2}
-  _graph: {fileID: 11400000, guid: c0be3984a1a8f1a498008e4786d753ee, type: 2}
-  _color0: {r: 1, g: 1, b: 1, a: 1}
-  _color1: {r: 0, g: 0, b: 0, a: 1}
-  _scale0: 1
-  _scale1: 0.8
-  _period: 3
---- !u!114 &892593810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 892593802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ecd8565eccc6334d865ba1233a3bb29, type: 3}
+  m_Script: {fileID: 11500000, guid: 916865b927a07dc45a3f62e6c91dca3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 1407300073}
   _material: {fileID: 2100000, guid: 9503062e767be5d4d86ee1e053183043, type: 2}
-  _graph: {fileID: 11400000, guid: c0be3984a1a8f1a498008e4786d753ee, type: 2}
-  _gradient: {fileID: 2800000, guid: 00a93696a4a2df1498809d5b9e4a22c0, type: 3}
-  _minDegree: 10
-  _maxDegree: 20
---- !u!114 &892593811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 892593802}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366821fa30578424ead4ed41d387ff43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transform: {fileID: 1407300073}
-  _mesh: {fileID: 4300000, guid: 8bf98a186fe34c34f9042eb9be2165ae, type: 3}
-  _material: {fileID: 2100000, guid: 9503062e767be5d4d86ee1e053183043, type: 2}
+  _period: 1
 --- !u!1 &965535997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,8 +1547,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1407300073}
-  - component: {fileID: 1407300074}
-  - component: {fileID: 1407300075}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1607,32 +1567,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1407300074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1407300072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beda349ccbfc8e645840e90ac4a44cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _graph: {fileID: 11400000, guid: c0be3984a1a8f1a498008e4786d753ee, type: 2}
-  _maxRadius: 0.25
-  _vertexCount: 250
---- !u!114 &1407300075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1407300072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9fb5073da0f07645bd27b7188cfd6bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _graph: {fileID: 11400000, guid: c0be3984a1a8f1a498008e4786d753ee, type: 2}
 --- !u!1 &1560026991
 GameObject:
   m_ObjectHideFlags: 0
