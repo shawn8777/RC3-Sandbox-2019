@@ -2,7 +2,6 @@
 
 namespace RC3.Unity.GraphIntro
 {
-
     /// <summary>
     /// 
     /// </summary>

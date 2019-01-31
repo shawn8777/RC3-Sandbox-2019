@@ -6,10 +6,9 @@ namespace RC3.Unity
     /// 
     /// </summary>
     [RequireComponent(typeof(Camera))]
-    public abstract class DebugDisplay : MonoBehaviour
+    public abstract class CustomDisplay : MonoBehaviour
     {
         [SerializeField] private Transform _transform;
-        [SerializeField] private Material _material;
         private Camera _camera;
 
 
@@ -27,26 +26,16 @@ namespace RC3.Unity
         /// </summary>
         private void OnPostRender()
         {
-            _material.SetPass(0);
-
-            GL.PushMatrix();
-            {
-                GL.LoadIdentity();
-
-                if (_transform == null)
-                    GL.MultMatrix(_camera.worldToCameraMatrix);
-                else
-                    GL.MultMatrix(_camera.worldToCameraMatrix * _transform.localToWorldMatrix);
-
-                Display();
-            }
-            GL.PopMatrix();
+            if (_transform == null)
+                Display(_camera, Matrix4x4.identity);
+            else
+                Display(_camera, _transform.localToWorldMatrix);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        protected abstract void Display();
+        protected abstract void Display(Camera camera, Matrix4x4 model);
     }
 }
