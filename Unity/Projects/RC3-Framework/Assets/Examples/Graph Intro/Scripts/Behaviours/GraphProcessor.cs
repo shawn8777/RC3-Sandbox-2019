@@ -10,8 +10,15 @@ namespace RC3.Unity.GraphIntro
     public class GraphProcessor : MonoBehaviour
     {
         [SerializeField] private Graph _graph;
+        [SerializeField] private float _smoothStrength = 0.5f;
 
-        private Vector3[] _deltas = System.Array.Empty<Vector3>();
+        // Delta buffers
+        private Vector3[] _positionDeltas = System.Array.Empty<Vector3>();
+        private Color[] _colorDeltas = System.Array.Empty<Color>();
+        // ...
+        // ...
+        // ...
+        // ...
 
 
         /// <summary>
@@ -19,16 +26,36 @@ namespace RC3.Unity.GraphIntro
         /// </summary>
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            var verts = _graph.Vertices;
+
+            // Fix vertex zero to red
+            _graph.Colors[0] = Color.red;
+
+            if (Input.GetKeyDown(KeyCode.P))
             {
-                var verts = _graph.Vertices;
-
-                // Ensure delta buffer is large enough
-                if (_deltas.Length < verts.Count)
-                    _deltas = new Vector3[verts.Capacity];
-
-                GraphFunctions.Assignment1(_graph, _deltas, 2);
+                _positionDeltas = ResizeBuffer(_graph, _positionDeltas);
+                GraphFunctions.UniformSmooth(_graph, _positionDeltas, _smoothStrength);
             }
+
+            if(Input.GetKeyDown(KeyCode.C))
+            {
+                _colorDeltas = ResizeBuffer(_graph, _colorDeltas);
+                GraphFunctions.UniformSmooth(_graph, _colorDeltas, _smoothStrength);
+            }
+        }
+
+
+        /// <summary>
+        /// Ensure the given buffer is large enough
+        /// </summary>
+        private T[] ResizeBuffer<T>(Graph graph, T[] buffer)
+        {
+            var verts = graph.Vertices;
+
+            if (buffer.Length < verts.Count)
+                return new T[verts.Capacity];
+
+            return buffer;
         }
     }
 }

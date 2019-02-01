@@ -883,6 +883,7 @@ GameObject:
   - component: {fileID: 892593809}
   - component: {fileID: 892593810}
   - component: {fileID: 892593811}
+  - component: {fileID: 892593812}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1014,7 +1015,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 892593802}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ecd8565eccc6334d865ba1233a3bb29, type: 3}
   m_Name: 
@@ -1039,6 +1040,21 @@ MonoBehaviour:
   _transform: {fileID: 1407300073}
   _mesh: {fileID: 4300000, guid: 8bf98a186fe34c34f9042eb9be2165ae, type: 3}
   _material: {fileID: 2100000, guid: 9503062e767be5d4d86ee1e053183043, type: 2}
+--- !u!114 &892593812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 892593802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdc35201c613944c9f82fda2deabe1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 1407300073}
+  _material: {fileID: 2100000, guid: 9503062e767be5d4d86ee1e053183043, type: 2}
+  _graph: {fileID: 11400000, guid: c0be3984a1a8f1a498008e4786d753ee, type: 2}
+  _scale: 0.02
 --- !u!1 &965535997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1633,6 +1649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _graph: {fileID: 11400000, guid: c0be3984a1a8f1a498008e4786d753ee, type: 2}
+  _smoothStrength: 0.5
 --- !u!1 &1560026991
 GameObject:
   m_ObjectHideFlags: 0

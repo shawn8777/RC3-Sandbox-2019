@@ -15,6 +15,7 @@ namespace RC3.Unity.GraphIntro
 
         // Geometry
         private List<Vector3> _positions = new List<Vector3>();
+        private List<Color> _colors = new List<Color>();
         // ...
         // ...
         // ...
@@ -42,10 +43,20 @@ namespace RC3.Unity.GraphIntro
         /// <summary>
         /// 
         /// </summary>
+        public List<Color> Colors
+        {
+            get { return _colors; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void Clear()
         {
             _vertices.Clear();
             _positions.Clear();
+            _colors.Clear();
         }
 
 

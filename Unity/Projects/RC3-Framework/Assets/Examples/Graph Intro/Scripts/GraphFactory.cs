@@ -11,6 +11,82 @@ namespace RC3.Unity.GraphIntro
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="count"></param>
+        public static void AddVertices(Graph graph, int count)
+        {
+            var verts = graph.Vertices;
+            
+            for (int i = 0; i < count; i++)
+                verts.Add(new List<int>());
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="graph"></param>
+        public static void AddRandomPositions(Graph graph)
+        {
+            var verts = graph.Vertices;
+            var positions = graph.Positions;
+
+            var random = new System.Random(1);
+
+            while (positions.Count < verts.Count)
+            {
+                float x = (float)random.NextDouble();
+                float y = (float)random.NextDouble();
+                float z = (float)random.NextDouble();
+                positions.Add(new Vector3(x, y, z));
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="graph"></param>
+        public static void AddColors(Graph graph, Color color)
+        {
+            var verts = graph.Vertices;
+            var colors = graph.Colors;
+
+            while (colors.Count < verts.Count)
+                colors.Add(color);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="radius"></param>
+        public static void AddEdgesByRange(Graph graph, float radius)
+        {
+            var verts = graph.Vertices;
+            var positions = graph.Positions;
+
+            float sqrRad = radius * radius;
+            
+            for (int i = 0; i < verts.Count; i++)
+            {
+                for (int j = i + 1; j < verts.Count; j++)
+                {
+                    var sqrDist = (positions[i] - positions[j]).sqrMagnitude;
+
+                    if (sqrDist < sqrRad)
+                    {
+                        verts[i].Add(j);
+                        verts[j].Add(i);
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static void CreateTestGraph0(Graph graph)
         {
             var verts = graph.Vertices;
@@ -60,58 +136,5 @@ namespace RC3.Unity.GraphIntro
             }
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="graph"></param>
-        public static void CreateScatterGraph(Graph graph, float maxRadius, int vertexCount)
-        {
-            var verts = graph.Vertices;
-            var positions = graph.Positions;
-
-            var random = new System.Random(1);
-
-            // Add vertices and positions
-            for (int i = 0; i < vertexCount; i++)
-            {
-                float x = (float)random.NextDouble();
-                float y = (float)random.NextDouble();
-                float z = (float)random.NextDouble();
-
-                positions.Add(new Vector3(x, y, z));
-                verts.Add(new List<int>());
-            }
-
-            // Add edges
-            AddEdgesByRange(graph, maxRadius);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="maxRadius"></param>
-        public static void AddEdgesByRange(Graph graph, float maxRadius)
-        {
-            var verts = graph.Vertices;
-            var positions = graph.Positions;
-            float sqrRad = maxRadius * maxRadius;
-            
-            for (int i = 0; i < verts.Count; i++)
-            {
-                for (int j = i + 1; j < verts.Count; j++)
-                {
-                    var sqrDist = (positions[i] - positions[j]).sqrMagnitude;
-
-                    if (sqrDist < sqrRad)
-                    {
-                        verts[i].Add(j);
-                        verts[j].Add(i);
-                    }
-                }
-            }
-        }
     }
 }

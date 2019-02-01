@@ -6,6 +6,10 @@ Fundamental algorithms and data structures for modelling complex systems
 
 ## Assignments
 
+### 19.01.31
+- Write a function that creates grid graph where each vertex has a consistent 1-ring neighborhood (degree 4 with same orientation)
+- Assign a color to interior vertices and a different color to boundary vertices
+
 ### 19.01.29
 - Add vertex colors to the current Graph class
 - Write a display class that visualizes vertex colors
