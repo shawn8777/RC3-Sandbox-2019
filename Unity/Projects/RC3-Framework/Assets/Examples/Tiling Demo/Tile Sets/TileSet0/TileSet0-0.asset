@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 916e312d56c198e4f8fc62db7e00e2cf, type: 3}
-  m_Name: TileSet1
+  m_Name: TileSet0-0
   m_EditorClassIdentifier: 
   _tiles:
   - {fileID: 11400000, guid: 13ab2bf0a04fcd54dbf9590f27553ec7, type: 2}
@@ -20,4 +20,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d932a9bbb535e0d47ae9542269294abd, type: 2}
   - {fileID: 11400000, guid: c07e10f5b572dc244970401e250b5d85, type: 2}
   - {fileID: 11400000, guid: 94b79a1bb5666a8428e840eddf16ae2f, type: 2}
+  - {fileID: 11400000, guid: 8134210e0ecff2a48b5a576489a9c413, type: 2}
+  - {fileID: 11400000, guid: a7594778e1fe8be45b7e7161f0ec0a36, type: 2}
+  - {fileID: 11400000, guid: 580db8a590f00db49b0892a02f8e9569, type: 2}
+  - {fileID: 11400000, guid: 0cae6b8080826af42801e3cc981bfb50, type: 2}
   - {fileID: 11400000, guid: d9f89e523b55e1d4980e417140f3e4db, type: 2}

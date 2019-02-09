@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa24c0254e539284592c7413b87b99e8, type: 3}
   m_Name: GraphInit0
   m_EditorClassIdentifier: 
-  _countX: 10
-  _countY: 10
+  _countX: 25
+  _countY: 25

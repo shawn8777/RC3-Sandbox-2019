@@ -2,7 +2,6 @@
  * Notes
  */
 
-using System.Linq;
 using UnityEngine;
 
 using Domino;

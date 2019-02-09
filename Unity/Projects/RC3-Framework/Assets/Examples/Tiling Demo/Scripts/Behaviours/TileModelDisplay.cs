@@ -46,7 +46,7 @@ namespace RC3.Unity.TilingDemo
                     m.SetTRS(p, q, new Vector3(t, t, t));
 
                     _defaultMaterial.SetPass(0);
-                    Graphics.DrawMeshNow(_defaultMesh, m, 0);
+                    Graphics.DrawMeshNow(_defaultMesh,  m, 0);
                 }
                 else
                 {

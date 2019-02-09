@@ -9,7 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e077db4c9f5881c4db32e2796aa3ce21, type: 3}
-  m_Name: Graph0
+  m_Script: {fileID: 11500000, guid: 5d43e67470f6e064fb285db042b3ed60, type: 3}
+  m_Name: Tile0
   m_EditorClassIdentifier: 
-  _tileSet: {fileID: 11400000, guid: f9200f1cbe7fd1c4bb9579134cb31346, type: 2}
+  _mesh: {fileID: 4300024, guid: 01c070f2eb11535419dbf75d57039a75, type: 3}
+  _material: {fileID: 2100000, guid: 18dd1922c829302448c32feb18c74f9b, type: 2}
+  _labels:
+  - A
+  - B
+  - C
+  - D
