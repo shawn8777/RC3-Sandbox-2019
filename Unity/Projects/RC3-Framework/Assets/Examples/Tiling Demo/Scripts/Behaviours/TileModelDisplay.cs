@@ -39,14 +39,12 @@ namespace RC3.Unity.TilingDemo
                     var p = positions[i];
                     var d = p - camPos;
                     var q = Quaternion.LookRotation(d, Vector3.Cross(d, camRight));
-                    
-                    const float t = 0.65f; // TODO Scale sprite by size of domain
 
-                    Matrix4x4 m = Matrix4x4.identity;
-                    m.SetTRS(p, q, new Vector3(t, t, t));
+                    const float t = 0.65f; // TODO Scale sprite by size of domain
+                    Matrix4x4 m = Matrix4x4.TRS(p, q, new Vector3(t, t, t));
 
                     _defaultMaterial.SetPass(0);
-                    Graphics.DrawMeshNow(_defaultMesh,  m, 0);
+                    Graphics.DrawMeshNow(_defaultMesh, model * m, 0);
                 }
                 else
                 {
@@ -54,8 +52,10 @@ namespace RC3.Unity.TilingDemo
 
                     if (tile.Mesh != null)
                     {
+                        Matrix4x4 m = Matrix4x4.Translate(positions[i]);
+
                         tile.Material.SetPass(0);
-                        Graphics.DrawMeshNow(tile.Mesh, positions[i], Quaternion.identity, 0);
+                        Graphics.DrawMeshNow(tile.Mesh, model * m, 0);
                     }
                 }
             }
