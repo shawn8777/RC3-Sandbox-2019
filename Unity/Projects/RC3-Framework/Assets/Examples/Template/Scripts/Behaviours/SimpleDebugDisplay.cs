@@ -11,7 +11,7 @@ namespace RC3.Unity.Template
         /// <summary>
         /// 
         /// </summary>
-        protected override void Display()
+        protected override void Display(Camera camera)
         {
             // Draw a line segment
             GL.Begin(GL.LINES);
