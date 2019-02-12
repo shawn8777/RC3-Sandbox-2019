@@ -2,8 +2,6 @@
  * Notes
  */
 
-using UnityEngine;
-
 using Domino;
 
 namespace RC3.Unity.TilingDemo

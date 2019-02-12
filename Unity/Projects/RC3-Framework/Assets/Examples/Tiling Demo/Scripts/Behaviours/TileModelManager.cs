@@ -53,6 +53,17 @@ namespace RC3.Unity.TilingDemo
 
                 _modelInit?.Initialize(_model);
             }
+
+            // Center at world origin
+            {
+                var positions = _graph.Positions;
+                Vector3 sum = Vector3.zero;
+
+                for(int i = 0; i < positions.Length; i++)
+                    sum += positions[i];
+
+                transform.localPosition = sum * (-1.0f / positions.Length);
+            }
         }
 
 

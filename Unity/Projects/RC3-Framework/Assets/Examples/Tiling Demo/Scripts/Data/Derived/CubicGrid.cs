@@ -69,10 +69,6 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
             int lastY = countY - 1;
             int lastZ = countZ - 1;
 
-            float x0 = countX * -0.5f;
-            float y0 = countY * -0.5f;
-            float z0 = countZ * -0.5f;
-
             for (int z = 0; z < countZ; z++)
             {
                 for (int y = 0; y < countY; y++)
@@ -80,7 +76,7 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
                     for (int x = 0; x < countX; x++)
                     {
                         int i = x + y * countX + z * nxy;
-                        positions[i] = new Vector3(x + x0, y + y0, z + z0);
+                        positions[i] = new Vector3(x, y, z);
 
                         // x-1
                         if (x > 0)
