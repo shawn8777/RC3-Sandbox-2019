@@ -19,6 +19,24 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <summary>
         /// 
         /// </summary>
+        public int CountX
+        {
+            get { return _countX; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int CountY
+        {
+            get { return _countY; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="graph"></param>
         public override void Initialize(TileGraph graph)
         {
@@ -39,12 +57,15 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
             int lastX = countX - 1;
             int lastY = countY - 1;
 
+            float x0 = countX * -0.5f;
+            float y0 = countY * -0.5f;
+
             for (int y = 0; y < countY; y++)
             {
                 for (int x = 0; x < countX; x++)
                 {
                     int i = x + y * countX;
-                    positions[i] = new Vector3(x, y, 0);
+                    positions[i] = new Vector3(x + x0, y + y0, 0);
 
                     // x-1
                     if (x > 0)

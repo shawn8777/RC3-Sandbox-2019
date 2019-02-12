@@ -16,7 +16,26 @@ namespace RC3.Unity.TilingDemo
     [CreateAssetMenu(menuName = "RC3/TilingDemo/TileSet")]
     public class TileSet : ScriptableObject
     {
+        #region Static
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly Dictionary<TileType, int> _degrees = new Dictionary<TileType, int>()
+        {
+            {TileType.Triangle, 3},
+            {TileType.Square, 4},
+            {TileType.Rhombus, 4},
+            {TileType.Hexagon, 6},
+            {TileType.Cube, 6},
+            {TileType.TruncatedOctahedron, 14},
+        };
+
+        #endregion
+
+
         [SerializeField, HideInInspector] private Tile[] _tiles;
+        [SerializeField] private TileType _type;
 
         
         /// <summary>
@@ -44,12 +63,15 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         public TileMap<string> CreateMap()
         {
-            var degree = _tiles[0].Labels.Length;
-            var map = new TileMap<string>(degree, Count);
+            var map = new TileMap<string>(_type, Count);
+            var degree = _degrees[_type];
 
             for (int i = 0; i < _tiles.Length; i++)
             {
                 var labels = _tiles[i].Labels;
+
+                if (labels.Length != degree)
+                    throw new System.ArgumentException("Unexpected number of tile labels");
                 
                 for (int j = 0; j < degree; j++)
                     map.SetLabel(j, i, labels[j]);

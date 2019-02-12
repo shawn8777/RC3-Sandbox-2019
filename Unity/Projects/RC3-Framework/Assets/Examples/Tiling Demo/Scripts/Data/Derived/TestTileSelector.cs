@@ -7,7 +7,7 @@ using System.Linq;
 
 using Domino;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.Unity.TilingDemo.TileModelSelectors
 {
     /// <summary>
     /// 

@@ -12,8 +12,7 @@ namespace RC3.Unity.TilingDemo
     public class TileModelDisplay : CustomDisplay
     {
         [SerializeField] private TileGraph _graph;
-        [SerializeField] private Mesh _defaultMesh;
-        [SerializeField] private Material _defaultMaterial;
+        [SerializeField] private Tile _unknown;
 
 
         /// <summary>
@@ -30,6 +29,8 @@ namespace RC3.Unity.TilingDemo
             var camPos = camera.transform.position;
             var camRight = camera.transform.right;
 
+            const float t = 0.5f;
+
             for(int i = 0; i < positions.Length; i++)
             {
                 var index = indices[i];
@@ -39,12 +40,11 @@ namespace RC3.Unity.TilingDemo
                     var p = positions[i];
                     var d = p - camPos;
                     var q = Quaternion.LookRotation(d, Vector3.Cross(d, camRight));
-
-                    const float t = 0.65f; // TODO Scale sprite by size of domain
+                    
                     Matrix4x4 m = Matrix4x4.TRS(p, q, new Vector3(t, t, t));
 
-                    _defaultMaterial.SetPass(0);
-                    Graphics.DrawMeshNow(_defaultMesh, model * m, 0);
+                    _unknown.Material.SetPass(0);
+                    Graphics.DrawMeshNow(_unknown.Mesh, model * m, 0);
                 }
                 else
                 {

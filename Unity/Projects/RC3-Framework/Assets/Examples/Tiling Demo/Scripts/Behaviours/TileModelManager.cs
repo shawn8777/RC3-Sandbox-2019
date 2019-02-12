@@ -63,7 +63,10 @@ namespace RC3.Unity.TilingDemo
         /// <param name="domain"></param>
         private void OnDomainChanged(int position)
         {
-            _graph.TileIndices[position] = _model.GetAssigned(position);
+            var domain = _model.GetDomain(position);
+
+            if (domain.Count == 1)
+                _graph.TileIndices[position] = domain.First();
         }
 
 
@@ -101,6 +104,8 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void ResetModel()
         {
+            _graph.TileIndices.Set(-1);
+
             _model.ResetAllDomains();
             _modelInit?.Initialize(_model);
             _status = TileModelStatus.Incomplete;
