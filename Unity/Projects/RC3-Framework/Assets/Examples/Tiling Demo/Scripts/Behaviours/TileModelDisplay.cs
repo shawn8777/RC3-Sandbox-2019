@@ -9,27 +9,26 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    public class TileModelDisplay : CustomDisplay
+    public class TileModelDisplay : MonoBehaviour
     {
         [SerializeField] private TileGraph _graph;
         [SerializeField] private Tile _unknown;
+
+        [SerializeField] private Camera _camera;
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="camera"></param>
-        /// <param name="model"></param>
-        protected override void Display(Camera camera, Matrix4x4 model)
+        private void Update()
         {
             var positions = _graph.Positions;
             var indices = _graph.TileIndices;
             var tiles = _graph.TileSet;
 
-            var camPos = camera.transform.position;
-            var camRight = camera.transform.right;
-
-            const float t = 0.5f;
+            var model = transform.localToWorldMatrix;
+            var camPos = _camera.transform.position;
+            var camUp = _camera.transform.up;
 
             for(int i = 0; i < positions.Length; i++)
             {
@@ -38,13 +37,12 @@ namespace RC3.Unity.TilingDemo
                 if (index == -1)
                 {
                     var p = positions[i];
-                    var d = p - camPos;
-                    var q = Quaternion.LookRotation(d, Vector3.Cross(d, camRight));
-                    
-                    Matrix4x4 m = Matrix4x4.TRS(p, q, new Vector3(t, t, t));
+                    var d = model.MultiplyPoint(p) - camPos;
+                    var q = Quaternion.LookRotation(d, camUp);
 
-                    _unknown.Material.SetPass(0);
-                    Graphics.DrawMeshNow(_unknown.Mesh, model * m, 0);
+                    const float t = 0.5f;
+                    Matrix4x4 m = Matrix4x4.TRS(p, q, new Vector3(t, t, t));
+                    Graphics.DrawMesh(_unknown.Mesh, model * m, _unknown.Material, 0, _camera);
                 }
                 else
                 {
@@ -53,9 +51,7 @@ namespace RC3.Unity.TilingDemo
                     if (tile.Mesh != null)
                     {
                         Matrix4x4 m = Matrix4x4.Translate(positions[i]);
-
-                        tile.Material.SetPass(0);
-                        Graphics.DrawMeshNow(tile.Mesh, model * m, 0);
+                        Graphics.DrawMesh(tile.Mesh, model * m, tile.Material, 0, _camera);
                     }
                 }
             }

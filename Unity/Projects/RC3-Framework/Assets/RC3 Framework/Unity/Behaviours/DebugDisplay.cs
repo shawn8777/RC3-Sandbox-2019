@@ -38,7 +38,7 @@ namespace RC3.Unity
                 else
                     GL.MultMatrix(_camera.worldToCameraMatrix * _transform.localToWorldMatrix);
 
-                Display(_camera);
+                Display();
             }
             GL.PopMatrix();
         }
@@ -47,6 +47,6 @@ namespace RC3.Unity
         /// <summary>
         /// 
         /// </summary>
-        protected abstract void Display(Camera camera);
+        protected abstract void Display();
     }
 }

@@ -43,7 +43,7 @@ namespace RC3.Unity.Template
         /// <summary>
         /// 
         /// </summary>
-        protected override void Display(Camera camera)
+        protected override void Display()
         {
             Color color0 = Color.magenta;
             Color color1 = Color.black;

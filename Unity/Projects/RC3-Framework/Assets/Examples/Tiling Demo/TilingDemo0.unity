@@ -923,7 +923,6 @@ GameObject:
   - component: {fileID: 892593808}
   - component: {fileID: 892593807}
   - component: {fileID: 892593806}
-  - component: {fileID: 892593809}
   - component: {fileID: 892593810}
   m_Layer: 0
   m_Name: Main Camera
@@ -1038,7 +1037,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sensitivity: 1
   _stiffness: 5
---- !u!114 &892593809
+--- !u!114 &892593810
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1047,29 +1046,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 892593802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a47c0bced788eae489d7be618d477878, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transform: {fileID: 1407300073}
-  _graph: {fileID: 11400000, guid: 752dd02f0c02ec6428e884964e091b03, type: 2}
-  _unknown: {fileID: 11400000, guid: 309ccd9b3852b694a8c0045335541fa3, type: 2}
---- !u!114 &892593810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892593802}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 469d0ec125e1b7c48b88a8bebdd5e897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 1407300073}
   _material: {fileID: 2100000, guid: 9503062e767be5d4d86ee1e053183043, type: 2}
   _graph: {fileID: 11400000, guid: 752dd02f0c02ec6428e884964e091b03, type: 2}
-  _color: {r: 1, g: 1, b: 1, a: 0.5019608}
-  _scale: 0.05
+  _color: {r: 1, g: 0.3137255, b: 0.47058824, a: 0.5019608}
+  _scale: 1.32
 --- !u!1 &965535997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,6 +1634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1407300073}
   - component: {fileID: 1407300074}
+  - component: {fileID: 1407300075}
   m_Layer: 0
   m_Name: Tile Model
   m_TagString: Untagged
@@ -1689,6 +1674,21 @@ MonoBehaviour:
   _seed: 1
   _selector: {fileID: 0}
   _modelInit: {fileID: 0}
+--- !u!114 &1407300075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407300072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47c0bced788eae489d7be618d477878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _graph: {fileID: 11400000, guid: 752dd02f0c02ec6428e884964e091b03, type: 2}
+  _unknown: {fileID: 11400000, guid: 309ccd9b3852b694a8c0045335541fa3, type: 2}
+  _camera: {fileID: 892593804}
 --- !u!1 &1560026991
 GameObject:
   m_ObjectHideFlags: 0

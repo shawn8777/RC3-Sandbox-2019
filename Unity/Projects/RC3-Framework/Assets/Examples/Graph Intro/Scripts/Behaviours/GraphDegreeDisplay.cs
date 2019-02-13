@@ -17,7 +17,7 @@ namespace RC3.Unity.GraphIntro
         /// <summary>
         /// 
         /// </summary>
-        protected override void Display(Camera camera)
+        protected override void Display()
         {
             var verts = _graph.Vertices;
             var positions = _graph.Positions;

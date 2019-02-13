@@ -10,13 +10,13 @@ namespace RC3.Unity.TilingDemo
         [SerializeField] private TileGraph _graph;
         [SerializeField] private Color _color = Color.white;
 
-        [Range(0.0f, 1.0f)]
+        [Range(0.0f, 0.1f)]
         [SerializeField] private float _scale = 0.05f;
 
         /// <summary>
         /// 
         /// </summary>
-        protected override void Display(Camera camera)
+        protected override void Display()
         {
             var verts = _graph.Vertices;
             var positions = _graph.Positions;
@@ -24,21 +24,29 @@ namespace RC3.Unity.TilingDemo
             var m = verts.GetLength(0);
             var n = verts.GetLength(1);
 
-
-            GL.Begin(GL.QUADS);
+            GL.PushMatrix();
             {
-                GL.Color(_color);
+                var modelView = GL.modelview;
+                GL.LoadIdentity();
 
-                for (int i = 0; i < m; i++)
+                GL.Begin(GL.QUADS);
                 {
-                    var p = positions[i];
-                    GL.Vertex(p + new Vector3(-1.0f, 1.0f) * _scale);
-                    GL.Vertex(p + new Vector3(1.0f, 1.0f) * _scale);
-                    GL.Vertex(p + new Vector3(1.0f, -1.0f) * _scale);
-                    GL.Vertex(p + new Vector3(-1.0f, -1.0f) * _scale);
+                    GL.Color(_color);
+
+                    for (int i = 0; i < m; i++)
+                    {
+                        var p = modelView.MultiplyPoint(positions[i]);
+                        var t = _scale * p.z; // Creates fixed size quads
+
+                        GL.Vertex(p + new Vector3(-t, t));
+                        GL.Vertex(p + new Vector3(t, t));
+                        GL.Vertex(p + new Vector3(t, -t));
+                        GL.Vertex(p + new Vector3(-t, -t));
+                    }
                 }
+                GL.End();
             }
-            GL.End();
+            GL.PopMatrix();
 
             GL.Begin(GL.LINES);
             {

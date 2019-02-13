@@ -20,16 +20,16 @@ namespace RC3.Unity.GraphIntro
         /// <summary>
         /// 
         /// </summary>
-        protected override void Display(Camera camera)
+        protected override void Display()
         {
-            DisplayFancy(camera);
+            DisplayFancy();
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private void DisplayFancy(Camera camera)
+        private void DisplayFancy()
         {
             var verts = _graph.Vertices;
             var positions = _graph.Positions;
@@ -67,7 +67,7 @@ namespace RC3.Unity.GraphIntro
         /// <summary>
         /// 
         /// </summary>
-        private void DisplaySimple(Camera camera)
+        private void DisplaySimple()
         {
             var verts = _graph.Vertices;
             var positions = _graph.Positions;

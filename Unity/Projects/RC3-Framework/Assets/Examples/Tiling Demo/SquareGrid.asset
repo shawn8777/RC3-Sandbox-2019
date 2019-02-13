@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa24c0254e539284592c7413b87b99e8, type: 3}
   m_Name: SquareGrid
   m_EditorClassIdentifier: 
-  _countX: 16
-  _countY: 16
+  _countX: 12
+  _countY: 12
