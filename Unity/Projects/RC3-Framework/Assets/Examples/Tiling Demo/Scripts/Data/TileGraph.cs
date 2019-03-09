@@ -10,7 +10,7 @@ namespace RC3.Unity.TilingDemo
     [CreateAssetMenu(menuName = "RC3/TilingDemo/TileGraph")]
     public class TileGraph : ScriptableObject
     {
-        [SerializeField] private TileSet _tileSet;
+        [SerializeField] private LabeledTileSet _tileSet;
 
         // Topology
         private int[,] _vertices;
@@ -26,7 +26,7 @@ namespace RC3.Unity.TilingDemo
         /// <summary>
         /// 
         /// </summary>
-        public TileSet TileSet
+        public LabeledTileSet TileSet
         {
             get { return _tileSet; }
         }

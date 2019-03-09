@@ -12,7 +12,7 @@ namespace RC3.Unity.TilingDemo
     public class TileModelDisplay : MonoBehaviour
     {
         [SerializeField] private TileGraph _graph;
-        [SerializeField] private Tile _unknown;
+        [SerializeField] private LabeledTile _unknown;
 
         [SerializeField] private Camera _camera;
 

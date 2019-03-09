@@ -18,7 +18,7 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    [CustomEditor(typeof(Tile))]
+    [CustomEditor(typeof(LabeledTile))]
     public class TileEditor : Editor
     {
         private ReorderableList _list;
@@ -91,7 +91,7 @@ namespace RC3.Unity.TilingDemo
 
             _renderUtil.BeginPreview(rect, background);
             {
-                var tile = target as Tile;
+                var tile = target as LabeledTile;
                 _renderUtil.DrawMesh(tile.Mesh, Matrix4x4.identity, tile.Material, 0);
                 _renderUtil.camera.Render();
             }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f237f6ebcb99a48931663d3b3719c4, type: 3}
   m_Name: CubicGrid
   m_EditorClassIdentifier: 
-  _countX: 5
-  _countY: 5
-  _countZ: 5
+  _countX: 32
+  _countY: 32
+  _countZ: 32

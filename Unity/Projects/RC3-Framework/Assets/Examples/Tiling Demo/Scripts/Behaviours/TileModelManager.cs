@@ -29,7 +29,7 @@ namespace RC3.Unity.TilingDemo
         [SerializeField] private TileModelInitializer _modelInit; // Optional
 
         private TileModel _model;
-        private TileMap<string> _map;
+        private TileMap _map;
         private TileModelStatus _status;
 
 
