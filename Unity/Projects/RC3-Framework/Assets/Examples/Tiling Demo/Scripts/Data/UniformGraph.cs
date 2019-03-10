@@ -5,17 +5,36 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    public abstract class GraphBase : ScriptableObject
+    public abstract class UniformGraph : ScriptableObject
     {
         private int[,] _adjacency;
 
 
         /// <summary>
-        /// [Vertex Index, Direction]
+        /// Table containing adjacency information for each vertex in the graph. 
+        /// Elements are accessed via [vertex index, direction].
         /// </summary>
         public int[,] Adjacency
         {
             get { return _adjacency; }
+        }
+
+
+        /// <summary>
+        /// Returns the number of vertices in the graph.
+        /// </summary>
+        public int Count
+        {
+            get { return _adjacency.GetLength(0); }
+        }
+
+
+        /// <summary>
+        /// Returns the degree of all vertices in the graph.
+        /// </summary>
+        public int Degree
+        {
+            get { return _adjacency.GetLength(1); }
         }
 
 

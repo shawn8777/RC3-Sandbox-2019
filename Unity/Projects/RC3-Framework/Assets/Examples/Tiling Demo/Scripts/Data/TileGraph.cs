@@ -8,7 +8,7 @@ namespace RC3.Unity.TilingDemo
     /// 
     /// </summary>
     [CreateAssetMenu(menuName = "RC3/TilingDemo/TileGraph")]
-    public class TileGraph : GraphBase
+    public class TileGraph : UniformGraph
     {
         [SerializeField] private LabeledTileSet _tileSet;
 

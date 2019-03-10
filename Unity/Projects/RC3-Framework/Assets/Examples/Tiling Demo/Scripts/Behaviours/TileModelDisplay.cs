@@ -9,12 +9,22 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
+    [RequireComponent(typeof(TileModelManager))]
     public class TileModelDisplay : MonoBehaviour
     {
-        [SerializeField] private TileGraph _graph;
         [SerializeField] private LabeledTile _unknown;
-
         [SerializeField] private Camera _camera;
+
+        private TileGraph _graph;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Start()
+        {
+            _graph = GetComponent<TileModelManager>().Graph;
+        }
 
 
         /// <summary>

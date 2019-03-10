@@ -1,9 +1,4 @@
-﻿/*
- * Notes
- * Tiles must be scaled by -1 in the x if modeled in a right hand coordinate system.
- */
-
-using System.Linq;
+﻿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +35,15 @@ namespace RC3.Unity.TilingDemo
         public TileModel Model
         {
             get { return _model; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TileGraph Graph
+        {
+            get { return _graph; }
         }
 
 

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9274a8a2cbfc084087d555dd33bc931, type: 3}
+  m_Script: {fileID: 11500000, guid: 0650d05be428bb74099ee7097f11a571, type: 3}
   m_Name: AssignBoundary
   m_EditorClassIdentifier: 
   _graph: {fileID: 11400000, guid: 752dd02f0c02ec6428e884964e091b03, type: 2}
-  _tiles: 0b000000
+  _tiles: 00000000

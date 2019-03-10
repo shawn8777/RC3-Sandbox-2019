@@ -1676,6 +1676,7 @@ MonoBehaviour:
   _seed: 1
   _selector: {fileID: 0}
   _modelInit: {fileID: 0}
+  _modelHistory: {fileID: 0}
 --- !u!114 &1407300075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1698,11 +1699,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1407300072}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51fe6ac0e4517cf40ba57631b05c2e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _graph: {fileID: 11400000, guid: 752dd02f0c02ec6428e884964e091b03, type: 2}
   _path: C:\Users\David\Desktop\model_0
 --- !u!114 &1407300077
 MonoBehaviour:
@@ -1711,7 +1713,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1407300072}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32f322fd3c5286843a8b361848cc5b9e, type: 3}
   m_Name: 

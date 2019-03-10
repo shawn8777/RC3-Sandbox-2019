@@ -6,13 +6,29 @@ using Domino;
 
 namespace RC3.Unity.TilingDemo
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [RequireComponent(typeof(TileModelManager))]
     public class TileModelExporter : MonoBehaviour
     {
         [SerializeField] private string _path;
 
-        private TileModel _model;
+        private TileGraph _graph;
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Start()
+        {
+            _graph = GetComponent<TileModelManager>().Graph;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void Update()
         {
             if(Input.GetKeyDown(KeyCode.E))
@@ -20,21 +36,12 @@ namespace RC3.Unity.TilingDemo
         }
 
 
-        private void Export()
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Export()
         {
-            if(_model == null)
-            {
-                var manager = GetComponent<TileModelManager>();
-                _model = manager.Model;
-            }
-
-            int[] tiles = new int[_model.PositionCount];
-
-            for(int i = 0; i < tiles.Length; i++)
-                tiles[i] = _model.GetAssigned(i);
-
-            Utilities.SerializeBinary(tiles, _path);
-
+            Utilities.SerializeBinary(_graph.TileIndices, _path);
             Debug.Log("TileModel export complete!");
         }
     }

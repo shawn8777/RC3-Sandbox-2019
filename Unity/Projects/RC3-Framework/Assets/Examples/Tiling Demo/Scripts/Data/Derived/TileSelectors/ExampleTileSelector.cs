@@ -12,8 +12,8 @@ namespace RC3.Unity.TilingDemo.TileModelSelectors
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/TilingDemo/TileModelSelectors/Test")]
-    public class TestTileSelector : TileSelector
+    [CreateAssetMenu(menuName = "RC3/TilingDemo/TileModelSelectors/Example")]
+    public class ExampleTileSelector : TileSelector
     {
         /// <summary>
         /// 

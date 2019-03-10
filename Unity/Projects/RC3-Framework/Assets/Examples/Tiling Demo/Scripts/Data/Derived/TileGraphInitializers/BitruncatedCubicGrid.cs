@@ -27,16 +27,16 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <param name="graph"></param>
         public override void Initialize(TileGraph graph)
         {
-            CreateTetragonalDisphenoidGrid(graph, _countX, _countY, _countZ);
+            CreateBitruncatedCubicGrid(graph, _countX, _countY, _countZ);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private static void CreateTetragonalDisphenoidGrid(TileGraph graph, int countX, int countY, int countZ)
+        private static void CreateBitruncatedCubicGrid(TileGraph graph, int countX, int countY, int countZ)
         {
-
+            // TODO
         }
 
 
