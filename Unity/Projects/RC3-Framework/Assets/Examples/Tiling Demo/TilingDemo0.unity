@@ -1635,6 +1635,8 @@ GameObject:
   - component: {fileID: 1407300073}
   - component: {fileID: 1407300074}
   - component: {fileID: 1407300075}
+  - component: {fileID: 1407300076}
+  - component: {fileID: 1407300077}
   m_Layer: 0
   m_Name: Tile Model
   m_TagString: Untagged
@@ -1689,6 +1691,33 @@ MonoBehaviour:
   _graph: {fileID: 11400000, guid: 752dd02f0c02ec6428e884964e091b03, type: 2}
   _unknown: {fileID: 11400000, guid: 309ccd9b3852b694a8c0045335541fa3, type: 2}
   _camera: {fileID: 892593804}
+--- !u!114 &1407300076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407300072}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51fe6ac0e4517cf40ba57631b05c2e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _path: C:\Users\David\Desktop\model_0
+--- !u!114 &1407300077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407300072}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32f322fd3c5286843a8b361848cc5b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _graph: {fileID: 11400000, guid: 752dd02f0c02ec6428e884964e091b03, type: 2}
+  _path: C:\Users\David\Desktop\graph_0
 --- !u!1 &1560026991
 GameObject:
   m_ObjectHideFlags: 0

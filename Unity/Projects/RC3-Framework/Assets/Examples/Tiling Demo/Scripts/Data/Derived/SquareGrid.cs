@@ -51,7 +51,7 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         {
             graph.Initialize(countX * countY, 4);
 
-            var verts = graph.Vertices;
+            var verts = graph.Adjacency;
             var positions = graph.Positions;
 
             int lastX = countX - 1;

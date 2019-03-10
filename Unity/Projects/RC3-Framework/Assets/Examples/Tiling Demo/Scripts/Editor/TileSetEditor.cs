@@ -13,8 +13,8 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    [CustomEditor(typeof(TileSet))]
-    public class TileSetEditor : Editor
+    [CustomEditor(typeof(LabeledTileSet))]
+    public class LabeledTileSetEditor : Editor
     {
         private ReorderableList _list;
 

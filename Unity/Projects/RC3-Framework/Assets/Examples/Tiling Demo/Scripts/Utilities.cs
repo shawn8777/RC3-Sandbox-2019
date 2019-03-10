@@ -4,10 +4,52 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
 
-namespace Assets.Examples.TilingDemo
+namespace RC3.Unity.TilingDemo
 {
     public static class Utilities
     {
+        /// <summary>
+        /// Binary serialization
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <param name="path"></param>
+        public static void SerializeBinary<T>(T item, string path)
+        {
+            using (Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, item);
+            }
+        }
+
+
+        /// <summary>
+        /// Binary deserialization
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static object DeserializeBinary(string path)
+        {
+            using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                var formatter = new BinaryFormatter();
+                return formatter.Deserialize(stream);
+            }
+        }
+
+
+        /// <summary>
+        /// Binary deserialization
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static T DeserializeBinary<T>(string path)
+        {
+            return (T)DeserializeBinary(path);
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -57,48 +99,6 @@ namespace Assets.Examples.TilingDemo
 
             
             return null;
-        }
-
-
-        /// <summary>
-        /// Binary serialization
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="item"></param>
-        /// <param name="path"></param>
-        public static void SerializeBinary<T>(T item, string path)
-        {
-            using (Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(stream, item);
-            }
-        }
-
-
-        /// <summary>
-        /// Binary deserialization
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static object DeserializeBinary(string path)
-        {
-            using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                var formatter = new BinaryFormatter();
-                return formatter.Deserialize(stream);
-            }
-        }
-
-
-        /// <summary>
-        /// Binary deserialization
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static T DeserializeBinary<T>(string path)
-        {
-            return (T)DeserializeBinary(path);
         }
     }
 }

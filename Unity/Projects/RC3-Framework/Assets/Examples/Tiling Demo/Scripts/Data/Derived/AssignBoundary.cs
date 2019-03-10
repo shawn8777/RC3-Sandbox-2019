@@ -23,7 +23,7 @@ namespace RC3.Unity.TilingDemo.TileModelInitializers
         /// <param name="model"></param>
         public override void Initialize(TileModel model)
         {
-            var verts = _graph.Vertices;
+            var verts = _graph.Adjacency;
 
             int m = verts.GetLength(0);
             int n = verts.GetLength(1);

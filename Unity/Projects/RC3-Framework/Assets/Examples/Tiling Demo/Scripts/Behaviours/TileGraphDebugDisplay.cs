@@ -18,7 +18,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         protected override void Display()
         {
-            var verts = _graph.Vertices;
+            var verts = _graph.Adjacency;
             var positions = _graph.Positions;
 
             var m = verts.GetLength(0);

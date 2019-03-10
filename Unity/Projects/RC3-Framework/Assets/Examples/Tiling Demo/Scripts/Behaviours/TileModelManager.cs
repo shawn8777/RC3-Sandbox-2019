@@ -27,10 +27,20 @@ namespace RC3.Unity.TilingDemo
 
         [SerializeField] private TileSelector _selector; // Optional
         [SerializeField] private TileModelInitializer _modelInit; // Optional
-
+        [SerializeField] private TileModelHistory _modelHistory; // Optional
+         
         private TileModel _model;
         private TileMap _map;
         private TileModelStatus _status;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TileModel Model
+        {
+            get { return _model; }
+        }
 
 
         /// <summary>
@@ -41,7 +51,7 @@ namespace RC3.Unity.TilingDemo
             _graphInit.Initialize(_graph);
             
             _map = _graph.TileSet.CreateMap();
-            _model = TileModel.Create(_graph.Vertices, _map, _seed);
+            _model = TileModel.Create(_graph.Adjacency, _map, _seed);
 
             _model.DomainChanged += OnDomainChanged;
             _status = TileModelStatus.Incomplete;
@@ -103,10 +113,21 @@ namespace RC3.Unity.TilingDemo
                     else if (_status == TileModelStatus.Complete)
                     {
                         Debug.Log("Collapse complete!");
+                        OnComplete();
                         return;
                     }
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OnComplete()
+        {
+            if (_modelHistory != null)
+                _modelHistory.Data.Add(_graph.TileIndices.ShallowCopy());
         }
 
 
