@@ -50,6 +50,15 @@ namespace RC3.Unity.TilingDemo
         /// <summary>
         /// 
         /// </summary>
+        public TileModelHistory History
+        {
+            get { return _modelHistory; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void Start()
         {
             _graphInit.Initialize(_graph);
