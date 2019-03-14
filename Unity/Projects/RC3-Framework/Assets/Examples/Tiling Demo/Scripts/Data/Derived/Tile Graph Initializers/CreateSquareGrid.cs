@@ -12,25 +12,16 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
     [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Graph Initializers/Create Square Grid")]
     public class CreateSquareGrid : TileGraphInitializer
     {
-        [SerializeField] private int _countX = 10;
-        [SerializeField] private int _countY = 10;
+        [SerializeField] private Vector2Int _count = new Vector2Int(1, 1);
+        [SerializeField] private Vector2 _scale = new Vector2(1.0f, 1.0f);
 
 
         /// <summary>
         /// 
         /// </summary>
-        public int CountX
+        public Vector2Int Count
         {
-            get { return _countX; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int CountY
-        {
-            get { return _countY; }
+            get { return _count; }
         }
 
 
@@ -40,14 +31,14 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <param name="graph"></param>
         public override void Initialize(TileGraph graph)
         {
-            CreateSquareGridImpl(graph, _countX, _countY);
+            CreateSquareGridImpl(graph, _count.x, _count.y, _scale.x, _scale.y);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private static void CreateSquareGridImpl(TileGraph graph, int countX, int countY)
+        private static void CreateSquareGridImpl(TileGraph graph, int countX, int countY, float scaleX, float scaleY)
         {
             graph.Initialize(countX * countY, 4);
 
@@ -62,7 +53,7 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
                 for (int x = 0; x < countX; x++)
                 {
                     int i = x + y * countX;
-                    positions[i] = new Vector3(x, y, 0);
+                    positions[i] = new Vector3(x * scaleX, y * scaleY, 0);
 
                     // x-1
                     if (x > 0)

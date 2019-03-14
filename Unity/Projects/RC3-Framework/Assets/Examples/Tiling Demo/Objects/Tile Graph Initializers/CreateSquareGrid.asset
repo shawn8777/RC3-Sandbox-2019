@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43c0044bfcebea408f30aabff6270ae, type: 3}
   m_Name: CreateSquareGrid
   m_EditorClassIdentifier: 
-  _countX: 16
-  _countY: 16
+  _count: {x: 16, y: 16}
+  _scale: {x: -1, y: 1}

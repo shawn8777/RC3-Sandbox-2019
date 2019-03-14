@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e077db4c9f5881c4db32e2796aa3ce21, type: 3}
   m_Name: CubicGraph
   m_EditorClassIdentifier: 
-  _tileSet: {fileID: 11400000, guid: bd8f320b255864c42ab5d165319f8b49, type: 2}
+  _tileSet: {fileID: 11400000, guid: 6c049d3d251d2514792dfe00d55cb561, type: 2}

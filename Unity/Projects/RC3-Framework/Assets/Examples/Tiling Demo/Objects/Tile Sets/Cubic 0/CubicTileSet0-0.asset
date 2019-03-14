@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 916e312d56c198e4f8fc62db7e00e2cf, type: 3}
+  m_Name: CubicTileSet0-0
+  m_EditorClassIdentifier: 
+  _tiles:
+  - {fileID: 11400000, guid: a53cb89a68ad3e04e992e9ac505cbf7d, type: 2}
+  - {fileID: 11400000, guid: db87d0890e608d640aef8cccc40ab3ac, type: 2}
+  - {fileID: 11400000, guid: d9e173c9257b7974daa3b1080cbc5e8b, type: 2}
+  - {fileID: 11400000, guid: 666c62cadbc88284b9f76696745bae8f, type: 2}
+  - {fileID: 11400000, guid: bb46c0f994f62cc4c9167b50da777dd0, type: 2}
+  - {fileID: 11400000, guid: 51aa2db48c5fc0c49bd6352194be631d, type: 2}
+  - {fileID: 11400000, guid: 7aad6435b68762e42a39b3d3d78f21ac, type: 2}
+  - {fileID: 11400000, guid: effc4d2dc31804f4588bd2e483367873, type: 2}
+  - {fileID: 11400000, guid: c1744a2476830ad4198eeb53a16d4521, type: 2}
+  _type: 4

@@ -13,6 +13,7 @@ namespace RC3.Unity.TilingDemo
     public class TileGraphExporter : MonoBehaviour
     {
         [SerializeField] private string _path;
+        [SerializeField] private Vector3 _scale = new Vector3(1.0f, 1.0f, 1.0f);
 
         private TileGraph _graph;
 
@@ -56,13 +57,15 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        private static IEnumerable<float> Flatten(IEnumerable<Vector3> points)
+        private IEnumerable<float> Flatten(IEnumerable<Vector3> points)
         {
+            var scale = _scale;
+
             foreach (var p in points)
             {
-                yield return p.x;
-                yield return p.y;
-                yield return p.z;
+                yield return p.x * scale.x;
+                yield return p.y * scale.y;
+                yield return p.z * scale.z;
             }
         }
 

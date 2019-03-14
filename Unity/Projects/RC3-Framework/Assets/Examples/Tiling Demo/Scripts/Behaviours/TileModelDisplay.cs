@@ -10,6 +10,8 @@ using UnityEngine;
 
 namespace RC3.Unity.TilingDemo
 {
+
+
     /// <summary>
     /// 
     /// </summary>
@@ -20,7 +22,6 @@ namespace RC3.Unity.TilingDemo
         [SerializeField] private Camera _camera;
 
         private TileGraph _graph;
-
 
         /// <summary>
         /// 
@@ -47,7 +48,7 @@ namespace RC3.Unity.TilingDemo
             for(int i = 0; i < positions.Length; i++)
             {
                 var index = indices[i];
-
+                
                 if (index == -1)
                 {
                     var p = positions[i];

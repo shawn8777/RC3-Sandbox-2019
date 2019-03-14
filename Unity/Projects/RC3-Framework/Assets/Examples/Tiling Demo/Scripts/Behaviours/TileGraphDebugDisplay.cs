@@ -18,11 +18,11 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         protected override void Display()
         {
-            var verts = _graph.Adjacency;
-            var positions = _graph.Positions;
+            var adj = _graph.Adjacency;
+            var pos = _graph.Positions;
 
-            var m = verts.GetLength(0);
-            var n = verts.GetLength(1);
+            var m = adj.GetLength(0);
+            var n = adj.GetLength(1);
             
             GL.PushMatrix();
             {
@@ -35,7 +35,7 @@ namespace RC3.Unity.TilingDemo
 
                     for (int i = 0; i < m; i++)
                     {
-                        var p = modelView.MultiplyPoint(positions[i]);
+                        var p = modelView.MultiplyPoint(pos[i]);
                         var t = _scale * p.z; // Creates fixed size quads
 
                         GL.Vertex(p + new Vector3(-t, t));
@@ -56,11 +56,11 @@ namespace RC3.Unity.TilingDemo
                 {
                     for (int dir = 0; dir < n; dir++)
                     {
-                        var j = verts[i, dir];
+                        var j = adj[i, dir];
                         if (j < 0 || j > i) continue;
                         
-                        GL.Vertex(positions[i]);
-                        GL.Vertex(positions[j]);
+                        GL.Vertex(pos[i]);
+                        GL.Vertex(pos[j]);
                     }
                 }
             }

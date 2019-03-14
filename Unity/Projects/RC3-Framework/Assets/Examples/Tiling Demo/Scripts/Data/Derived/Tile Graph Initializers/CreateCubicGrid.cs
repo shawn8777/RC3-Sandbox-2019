@@ -12,35 +12,16 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
     [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Graph Initializers/Create Cubic Grid")]
     public class CreateCubicGrid : TileGraphInitializer
     {
-        [SerializeField] private int _countX = 10;
-        [SerializeField] private int _countY = 10;
-        [SerializeField] private int _countZ = 10;
+        [SerializeField] private Vector3Int _count = new Vector3Int(10, 10, 10);
+        [SerializeField] private Vector3 _scale = new Vector3(1.0f, 1.0f, 1.0f);
 
 
         /// <summary>
         /// 
         /// </summary>
-        public int CountX
+        public Vector3Int Count
         {
-            get { return _countX; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int CountY
-        {
-            get { return _countY; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int CountZ
-        {
-            get { return _countZ; }
+            get { return _count; }
         }
 
 
@@ -50,14 +31,14 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <param name="graph"></param>
         public override void Initialize(TileGraph graph)
         {
-            CreateCubicGridImpl(graph, _countX, _countY, _countZ);
+            CreateCubicGridImpl(graph, _count.x, _count.y, _count.z, _scale.x, _scale.y, _scale.z);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private static void CreateCubicGridImpl(TileGraph graph, int countX, int countY, int countZ)
+        private static void CreateCubicGridImpl(TileGraph graph, int countX, int countY, int countZ, float scaleX, float scaleY, float scaleZ)
         {
             int nxy = countX * countY;
             graph.Initialize(nxy * countZ, 6);
@@ -76,29 +57,29 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
                     for (int x = 0; x < countX; x++)
                     {
                         int i = x + y * countX + z * nxy;
-                        positions[i] = new Vector3(x, y, z);
+                        positions[i] = new Vector3(x * scaleX, y * scaleY, z * scaleZ);
 
-                        // x-1
+                        // -x
                         if (x > 0)
                             verts[i, 0] = i - 1;
 
-                        // x+1
+                        // +x
                         if (x < lastX)
                             verts[i, 1] = i + 1;
 
-                        // y-1
+                        // -y
                         if (y > 0)
                             verts[i, 2] = i - countX;
 
-                        // y+1
+                        // +y
                         if (y < lastY)
                             verts[i, 3] = i + countX;
 
-                        // z-1
+                        // -z
                         if (z > 0)
                             verts[i, 4] = i - nxy;
 
-                        // y+1
+                        // +z
                         if (z < lastZ)
                             verts[i, 5] = i + nxy;
                     }
