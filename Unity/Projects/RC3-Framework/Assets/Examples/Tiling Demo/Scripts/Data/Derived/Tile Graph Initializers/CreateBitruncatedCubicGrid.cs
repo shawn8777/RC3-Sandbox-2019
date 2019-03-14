@@ -13,8 +13,8 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/TilingDemo/TileGraphInitializers/BitruncatedCubicGrid")]
-    public class BitruncatedCubicGrid : TileGraphInitializer
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Graph Initializers/Create Bitruncated Cubic Grid")]
+    public class CreateBitruncatedCubicGrid : TileGraphInitializer
     {
         [SerializeField] private int _countX = 10;
         [SerializeField] private int _countY = 10;
@@ -27,14 +27,14 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <param name="graph"></param>
         public override void Initialize(TileGraph graph)
         {
-            CreateBitruncatedCubicGrid(graph, _countX, _countY, _countZ);
+            CreateBitruncatedCubicGridImpl(graph, _countX, _countY, _countZ);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private static void CreateBitruncatedCubicGrid(TileGraph graph, int countX, int countY, int countZ)
+        private static void CreateBitruncatedCubicGridImpl(TileGraph graph, int countX, int countY, int countZ)
         {
             // TODO
         }

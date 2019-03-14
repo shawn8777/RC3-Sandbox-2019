@@ -9,8 +9,8 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/TilingDemo/TileGraphInitializers/SquareGrid")]
-    public class SquareGrid : TileGraphInitializer
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Graph Initializers/Create Square Grid")]
+    public class CreateSquareGrid : TileGraphInitializer
     {
         [SerializeField] private int _countX = 10;
         [SerializeField] private int _countY = 10;
@@ -40,14 +40,14 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <param name="graph"></param>
         public override void Initialize(TileGraph graph)
         {
-            CreateSquareGrid(graph, _countX, _countY);
+            CreateSquareGridImpl(graph, _countX, _countY);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private static void CreateSquareGrid(TileGraph graph, int countX, int countY)
+        private static void CreateSquareGridImpl(TileGraph graph, int countX, int countY)
         {
             graph.Initialize(countX * countY, 4);
 

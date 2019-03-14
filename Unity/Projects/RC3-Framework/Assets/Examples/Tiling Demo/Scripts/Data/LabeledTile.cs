@@ -14,7 +14,7 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/TilingDemo/LabeledTile")]
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Labeled Tile")]
     public class LabeledTile : ScriptableObject
     {
         [SerializeField] private Mesh _mesh;

@@ -9,8 +9,8 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/TilingDemo/TileGraphInitializers/CubicGrid")]
-    public class CubicGrid : TileGraphInitializer
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Graph Initializers/Create Cubic Grid")]
+    public class CreateCubicGrid : TileGraphInitializer
     {
         [SerializeField] private int _countX = 10;
         [SerializeField] private int _countY = 10;
@@ -50,14 +50,14 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <param name="graph"></param>
         public override void Initialize(TileGraph graph)
         {
-            CreateCubicGrid(graph, _countX, _countY, _countZ);
+            CreateCubicGridImpl(graph, _countX, _countY, _countZ);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        private static void CreateCubicGrid(TileGraph graph, int countX, int countY, int countZ)
+        private static void CreateCubicGridImpl(TileGraph graph, int countX, int countY, int countZ)
         {
             int nxy = countX * countY;
             graph.Initialize(nxy * countZ, 6);

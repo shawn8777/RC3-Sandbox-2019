@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b43c0044bfcebea408f30aabff6270ae, type: 3}
-  m_Name: SquareGrid
+  m_Script: {fileID: 11500000, guid: e077db4c9f5881c4db32e2796aa3ce21, type: 3}
+  m_Name: CubicGraph
   m_EditorClassIdentifier: 
-  _countX: 16
-  _countY: 16
+  _tileSet: {fileID: 11400000, guid: bd8f320b255864c42ab5d165319f8b49, type: 2}

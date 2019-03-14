@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0650d05be428bb74099ee7097f11a571, type: 3}
-  m_Name: AssignBoundary1
+  m_Script: {fileID: 11500000, guid: e077db4c9f5881c4db32e2796aa3ce21, type: 3}
+  m_Name: SquareGraph
   m_EditorClassIdentifier: 
-  _graph: {fileID: 11400000, guid: 3daa9a0817f4e7245af8ce9af615501b, type: 2}
-  _tiles: 00000000
+  _tileSet: {fileID: 11400000, guid: d82c63ca25d8142459d0346a1e351e8a, type: 2}

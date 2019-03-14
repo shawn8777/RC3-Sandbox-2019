@@ -10,8 +10,8 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/TilingDemo/TileGraphInitializers/HexagonalGrid")]
-    public class HexagonalGrid : TileGraphInitializer
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Graph Initializers/Create Hexagonal Grid")]
+    public class CreateHexagonalGrid : TileGraphInitializer
     {
         [SerializeField] private int _countX = 10;
         [SerializeField] private int _countY = 10;
@@ -23,7 +23,7 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <param name="graph"></param>
         public override void Initialize(TileGraph graph)
         {
-            CreateTriangleGrid(graph, _countX, _countY);
+            CreateHexagonalGridImpl(graph, _countX, _countY);
         }
 
 
@@ -33,7 +33,7 @@ namespace RC3.Unity.TilingDemo.TileGraphInitializers
         /// <param name="graph"></param>
         /// <param name="countX"></param>
         /// <param name="countY"></param>
-        private static void CreateTriangleGrid(TileGraph graph, int countX, int countY)
+        private static void CreateHexagonalGridImpl(TileGraph graph, int countX, int countY)
         {
             // TODO
         }

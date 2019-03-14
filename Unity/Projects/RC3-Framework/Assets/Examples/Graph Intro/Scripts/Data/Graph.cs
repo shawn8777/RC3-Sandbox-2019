@@ -7,7 +7,7 @@ namespace RC3.Unity.GraphIntro
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/GraphIntro/Graph")]
+    [CreateAssetMenu(menuName = "RC3/Graph Intro/Graph")]
     public class Graph : ScriptableObject
     {
         // Topology

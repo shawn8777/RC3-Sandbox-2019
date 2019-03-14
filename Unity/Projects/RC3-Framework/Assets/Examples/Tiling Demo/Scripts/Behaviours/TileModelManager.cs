@@ -58,7 +58,11 @@ namespace RC3.Unity.TilingDemo
                 if (_selector != null)
                     _model.Selector = _selector;
 
-                _modelInit?.Initialize(_model);
+                if (_modelInit != null)
+                {
+                    _modelInit.Graph = _graph; // Pass graph to initializer
+                    _modelInit.Initialize(_model);
+                }
             }
 
             // Center at world origin

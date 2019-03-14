@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d014afc8acffc64ea3bbcc591443b30, type: 3}
-  m_Name: TileModelHistory0
+  m_Script: {fileID: 11500000, guid: cebc28aca8672254ab8a9d5f3038e122, type: 3}
+  m_Name: CreateCubicGrid
   m_EditorClassIdentifier: 
+  _countX: 8
+  _countY: 8
+  _countZ: 8

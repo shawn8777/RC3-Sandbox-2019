@@ -11,7 +11,7 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/TilingDemo/TileModelInitializers/ImageInitializer")]
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Model Initializers/Image Initializer")]
     public class ImageInitializer : TileModelInitializer
     {
         [SerializeField] private TileGraph _graph;

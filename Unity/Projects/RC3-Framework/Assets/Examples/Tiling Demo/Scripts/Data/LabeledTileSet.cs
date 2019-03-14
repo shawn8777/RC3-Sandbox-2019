@@ -13,7 +13,7 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/TilingDemo/LabeledTileSet")]
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Labeled Tile Set")]
     public class LabeledTileSet : TileSet
     {
         #region Static
