@@ -13,17 +13,19 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
+    [RequireComponent(typeof(TileModelData))]
     public class TileModelManager : MonoBehaviour
     {
-        [SerializeField] private TileGraph _graph;
-        [SerializeField] private TileGraphInitializer _graphInit;
         [SerializeField] private int _substeps = 10;
         [SerializeField] private int _seed = 1;
 
         [SerializeField] private TileSelector _selector; // Optional
         [SerializeField] private TileModelInitializer _modelInit; // Optional
-        [SerializeField] private TileModelHistory _modelHistory; // Optional
-         
+
+        [SerializeField] private Event _modelCompleted; // Optional
+        [SerializeField] private Event _modelContradicted; // Optional
+
+        private TileGraph _graph;
         private TileModel _model;
         private TileMap _map;
         private TileModelStatus _status;
@@ -41,28 +43,10 @@ namespace RC3.Unity.TilingDemo
         /// <summary>
         /// 
         /// </summary>
-        public TileGraph Graph
-        {
-            get { return _graph; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public TileModelHistory History
-        {
-            get { return _modelHistory; }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
         private void Start()
         {
-            _graphInit.Initialize(_graph);
-            
+            _graph = GetComponent<TileModelData>().Graph;
+
             _map = _graph.TileSet.CreateMap();
             _model = TileModel.Create(_graph.Adjacency, _map, _seed);
 
@@ -121,6 +105,7 @@ namespace RC3.Unity.TilingDemo
                     if (_status == TileModelStatus.Contradiction)
                     {
                         Debug.Log("Contradiction found! Reset the model and try again.");
+                        OnContradiction();
                         return;
                     }
                     else if (_status == TileModelStatus.Complete)
@@ -137,10 +122,20 @@ namespace RC3.Unity.TilingDemo
         /// <summary>
         /// 
         /// </summary>
+        private void OnContradiction()
+        {
+            if (_modelContradicted != null)
+                _modelContradicted.Raise();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void OnComplete()
         {
-            if (_modelHistory != null)
-                _modelHistory.Data.Add(_graph.TileIndices.ShallowCopy());
+            if(_modelCompleted != null)
+                _modelCompleted.Raise();
         }
 
 

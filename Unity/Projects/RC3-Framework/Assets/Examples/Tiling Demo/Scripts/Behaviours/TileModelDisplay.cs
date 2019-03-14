@@ -13,7 +13,7 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    [RequireComponent(typeof(TileModelManager))]
+    [RequireComponent(typeof(TileModelData))]
     public class TileModelDisplay : MonoBehaviour
     {
         [SerializeField] private LabeledTile _unknown;
@@ -27,7 +27,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Start()
         {
-            _graph = GetComponent<TileModelManager>().Graph;
+            _graph = GetComponent<TileModelData>().Graph;
         }
 
 

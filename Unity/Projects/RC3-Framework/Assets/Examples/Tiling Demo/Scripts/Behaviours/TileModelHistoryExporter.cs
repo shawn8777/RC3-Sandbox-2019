@@ -1,20 +1,16 @@
-﻿using System.Collections;
-
-using UnityEngine;
-
-using Domino;
+﻿using UnityEngine;
 
 namespace RC3.Unity.TilingDemo
 {
     /// <summary>
     /// 
     /// </summary>
-    [RequireComponent(typeof(TileModelData))]
-    public class TileModelExporter : MonoBehaviour
+    [RequireComponent(typeof(TileModelRecorderData))]
+    public class TileModelHistoryExporter : MonoBehaviour
     {
         [SerializeField] private string _path;
 
-        private TileGraph _graph;
+        private TileModelHistory _history;
 
 
         /// <summary>
@@ -22,7 +18,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Start()
         {
-            _graph = GetComponent<TileModelData>().Graph;
+            _history = GetComponent<TileModelRecorderData>().History;
         }
 
 
@@ -31,7 +27,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.Alpha3))
                 Export();
         }
 
@@ -41,8 +37,8 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         public void Export()
         {
-            Utilities.SerializeBinary(_graph.TileIndices, _path);
-            Debug.Log("TileModel export complete!");
+            Utilities.SerializeBinary(_history.Data, _path);
+            Debug.Log("TileModelHistory export complete!");
         }
     }
 }

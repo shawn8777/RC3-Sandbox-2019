@@ -11,14 +11,27 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// Custom display method for rendering accumulated history of tile model
     /// </summary>
+    [RequireComponent(typeof(TileModelRecorderData))]
     public class TileModelHistoryDisplay : MonoBehaviour
     {
-        [SerializeField] private TileGraph _graph;
-        [SerializeField] private TileModelHistory _modelHistory;
         [SerializeField] private Camera _camera;
         [SerializeField] private float _rowSpacing = 10.0f;
         [SerializeField] private float _columnSpacing = 10.0f;
         [SerializeField] private int _columnCount = 10;
+
+        private TileModelHistory _history;
+        private TileGraph _graph;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Start()
+        {
+            var data = GetComponent<TileModelRecorderData>();
+            _history = data.History;
+            _graph = data.Graph;
+        }
 
 
         /// <summary>
@@ -32,10 +45,10 @@ namespace RC3.Unity.TilingDemo
             var model = transform.localToWorldMatrix;
             var camPos = _camera.transform.position;
             var camUp = _camera.transform.up;
-            
+           
             var deltas = GetTranslations().GetEnumerator();
 
-            foreach(var tileIndices in _modelHistory.Data)
+            foreach (var tileIndices in _history.Data)
             {
                 deltas.MoveNext();
                 var delta = deltas.Current;

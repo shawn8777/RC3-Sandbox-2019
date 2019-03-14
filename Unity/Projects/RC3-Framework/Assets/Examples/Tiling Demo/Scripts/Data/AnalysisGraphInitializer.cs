@@ -10,7 +10,6 @@ namespace RC3.Unity.TilingDemo
     public class AnalysisGraphInitializer : Initializer<UniformGraph>
     {
         [SerializeField] TileGraph _tileGraph;
-        [SerializeField] LabeledTileSet _tileSet;
         [SerializeField] string[] _connectedLabels;
 
 
@@ -27,6 +26,7 @@ namespace RC3.Unity.TilingDemo
             target.Initialize(n, m);
             var adj1 = target.Adjacency;
 
+            var tileSet = _tileGraph.TileSet;
             var tileIndices = _tileGraph.TileIndices;
             var connectedLabelSet = new HashSet<string>(_connectedLabels);
 
@@ -37,7 +37,7 @@ namespace RC3.Unity.TilingDemo
                 if (tileIndex == -1)
                     throw new System.ArgumentException($"Tile has not yet been assigned at position {i}");
                 
-                var labels = _tileSet[tileIndex].Labels;
+                var labels = tileSet[tileIndex].Labels;
                 
                 for(int j = 0; j < m; j++)
                 {

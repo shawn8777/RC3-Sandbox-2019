@@ -1633,6 +1633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1407300073}
+  - component: {fileID: 1407300076}
   - component: {fileID: 1407300074}
   - component: {fileID: 1407300075}
   m_Layer: 0
@@ -1668,13 +1669,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd08c255f63a7c54eb50a4cbfc7f00c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _graph: {fileID: 11400000, guid: 3daa9a0817f4e7245af8ce9af615501b, type: 2}
-  _graphInit: {fileID: 11400000, guid: 35eb1a48a8c86a74fa5e0ef0c85bb2ba, type: 2}
-  _substeps: 1
+  _substeps: 5
   _seed: 1
   _selector: {fileID: 0}
-  _modelInit: {fileID: 0}
-  _modelHistory: {fileID: 0}
+  _modelInit: {fileID: 11400000, guid: 6f47e5156387eca48a495f210585a617, type: 2}
+  _modelCompleted: {fileID: 11400000, guid: 919cc68a1c527a942bbc11d20ce537e0, type: 2}
+  _modelContradicted: {fileID: 11400000, guid: 5baa02de5dd55d04e994c5b5c6760be3, type: 2}
 --- !u!114 &1407300075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1687,9 +1687,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47c0bced788eae489d7be618d477878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _graph: {fileID: 11400000, guid: 3daa9a0817f4e7245af8ce9af615501b, type: 2}
   _unknown: {fileID: 11400000, guid: 309ccd9b3852b694a8c0045335541fa3, type: 2}
   _camera: {fileID: 892593804}
+--- !u!114 &1407300076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407300072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea1eff10ebf2904a85de8783aa3ce20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _graph: {fileID: 11400000, guid: 3daa9a0817f4e7245af8ce9af615501b, type: 2}
+  _graphInit: {fileID: 11400000, guid: 35eb1a48a8c86a74fa5e0ef0c85bb2ba, type: 2}
 --- !u!1 &1560026991
 GameObject:
   m_ObjectHideFlags: 0

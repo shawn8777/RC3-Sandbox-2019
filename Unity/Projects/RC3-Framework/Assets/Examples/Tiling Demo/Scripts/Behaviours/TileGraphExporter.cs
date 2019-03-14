@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,10 +9,10 @@ namespace RC3.Unity.TilingDemo
     /// <summary>
     /// 
     /// </summary>
-    [RequireComponent(typeof(TileModelManager))]
+    [RequireComponent(typeof(TileModelData))]
     public class TileGraphExporter : MonoBehaviour
     {
-        [SerializeField] string _path;
+        [SerializeField] private string _path;
 
         private TileGraph _graph;
 
@@ -23,7 +22,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Start()
         {
-            _graph = GetComponent<TileModelManager>().Graph;
+            _graph = GetComponent<TileModelData>().Graph;
         }
 
 
@@ -32,7 +31,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.Alpha1))
                 Export();
         }
 
@@ -59,7 +58,7 @@ namespace RC3.Unity.TilingDemo
         /// <returns></returns>
         private static IEnumerable<float> Flatten(IEnumerable<Vector3> points)
         {
-            foreach(var p in points)
+            foreach (var p in points)
             {
                 yield return p.x;
                 yield return p.y;
@@ -67,7 +66,7 @@ namespace RC3.Unity.TilingDemo
             }
         }
 
-       
+
         /// <summary>
         /// 
         /// </summary>
@@ -79,7 +78,7 @@ namespace RC3.Unity.TilingDemo
             var m = source.GetLength(0);
             var n = source.GetLength(1);
 
-            for(int i = 0; i < m; i++)
+            for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
                     yield return source[i, j];
@@ -87,4 +86,3 @@ namespace RC3.Unity.TilingDemo
         }
     }
 }
-

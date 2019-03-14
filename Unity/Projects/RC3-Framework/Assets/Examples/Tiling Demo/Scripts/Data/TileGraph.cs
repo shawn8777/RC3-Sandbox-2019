@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace RC3.Unity.TilingDemo
 {
-
     /// <summary>
     /// 
     /// </summary>

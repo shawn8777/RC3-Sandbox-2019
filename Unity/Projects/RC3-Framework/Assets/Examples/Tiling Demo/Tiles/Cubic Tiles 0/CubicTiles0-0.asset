@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CubicTiles0-0
   m_EditorClassIdentifier: 
   _tiles:
+  - {fileID: 11400000, guid: a53cb89a68ad3e04e992e9ac505cbf7d, type: 2}
   - {fileID: 11400000, guid: db87d0890e608d640aef8cccc40ab3ac, type: 2}
   - {fileID: 11400000, guid: d9e173c9257b7974daa3b1080cbc5e8b, type: 2}
   - {fileID: 11400000, guid: 666c62cadbc88284b9f76696745bae8f, type: 2}

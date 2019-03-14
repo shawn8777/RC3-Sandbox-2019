@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SquareTiles0-0
   m_EditorClassIdentifier: 
   _tiles:
+  - {fileID: 11400000, guid: d9f89e523b55e1d4980e417140f3e4db, type: 2}
   - {fileID: 11400000, guid: 13ab2bf0a04fcd54dbf9590f27553ec7, type: 2}
   - {fileID: 11400000, guid: 60e0e99adb962b948874af1a295c3c9b, type: 2}
   - {fileID: 11400000, guid: d9f78e17a180d5543ad522fab0bb85a6, type: 2}
@@ -24,5 +25,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a7594778e1fe8be45b7e7161f0ec0a36, type: 2}
   - {fileID: 11400000, guid: 580db8a590f00db49b0892a02f8e9569, type: 2}
   - {fileID: 11400000, guid: 0cae6b8080826af42801e3cc981bfb50, type: 2}
-  - {fileID: 11400000, guid: d9f89e523b55e1d4980e417140f3e4db, type: 2}
   _type: 1
