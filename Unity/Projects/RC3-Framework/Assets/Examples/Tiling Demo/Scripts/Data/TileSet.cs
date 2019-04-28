@@ -6,7 +6,7 @@ using UnityEngine;
 
 using Domino;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 

@@ -261,7 +261,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: App Name
+  m_Text: Tiling Demo
 --- !u!222 &41802697
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892593802}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2685ccf612f1f1d4eb54306a024132af, type: 3}
   m_Name: 
@@ -1861,7 +1861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd08c255f63a7c54eb50a4cbfc7f00c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _substeps: 10
+  _substeps: 1
   _seed: 1
   _selector: {fileID: 11400000, guid: 9a8ab57257b438d4f97e3201f9ed434c, type: 2}
   _modelInit: {fileID: 11400000, guid: 3ba024e3d159c7e4ea13eb2fed053469, type: 2}

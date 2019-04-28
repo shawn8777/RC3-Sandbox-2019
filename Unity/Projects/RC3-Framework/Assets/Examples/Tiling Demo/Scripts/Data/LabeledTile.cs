@@ -9,7 +9,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 

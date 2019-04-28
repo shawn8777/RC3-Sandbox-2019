@@ -1,20 +1,15 @@
-﻿/*
- * Notes
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 
 using Domino;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Model Initializers/Image Initializer")]
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Model Initializers/Image")]
     public class ImageInitializer : TileModelInitializer
     {
-        [SerializeField] private TileGraph _graph;
         [SerializeField] private Texture2D _texture;
         [SerializeField] private float _threshold = 0.5f;
         [SerializeField] private int[] _domain;
@@ -23,9 +18,9 @@ namespace RC3.Unity.TilingDemo
         /// <summary>
         /// 
         /// </summary>
-        public override void Initialize(TileModel model)
+        public override void Initialize(TileModel model, TileGraph graph)
         {
-            var positions = _graph.Positions;
+            var positions = graph.Positions;
 
             // Compute bounding box
             var bounds = new Bounds();
@@ -39,7 +34,7 @@ namespace RC3.Unity.TilingDemo
                 var p0 = bounds.min;
                 var d = bounds.size;
 
-                for(int i = 0; i < positions.Length; i++)
+                for (int i = 0; i < positions.Length; i++)
                 {
                     // Normalize point within bounds
                     var p = positions[i] - p0;
@@ -50,7 +45,7 @@ namespace RC3.Unity.TilingDemo
                     Color color = _texture.GetPixelBilinear(u, v);
 
                     // Reduce domain if above the threshold
-                    if(color.grayscale > _threshold)
+                    if (color.grayscale > _threshold)
                         model.SetDomain(i, _domain);
                 }
             }

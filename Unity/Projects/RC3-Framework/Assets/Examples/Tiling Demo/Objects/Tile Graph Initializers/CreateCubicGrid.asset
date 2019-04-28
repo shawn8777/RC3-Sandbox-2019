@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cebc28aca8672254ab8a9d5f3038e122, type: 3}
   m_Name: CreateCubicGrid
   m_EditorClassIdentifier: 
-  _count: {x: 5, y: 5, z: 5}
+  _count: {x: 20, y: 20, z: 4}
   _scale: {x: -1, y: 1, z: 1}

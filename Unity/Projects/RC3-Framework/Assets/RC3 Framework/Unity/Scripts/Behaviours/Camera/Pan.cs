@@ -6,7 +6,7 @@ using UnityEngine;
  * Notes
  */
 
-namespace RC3.Unity
+namespace RC3
 {
     /// <summary>
     /// 

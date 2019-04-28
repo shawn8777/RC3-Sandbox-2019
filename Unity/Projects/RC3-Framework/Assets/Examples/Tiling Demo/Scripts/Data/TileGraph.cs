@@ -1,8 +1,12 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
+using System.Linq;
+
 using UnityEngine;
 
-namespace RC3.Unity.TilingDemo
-{
+using Domino.Collections;
+
+namespace RC3.TilingDemo
+{ 
     /// <summary>
     /// 
     /// </summary>
@@ -13,7 +17,8 @@ namespace RC3.Unity.TilingDemo
 
         // Attributes
         private Vector3[] _positions;
-        private int[] _tileIndices;
+        private int[] _assignedTiles;
+        private int[] _domainSizes;
         // ...
         // ...
         // ...
@@ -36,13 +41,22 @@ namespace RC3.Unity.TilingDemo
             get { return _positions; }
         }
 
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public int[] AssignedTiles
+        {
+            get { return _assignedTiles; }
+        }
+
 
         /// <summary>
         /// 
         /// </summary>
-        public int[] TileIndices
+        public int[] DomainSizes
         {
-            get { return _tileIndices; }
+            get { return _domainSizes; }
         }
 
 
@@ -52,9 +66,12 @@ namespace RC3.Unity.TilingDemo
         public override void Initialize(int vertexCount, int vertexDegree)
         {
             base.Initialize(vertexCount, vertexDegree);
+            
+            _assignedTiles = new int[vertexCount];
+            Set(_assignedTiles, -1);
 
-            _tileIndices = new int[vertexCount];
-            Set(_tileIndices, -1);
+            _domainSizes = new int[vertexCount];
+            Set(_domainSizes, _tileSet.Count);
 
             _positions = new Vector3[vertexCount];
             // ...

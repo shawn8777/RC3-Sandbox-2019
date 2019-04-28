@@ -8,14 +8,12 @@ using System.Linq;
 
 using UnityEngine;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
-
-
     /// <summary>
     /// 
     /// </summary>
-    [RequireComponent(typeof(TileModelData))]
+    [RequireComponent(typeof(TileModelManager))]
     public class TileModelDisplay : MonoBehaviour
     {
         [SerializeField] private LabeledTile _unknown;
@@ -28,7 +26,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Start()
         {
-            _graph = GetComponent<TileModelData>().Graph;
+            _graph = GetComponent<TileModelManager>().Graph;
         }
 
 
@@ -38,7 +36,8 @@ namespace RC3.Unity.TilingDemo
         private void Update()
         {
             var positions = _graph.Positions;
-            var indices = _graph.TileIndices;
+            var tileIndices = _graph.AssignedTiles;
+            var domainSizes = _graph.DomainSizes;
             var tiles = _graph.TileSet;
 
             var model = transform.localToWorldMatrix;
@@ -47,21 +46,27 @@ namespace RC3.Unity.TilingDemo
 
             for(int i = 0; i < positions.Length; i++)
             {
-                var index = indices[i];
+                var tileIndex = tileIndices[i];
                 
-                if (index == -1)
+                if (tileIndex == -1)
                 {
                     var p = positions[i];
                     var d = model.MultiplyPoint(p) - camPos;
                     var q = Quaternion.LookRotation(d, camUp);
+                    
+                    const float t0 = 0.25f;
+                    const float t1 = 0.75f;
 
-                    const float t = 0.5f;
+                    // Scale placeholder tile by domain size
+                    float t = (float)domainSizes[i] / tiles.Count;
+                    t = t0 + t * (t1 - t0);
+                    
                     Matrix4x4 m = Matrix4x4.TRS(p, q, new Vector3(t, t, t));
                     Graphics.DrawMesh(_unknown.Mesh, model * m, _unknown.Material, 0, _camera);
                 }
                 else
                 {
-                    var tile = tiles[index];
+                    var tile = tiles[tileIndex];
 
                     if (tile.Mesh != null)
                     {

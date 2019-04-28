@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace RC3.Unity
+namespace RC3
 {
     /// <summary>
     /// 

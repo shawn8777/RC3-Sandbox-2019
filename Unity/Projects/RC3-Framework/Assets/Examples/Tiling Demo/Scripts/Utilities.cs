@@ -9,7 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     public static class Utilities
     {

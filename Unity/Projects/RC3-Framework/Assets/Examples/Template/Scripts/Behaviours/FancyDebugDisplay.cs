@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RC3.Unity.Template
+namespace RC3.Template
 {
     /// <summary>
     /// 

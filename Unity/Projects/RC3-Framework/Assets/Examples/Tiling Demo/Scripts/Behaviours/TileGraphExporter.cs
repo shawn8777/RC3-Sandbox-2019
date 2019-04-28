@@ -4,12 +4,12 @@ using System.Linq;
 
 using UnityEngine;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 
     /// </summary>
-    [RequireComponent(typeof(TileModelData))]
+    [RequireComponent(typeof(TileModelManager))]
     public class TileGraphExporter : MonoBehaviour
     {
         [SerializeField] private string _path;
@@ -23,7 +23,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Start()
         {
-            _graph = GetComponent<TileModelData>().Graph;
+            _graph = GetComponent<TileModelManager>().Graph;
         }
 
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RC3.Unity.GraphIntro
+namespace RC3.GraphIntro
 {
     /// <summary>
     /// 

@@ -4,12 +4,12 @@ using UnityEngine;
 
 using Domino;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 
     /// </summary>
-    [RequireComponent(typeof(TileModelData))]
+    [RequireComponent(typeof(TileModelManager))]
     public class TileModelExporter : MonoBehaviour
     {
         [SerializeField] private string _path;
@@ -22,7 +22,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Start()
         {
-            _graph = GetComponent<TileModelData>().Graph;
+            _graph = GetComponent<TileModelManager>().Graph;
         }
 
 
@@ -41,7 +41,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         public void Export()
         {
-            Utilities.SerializeBinary(_graph.TileIndices, _path);
+            Utilities.SerializeBinary(_graph.AssignedTiles, _path);
             Debug.Log("TileModel export complete!");
         }
     }

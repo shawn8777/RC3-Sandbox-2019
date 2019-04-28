@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace RC3.Unity.GraphIntro
+namespace RC3.GraphIntro
 {
     /// <summary>
     /// 

@@ -2,35 +2,41 @@
 
 using SpatialSlur;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 
     /// </summary>
-    [RequireComponent(typeof(TileModelRecorderData))]
     public class TileModelRecorder : MonoBehaviour
     {
-        private TileModelHistory _history;
-        private TileGraph _graph;
+        [SerializeField] private TileModelHistory _history;
+        [SerializeField] private TileGraph _graph;
 
 
         /// <summary>
         /// 
         /// </summary>
-        private void Start()
+        public TileModelHistory History
         {
-            var data = GetComponent<TileModelRecorderData>();
-            _history = data.History;
-            _graph = data.Graph;
+            get { return _history; }
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        public void Record()
+        public TileGraph Graph
         {
-            _history.Data.Add(_graph.TileIndices.ShallowCopy());
+            get { return _graph; }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual void Record()
+        {
+            _history.Data.Add(_graph.AssignedTiles.ShallowCopy());
         }
     }
 }

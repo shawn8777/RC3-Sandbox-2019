@@ -1,23 +1,23 @@
 ﻿/*
  * Notes
  */
- 
+
 using System.Linq;
 using UnityEngine;
 
 using Domino;
 
-namespace RC3.Unity.TilingDemo.TileModelSelectors
+namespace RC3.TilingDemo.TileModelSelectors
 {
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Model Selectors/Random")]
+    [CreateAssetMenu(menuName = "RC3/Tiling Demo/Tile Selectors/Random")]
     public class RandomTileSelector : TileSelector
     {
         [SerializeField] private int _seed = 0;
 
-        private System.Random _random;
+        private Domino.RandomTileSelector _selector;
 
 
         /// <summary>
@@ -25,17 +25,16 @@ namespace RC3.Unity.TilingDemo.TileModelSelectors
         /// </summary>
         private void OnEnable()
         {
-            _random = new System.Random(_seed);
+            _selector = new Domino.RandomTileSelector(_seed);
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        public override int Select(TileModel model, int position)
+        public override int Select(TileModel model, int node)
         {
-            var d = model.GetDomain(position);
-            return d.ElementAt(_random.Next(d.Count));
+            return _selector.Select(model, node);
         }
     }
 }

@@ -4,7 +4,7 @@
 
 using UnityEngine;
 
-namespace RC3.Unity.TilingDemo.TileGraphInitializers
+namespace RC3.TilingDemo.TileGraphInitializers
 {
     /// <summary>
     /// 

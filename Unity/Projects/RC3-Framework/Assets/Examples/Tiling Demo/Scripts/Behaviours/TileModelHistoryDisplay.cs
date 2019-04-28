@@ -6,12 +6,12 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// Custom display method for rendering accumulated history of tile model
     /// </summary>
-    [RequireComponent(typeof(TileModelRecorderData))]
+    [RequireComponent(typeof(TileModelRecorder))]
     public class TileModelHistoryDisplay : MonoBehaviour
     {
         [SerializeField] private Camera _camera;
@@ -28,9 +28,9 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Start()
         {
-            var data = GetComponent<TileModelRecorderData>();
-            _history = data.History;
-            _graph = data.Graph;
+            var recorder = GetComponent<TileModelRecorder>();
+            _history = recorder.History;
+            _graph = recorder.Graph;
         }
 
 

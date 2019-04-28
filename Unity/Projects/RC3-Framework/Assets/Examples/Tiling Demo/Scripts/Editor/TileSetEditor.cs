@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 

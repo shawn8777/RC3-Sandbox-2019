@@ -5,12 +5,13 @@
 using System;
 using UnityEngine;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 
     /// </summary>
-    public abstract class TileGraphInitializer : Initializer<TileGraph>
+    public abstract class TileGraphInitializer : ScriptableObject, IInitializer<TileGraph>
     {
+        public abstract void Initialize(TileGraph target);
     }
 }

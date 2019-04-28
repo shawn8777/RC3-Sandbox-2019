@@ -3,38 +3,22 @@ using UnityEngine;
 
 using SpatialSlur;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// Only records new model results i.e. those which don't yet exist in the history
     /// </summary>
-    [RequireComponent(typeof(TileModelRecorderData))]
-    public class UniqueTileModelRecorder : MonoBehaviour
+    public class UniqueTileModelRecorder : TileModelRecorder
     {
-        private TileModelHistory _history;
-        private TileGraph _graph;
-
-
         /// <summary>
         /// 
         /// </summary>
-        private void Start()
+        public override void Record()
         {
-            var data = GetComponent<TileModelRecorderData>();
-            _history = data.History;
-            _graph = data.Graph;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Record()
-        {
-            var indices = _graph.TileIndices;
+            var indices = Graph.AssignedTiles;
 
             if (IsUnique(indices))
-                _history.Data.Add(indices.ShallowCopy());
+                History.Data.Add(indices.ShallowCopy());
         }
 
 
@@ -43,7 +27,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private bool IsUnique(int[] indices)
         {
-            var data = _history.Data;
+            var data = History.Data;
 
             for(int i = 0; i < data.Count; i++)
             {
@@ -58,7 +42,7 @@ namespace RC3.Unity.TilingDemo
         /// <summary>
         /// 
         /// </summary>
-        public static bool Equals(int[] a, int[] b)
+        private static bool Equals(int[] a, int[] b)
         {
             for (int i = 0; i < a.Length; i++)
             {

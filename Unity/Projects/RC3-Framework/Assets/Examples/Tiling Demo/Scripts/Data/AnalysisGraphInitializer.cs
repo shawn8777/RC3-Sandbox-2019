@@ -2,12 +2,12 @@
 
 using UnityEngine;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 
     /// </summary>
-    public class AnalysisGraphInitializer : Initializer<UniformGraph>
+    public class AnalysisGraphInitializer : ScriptableObject, IInitializer<UniformGraph>
     {
         [SerializeField] TileGraph _tileGraph;
         [SerializeField] string[] _connectedLabels;
@@ -17,7 +17,7 @@ namespace RC3.Unity.TilingDemo
         /// 
         /// </summary>
         /// <param name="target"></param>
-        public override void Initialize(UniformGraph target)
+        public void Initialize(UniformGraph target)
         {
             var adj0 = _tileGraph.Adjacency;
             var n = adj0.GetLength(0);
@@ -26,8 +26,8 @@ namespace RC3.Unity.TilingDemo
             target.Initialize(n, m);
             var adj1 = target.Adjacency;
 
-            var tileSet = _tileGraph.TileSet;
-            var tileIndices = _tileGraph.TileIndices;
+            var tiles = _tileGraph.TileSet;
+            var tileIndices = _tileGraph.AssignedTiles;
             var connectedLabelSet = new HashSet<string>(_connectedLabels);
 
             for (int i = 0; i < n; i++)
@@ -35,9 +35,9 @@ namespace RC3.Unity.TilingDemo
                 int tileIndex = tileIndices[i];
 
                 if (tileIndex == -1)
-                    throw new System.ArgumentException($"Tile has not yet been assigned at position {i}");
+                    throw new System.ArgumentException($"Tile has not yet been assigned at node {i}");
                 
-                var labels = tileSet[tileIndex].Labels;
+                var labels = tiles[tileIndex].Labels;
                 
                 for(int j = 0; j < m; j++)
                 {

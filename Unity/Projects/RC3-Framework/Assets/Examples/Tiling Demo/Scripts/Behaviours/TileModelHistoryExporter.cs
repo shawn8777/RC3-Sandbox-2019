@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 
     /// </summary>
-    [RequireComponent(typeof(TileModelRecorderData))]
+    [RequireComponent(typeof(TileModelRecorder))]
     public class TileModelHistoryExporter : MonoBehaviour
     {
         [SerializeField] private string _path;
@@ -18,7 +18,7 @@ namespace RC3.Unity.TilingDemo
         /// </summary>
         private void Start()
         {
-            _history = GetComponent<TileModelRecorderData>().History;
+            _history = GetComponent<TileModelRecorder>().History;
         }
 
 

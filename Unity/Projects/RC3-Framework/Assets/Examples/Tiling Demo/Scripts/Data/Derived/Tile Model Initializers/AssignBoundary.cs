@@ -1,11 +1,8 @@
-﻿/*
- * Notes
- */
+﻿using UnityEngine;
 
-using UnityEngine;
 using Domino;
 
-namespace RC3.Unity.TilingDemo.TileModelInitializers
+namespace RC3.TilingDemo
 {
     /// <summary>
     /// 
@@ -20,9 +17,9 @@ namespace RC3.Unity.TilingDemo.TileModelInitializers
         /// 
         /// </summary>
         /// <param name="model"></param>
-        public override void Initialize(TileModel model)
+        public override void Initialize(TileModel model, TileGraph graph)
         {
-            var adj = Graph.Adjacency;
+            var adj = graph.Adjacency;
             int m = adj.GetLength(0);
             int n = adj.GetLength(1);
 

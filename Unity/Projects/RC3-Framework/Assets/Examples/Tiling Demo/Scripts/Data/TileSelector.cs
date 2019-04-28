@@ -6,15 +6,13 @@ using UnityEngine;
 
 using Domino;
 
-namespace RC3.Unity.TilingDemo
+namespace RC3.TilingDemo
 {
-
-
     /// <summary>
     /// 
     /// </summary>
     public abstract class TileSelector : ScriptableObject, ITileSelector
     {
-        public abstract int Select(TileModel model, int position);
+        public abstract int Select(TileModel model, int node);
     }
 }
