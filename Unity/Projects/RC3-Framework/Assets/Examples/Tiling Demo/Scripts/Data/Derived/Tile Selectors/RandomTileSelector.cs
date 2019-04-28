@@ -34,6 +34,7 @@ namespace RC3.TilingDemo.TileModelSelectors
         /// </summary>
         public override int Select(TileModel model, int node)
         {
+            Debug.Log("Selecting tile");
             return _selector.Select(model, node);
         }
     }

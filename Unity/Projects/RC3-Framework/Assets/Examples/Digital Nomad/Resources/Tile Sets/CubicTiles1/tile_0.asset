@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: tile_0
   m_EditorClassIdentifier: 
   _material: {fileID: 0}
-  _labelX0: 
-  _labelX1: 
+  _labelX0: A
+  _labelX1: C
   _labelY0: 
   _labelY1: 
   _labelZ0: 

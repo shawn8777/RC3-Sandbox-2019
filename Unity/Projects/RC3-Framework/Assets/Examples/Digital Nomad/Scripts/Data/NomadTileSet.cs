@@ -84,7 +84,7 @@ namespace RC3.DigitalNomad
                         // Set labels of the copy (need a table of rotations)
                         copy.Transform = Matrix4x4.Rotate(quat);
                         copy.Mesh = tile.Mesh;
-                        copy.
+                        // copy.
                           
                     }
                 }
